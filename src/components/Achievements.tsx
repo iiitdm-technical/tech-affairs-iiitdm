@@ -31,7 +31,7 @@ interface OrgRow {
   category: string;
 }
 
-const ACCENT_COLORS = ['#34d399', '#fb923c', '#f472b6', '#a78bfa', '#60a5fa', '#fbbf24'];
+const ACCENT_COLORS = ['#a3e635', '#4ade80', '#f59e0b', '#86efac', '#fcd34d', '#d9f99d'];
 
 function slugToOrg(slug: string, orgs: OrgRow[]): OrgRow | undefined {
   return orgs.find((o) => o.link.endsWith('/' + slug.split('/').pop()));

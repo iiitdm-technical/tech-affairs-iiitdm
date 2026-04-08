@@ -32,7 +32,7 @@ const Techfest = () => {
               fontWeight: 650,
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
-              color: '#a78bfa',
+              color: '#a3e635',
               mb: 1.5,
               textAlign: 'center',
             }}
@@ -64,9 +64,9 @@ const Techfest = () => {
             p: { xs: 3, md: 5 },
             borderRadius: 5,
             background: isDark
-              ? 'linear-gradient(145deg, rgba(167,139,250,0.06), rgba(244,114,182,0.04))'
-              : 'linear-gradient(145deg, rgba(167,139,250,0.08), rgba(244,114,182,0.05))',
-            border: `1px solid ${isDark ? 'rgba(167,139,250,0.12)' : 'rgba(167,139,250,0.18)'}`,
+              ? 'linear-gradient(145deg, rgba(163,230,53,0.06), rgba(74,222,128,0.03))'
+              : 'linear-gradient(145deg, rgba(21,128,61,0.06), rgba(74,222,128,0.04))',
+            border: `1px solid ${isDark ? 'rgba(163,230,53,0.15)' : 'rgba(21,128,61,0.18)'}`,
           }}
         >
           <motion.div
@@ -120,11 +120,12 @@ const Techfest = () => {
                 py: 1.5,
                 fontSize: '0.95rem',
                 borderRadius: 3.5,
-                background: 'linear-gradient(135deg, #a78bfa, #f472b6)',
-                boxShadow: '0 4px 14px -3px rgba(167,139,250,0.4)',
+                background: 'linear-gradient(135deg, #16a34a, #a3e635)',
+                color: '#030a06',
+                boxShadow: '0 4px 18px -3px rgba(163,230,53,0.45)',
                 '&:hover': {
-                  background: 'linear-gradient(135deg, #7c3aed, #ec4899)',
-                  boxShadow: '0 6px 20px -3px rgba(167,139,250,0.5)',
+                  background: 'linear-gradient(135deg, #15803d, #84cc16)',
+                  boxShadow: '0 6px 24px -3px rgba(163,230,53,0.55)',
                   transform: 'translateY(-1px)',
                 },
               }}

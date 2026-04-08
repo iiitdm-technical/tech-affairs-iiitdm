@@ -39,7 +39,7 @@ export default function AnnouncementsPage() {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 6 }}>
           <Box sx={{
             width: 48, height: 48, borderRadius: 2,
-            background: 'linear-gradient(135deg, #fb923c, #f472b6)',
+            background: 'linear-gradient(135deg, #16a34a, #a3e635)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
             <Campaign sx={{ color: '#fff' }} />

@@ -5,11 +5,11 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const stats = [
-  { number: '13', label: 'Technical Clubs', color: '#fb923c' },
-  { number: '6', label: 'Competitive Teams', color: '#34d399' },
-  { number: '10+', label: 'Esteemed Awards', color: '#f472b6' },
-  { number: '50+', label: 'Events Annually', color: '#a78bfa' },
-  { number: '20+', label: 'Sponsors', color: '#38bdf8' },
+  { number: '13', label: 'Technical Clubs',  color: '#a3e635' },
+  { number: '6',  label: 'Competitive Teams', color: '#4ade80' },
+  { number: '10+',label: 'Esteemed Awards',   color: '#f59e0b' },
+  { number: '50+',label: 'Events Annually',   color: '#86efac' },
+  { number: '20+',label: 'Sponsors',           color: '#fcd34d' },
 ];
 
 const About = () => {
@@ -36,7 +36,7 @@ const About = () => {
               fontWeight: 650,
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
-              color: '#fb923c',
+              color: '#a3e635',
               mb: 1.5,
               textAlign: 'center',
             }}
@@ -107,8 +107,8 @@ const About = () => {
             maxWidth: 1000,
             mx: 'auto',
             py: 5,
-            borderTop: `1px solid ${isDark ? 'rgba(255,255,255,0.07)' : 'rgba(15,23,42,0.14)'}`,
-            borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.07)' : 'rgba(15,23,42,0.14)'}`,
+            borderTop: `1px solid ${isDark ? 'rgba(163,230,53,0.12)' : 'rgba(21,128,61,0.15)'}`,
+            borderBottom: `1px solid ${isDark ? 'rgba(163,230,53,0.12)' : 'rgba(21,128,61,0.15)'}`,
           }}
         >
           {stats.map((stat, index) => (

@@ -29,7 +29,7 @@ function I2RIntro() {
     }}>
       <Box sx={{
         width: { xs: '100%', md: 220 }, flexShrink: 0,
-        background: 'linear-gradient(135deg, #fb923c 0%, #f472b6 100%)',
+        background: 'linear-gradient(135deg, #16a34a 0%, #a3e635 100%)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         minHeight: { xs: 140, md: 'auto' }, position: 'relative', overflow: 'hidden',
         '&::before': {

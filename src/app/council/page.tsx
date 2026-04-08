@@ -28,8 +28,8 @@ const TeamCard = styled(Card)(({ theme }) => ({
   justifyContent: "center",
   textAlign: "center",
   borderRadius: 18,
-  background: theme.palette.mode === "dark" ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.82)",
-  border: `1px solid ${theme.palette.mode === "dark" ? "rgba(255,255,255,0.07)" : "rgba(15,23,42,0.14)"}`,
+  background: theme.palette.mode === "dark" ? "rgba(3,15,8,0.75)" : "rgba(255,255,255,0.85)",
+  border: `1px solid ${theme.palette.mode === "dark" ? "rgba(163,230,53,0.1)" : "rgba(163,230,53,0.14)"}`,
   boxShadow: "none",
   transition: "transform 0.35s cubic-bezier(.22,.61,.36,1), box-shadow 0.35s ease, border-color 0.35s ease",
   cursor: "pointer",
@@ -47,10 +47,10 @@ const TeamCard = styled(Card)(({ theme }) => ({
 }));
 
 const TAB_META = [
-  { label: "Clubs",       category: "club",      route: "clubs",       color: "#f472b6" },
-  { label: "Teams",       category: "team",      route: "teams",       color: "#34d399" },
-  { label: "Societies",   category: "society",   route: "societies",   color: "#a78bfa" },
-  { label: "Communities", category: "community", route: "communities", color: "#38bdf8" },
+  { label: "Clubs",       category: "club",      route: "clubs",       color: "#a3e635" },
+  { label: "Teams",       category: "team",      route: "teams",       color: "#4ade80" },
+  { label: "Societies",   category: "society",   route: "societies",   color: "#f59e0b" },
+  { label: "Communities", category: "community", route: "communities", color: "#fcd34d" },
 ];
 
 export default function Council() {
@@ -153,14 +153,14 @@ export default function Council() {
           sx={{
             mb: 3,
             borderRadius: 3,
-            bgcolor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.82)',
-            border: `1px solid ${isDark ? 'rgba(255,255,255,0.07)' : 'rgba(15,23,42,0.14)'}`,
+            bgcolor: isDark ? 'rgba(3,15,8,0.75)' : 'rgba(255,255,255,0.9)',
+            border: `1px solid ${isDark ? 'rgba(163,230,53,0.14)' : 'rgba(163,230,53,0.17)'}`,
             boxShadow: 'none',
             minHeight: 36,
             mx: "auto",
             width: "100%",
             "& .MuiTabs-indicator": {
-              background: `linear-gradient(90deg, ${currentColor}, #fb923c)`,
+              background: `linear-gradient(90deg, ${currentColor}, #4ade80)`,
               height: 3,
               borderRadius: 2,
             },
@@ -232,12 +232,12 @@ export default function Council() {
                       width: { xs: 70, sm: 85 },
                       height: { xs: 70, sm: 85 },
                       mb: 1,
-                      bgcolor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(15,23,42,0.02)',
+                      bgcolor: isDark ? 'rgba(163,230,53,0.06)' : 'rgba(21,128,61,0.05)',
                       borderRadius: 3.5,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      border: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(15,23,42,0.08)'}`,
+                      border: `1px solid ${isDark ? 'rgba(163,230,53,0.1)' : 'rgba(163,230,53,0.13)'}`,
                       overflow: "hidden",
                       p: 1,
                       position: "relative",

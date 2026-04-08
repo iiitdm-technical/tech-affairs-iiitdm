@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f6f7fb;
-  --foreground: #0f172a;
+  --background: #f7fef5;
+  --foreground: #052e16;
 }
 
 @theme inline {
@@ -14,8 +14,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a1a;
-    --foreground: #f1f0f5;
+    --background: #030a06;
+    --foreground: #ecfdf5;
   }
 }
 
@@ -27,438 +27,233 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-/* ══════════════════════════════════════════════
-   UNIFIED GRID SYSTEM (for all pages)
-   ══════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   CIRCUIT BOARD / PCB — Background System
+   Dark  : #030a06 FR4 substrate, lime traces, amber glow
+   Light : #f7fef5 bare board reveal, forest green traces
+   ══════════════════════════════════════════════════════ */
 
-/* Base grid utility - can be applied to any section */
-.grid-section {
-  position: relative;
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  background-image:
-    linear-gradient(var(--grid-line-dark, rgba(255, 255, 255, 0.08)) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line-dark, rgba(255, 255, 255, 0.08)) 1px, transparent 1px);
-  background-size: 72px 72px;
-  background-attachment: fixed;
-  background-position: 0 0;
-}
-
-@media (prefers-color-scheme: light) {
-  .grid-section {
-    background-image:
-      linear-gradient(var(--grid-line-light, rgba(15, 23, 42, 0.015)) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line-light, rgba(15, 23, 42, 0.015)) 1px, transparent 1px);
-  }
-}
-
-/* ── Grid backgrounds matching Open House aesthetic ── */
+/* ── DARK: PCB board at night ── */
 .grids-dark {
-  background-color: #0a0a1a;
+  background-color: #030a06;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-    radial-gradient(1000px 560px at -10% -10%, rgba(251, 146, 60, 0.14), transparent 60%),
-    radial-gradient(960px 520px at 110% 100%, rgba(56, 189, 248, 0.12), transparent 62%);
-  background-size: 72px 72px, 72px 72px, 100% 100%, 100% 100%;
+    /* fine copper trace grid */
+    linear-gradient(rgba(163,230,53,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(163,230,53,0.07) 1px, transparent 1px),
+    /* top-left neon green ground-plane glow */
+    radial-gradient(ellipse 75% 55% at -5% -5%,  rgba(74,222,128,0.18)  0%, transparent 55%),
+    /* bottom-right amber component warmth */
+    radial-gradient(ellipse 65% 50% at 108% 108%, rgba(245,158,11,0.12)  0%, transparent 52%),
+    /* centre deep board tint */
+    radial-gradient(ellipse 55% 45% at 50% 55%,   rgba(5,46,22,0.6)      0%, transparent 65%);
+  background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%, 100% 100%;
   background-attachment: fixed;
 }
 
+/* ── LIGHT: PCB under daylight ── */
 .grids-light {
-  background-color: #f6f7fb;
+  background-color: #f7fef5;
   background-image:
-    linear-gradient(rgba(15, 23, 42, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.06) 1px, transparent 1px),
-    radial-gradient(860px 460px at -10% -10%, rgba(251, 146, 60, 0.18), transparent 62%),
-    radial-gradient(920px 500px at 110% 100%, rgba(56, 189, 248, 0.14), transparent 64%);
-  background-size: 72px 72px, 72px 72px, 100% 100%, 100% 100%;
+    /* visible forest-green trace grid */
+    linear-gradient(rgba(21,128,61,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(21,128,61,0.1) 1px, transparent 1px),
+    /* top-left green wash */
+    radial-gradient(ellipse 75% 55% at -5% -5%,   rgba(21,128,61,0.1) 0%, transparent 55%),
+    /* bottom-right warm amber tint */
+    radial-gradient(ellipse 60% 48% at 108% 108%,  rgba(245,158,11,0.08) 0%, transparent 52%);
+  background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%;
   background-attachment: fixed;
 }
 
-/* ── Navbar styles ── */
+/* ── Navbar: transparent → scrolled ── */
 .navbar-transparent {
   background-color: transparent !important;
   box-shadow: none !important;
   transition: all 0.35s ease;
 }
 
-.navbar-scrolled-light {
-  background-color: rgba(246, 247, 251, 0.92) !important;
-  backdrop-filter: blur(24px) saturate(1.4);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.14);
-  box-shadow: none !important;
-  transition: all 0.35s ease;
-}
-
 .navbar-scrolled-dark {
-  background-color: rgba(5, 5, 26, 0.92) !important;
-  backdrop-filter: blur(24px) saturate(1.4);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: none !important;
+  background-color: rgba(3, 10, 6, 0.9) !important;
+  backdrop-filter: blur(24px) saturate(1.6);
+  border-bottom: 1px solid rgba(163,230,53,0.14);
+  box-shadow: 0 1px 0 rgba(163,230,53,0.06) !important;
   transition: all 0.35s ease;
 }
 
-/* ── Swiper ── */
-.mySwiper {
-  width: 100%;
-  padding-top: 50px;
-  padding-bottom: 50px;
+.navbar-scrolled-light {
+  background-color: rgba(247,254,245,0.92) !important;
+  backdrop-filter: blur(24px) saturate(1.5);
+  border-bottom: 1px solid rgba(21,128,61,0.14);
+  box-shadow: 0 1px 0 rgba(21,128,61,0.06) !important;
+  transition: all 0.35s ease;
 }
 
-.swiper-slide {
-  background-position: center;
-  background-size: cover;
-  width: 300px;
-  height: 300px;
+/* ── Glow utilities ── */
+.glow-lime   { box-shadow: 0 0 32px -6px rgba(163,230,53,0.55), 0 0 72px -18px rgba(163,230,53,0.28); }
+.glow-neon   { box-shadow: 0 0 32px -6px rgba(74,222,128,0.5),  0 0 72px -18px rgba(74,222,128,0.22); }
+.glow-amber  { box-shadow: 0 0 32px -6px rgba(245,158,11,0.5),  0 0 72px -18px rgba(245,158,11,0.22); }
+
+/* ── Text gradients ── */
+.text-gradient-pcb {
+  background: linear-gradient(135deg, #4ade80, #a3e635);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-gradient-board {
+  background: linear-gradient(135deg, #a3e635, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.swiper-slide img {
-  display: block;
-  width: 100%;
+/* ── Card hover variants ── */
+.card-hover-lime {
+  transition: transform 0.3s cubic-bezier(.22,.61,.36,1), box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+.card-hover-lime:hover {
+  transform: translateY(-6px) scale(1.01) !important;
+  border-color: rgba(163,230,53,0.45) !important;
+  box-shadow: 0 20px 48px -12px rgba(163,230,53,0.25), 0 0 0 1px rgba(163,230,53,0.15) !important;
+}
+.card-hover-amber:hover {
+  transform: translateY(-6px) scale(1.01) !important;
+  border-color: rgba(245,158,11,0.45) !important;
+  box-shadow: 0 20px 48px -12px rgba(245,158,11,0.22) !important;
+}
+.card-hover-neon:hover {
+  transform: translateY(-6px) scale(1.01) !important;
+  border-color: rgba(74,222,128,0.45) !important;
+  box-shadow: 0 20px 48px -12px rgba(74,222,128,0.22) !important;
 }
 
-/* ── Animations ── */
-@keyframes float {
+/* ── Council org card hover (category colours) ── */
+.oh-card-hover {
+  transition: transform 0.3s cubic-bezier(.22,.61,.36,1), box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+.oh-card-hover:hover                       { transform: translateY(-6px) scale(1.01) !important; }
+.oh-card-hover[data-cat="Clubs"]:hover     { border-color: #a3e635 !important; box-shadow: 0 20px 48px -12px rgba(163,230,53,0.28) !important; }
+.oh-card-hover[data-cat="Teams"]:hover     { border-color: #4ade80 !important; box-shadow: 0 20px 48px -12px rgba(74,222,128,0.25) !important; }
+.oh-card-hover[data-cat="Societies"]:hover { border-color: #f59e0b !important; box-shadow: 0 20px 48px -12px rgba(245,158,11,0.25) !important; }
+.oh-card-hover[data-cat="Communities"]:hover{ border-color: #fcd34d !important; box-shadow: 0 20px 48px -12px rgba(252,211,77,0.2)  !important; }
 
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
+/* ── Buttons ── */
+.oh-btn-primary { transition: all 0.22s cubic-bezier(.22,.61,.36,1) !important; }
+.oh-btn-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 30px -4px rgba(163,230,53,0.4) !important;
+  filter: brightness(1.08);
+}
+.oh-btn-ghost { transition: all 0.2s ease !important; }
+.oh-btn-ghost:hover {
+  background: rgba(163,230,53,0.07) !important;
+  border-color: rgba(163,230,53,0.3) !important;
 }
 
-/* ══════════════════════════════════════════════
-/* ══════════════════════════════════════════════
-   OPEN HOUSE STYLES (using unified grid system)
-   ══════════════════════════════════════════════ */
+/* ── Shared grid section ── */
+.grid-section {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  background-image:
+    linear-gradient(rgba(163,230,53,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(163,230,53,0.07) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-attachment: fixed;
+}
 
+/* ── Open House sections ── */
 .oh-section {
   scroll-margin-top: 86px;
   position: relative;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   background-image:
-    linear-gradient(var(--oh-grid-line, rgba(255, 255, 255, 0.04)) 1px, transparent 1px),
-    linear-gradient(90deg, var(--oh-grid-line, rgba(255, 255, 255, 0.04)) 1px, transparent 1px);
-  background-size: 72px 72px;
+    linear-gradient(rgba(163,230,53,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(163,230,53,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
   background-attachment: fixed;
-  background-position: 0 0;
 }
+.oh-section > * { position: relative; z-index: 1; }
 
-.oh-section>* {
-  position: relative;
-  z-index: 1;
-}
-
-@media (prefers-color-scheme: light) {
-  .oh-section {
-    background-image:
-      linear-gradient(var(--oh-grid-line, rgba(15, 23, 42, 0.035)) 1px, transparent 1px),
-      linear-gradient(90deg, var(--oh-grid-line, rgba(15, 23, 42, 0.035)) 1px, transparent 1px);
-  }
-}
-
-.oh-hero {
-  position: relative;
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  background-image:
-    linear-gradient(var(--oh-grid-line, rgba(255, 255, 255, 0.04)) 1px, transparent 1px),
-    linear-gradient(90deg, var(--oh-grid-line, rgba(255, 255, 255, 0.04)) 1px, transparent 1px);
-  background-size: 72px 72px;
-  background-attachment: fixed;
-  background-position: 0 0;
-}
-
-.oh-hero>* {
-  position: relative;
-  z-index: 1;
-}
-
-@media (prefers-color-scheme: light) {
-  .oh-hero {
-    background-image:
-      linear-gradient(var(--oh-grid-line, rgba(15, 23, 42, 0.035)) 1px, transparent 1px),
-      linear-gradient(90deg, var(--oh-grid-line, rgba(15, 23, 42, 0.035)) 1px, transparent 1px);
-  }
-}
-
-.oh-body-card {
-  min-width: 0;
-}
-
-.oh-filter-row {
-  align-items: center;
-}
+.oh-hero          { position: relative; width: 100vw; margin-left: calc(-50vw + 50%); }
+.oh-hero > *      { position: relative; z-index: 1; }
+.oh-body-card     { min-width: 0; }
+.oh-filter-row    { align-items: center; }
 
 /* ── Open House Marquee ── */
 @keyframes oh-marquee {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
-
-.oh-marquee-track {
-  animation: oh-marquee 45s linear infinite;
-}
-
-.oh-marquee-track:hover {
-  animation-play-state: paused;
-}
-
-/* ── Open House Hover Effects ── */
-.oh-card-hover {
-  transition: transform 0.35s cubic-bezier(.22, .61, .36, 1), box-shadow 0.35s ease, border-color 0.35s ease !important;
-}
-
-.oh-card-hover:hover {
-  transform: translateY(-8px) scale(1.01) !important;
-  box-shadow: var(--oh-card-hover-shadow, 0 24px 48px -12px rgba(0, 0, 0, 0.4)), 0 0 0 1px var(--oh-card-hover-outline, rgba(255, 255, 255, 0.08)) !important;
-}
-
-.oh-card-hover[data-cat="Clubs"]:hover {
-  border-color: #f472b6 !important;
-  box-shadow: 0 24px 48px -12px rgba(244, 114, 182, 0.15) !important;
-}
-
-.oh-card-hover[data-cat="Teams"]:hover {
-  border-color: #34d399 !important;
-  box-shadow: 0 24px 48px -12px rgba(52, 211, 153, 0.15) !important;
-}
-
-.oh-card-hover[data-cat="Societies"]:hover {
-  border-color: #a78bfa !important;
-  box-shadow: 0 24px 48px -12px rgba(167, 139, 250, 0.15) !important;
-}
-
-.oh-card-hover[data-cat="Communities"]:hover {
-  border-color: #38bdf8 !important;
-  box-shadow: 0 24px 48px -12px rgba(56, 189, 248, 0.15) !important;
-}
-
-.oh-btn-primary {
-  transition: all 0.3s cubic-bezier(.22, .61, .36, 1) !important;
-}
-
-.oh-btn-primary:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 12px 32px -4px rgba(251, 146, 60, 0.35) !important;
-  filter: brightness(1.1);
-}
-
-.oh-btn-ghost {
-  transition: all 0.25s ease !important;
-}
-
-.oh-btn-ghost:hover {
-  background: var(--oh-ghost-hover-bg, rgba(255, 255, 255, 0.08)) !important;
-  border-color: var(--oh-ghost-hover-border, rgba(255, 255, 255, 0.25)) !important;
-}
-
-.oh-filter-btn {
-  transition: all 0.2s ease !important;
-}
-
+.oh-marquee-track               { animation: oh-marquee 45s linear infinite; }
+.oh-marquee-track:hover         { animation-play-state: paused; }
+.oh-filter-btn                  { transition: all 0.2s ease !important; }
 .oh-filter-btn:hover:not(.oh-filter-active) {
-  background: var(--oh-filter-hover-bg, rgba(255, 255, 255, 0.06)) !important;
-  border-color: var(--oh-filter-hover-border, rgba(255, 255, 255, 0.15)) !important;
+  background: rgba(163,230,53,0.07) !important;
+  border-color: rgba(163,230,53,0.28) !important;
 }
-
-.oh-why-card {
-  transition: all 0.3s ease !important;
-}
-
-.oh-why-card:hover {
+.oh-why-card  { transition: all 0.28s ease !important; }
+.oh-why-card:hover  {
   transform: translateY(-4px) !important;
-  border-color: var(--oh-why-hover-border, rgba(255, 255, 255, 0.12)) !important;
-  background: var(--oh-why-hover-bg, rgba(255, 255, 255, 0.05)) !important;
+  border-color: rgba(163,230,53,0.3) !important;
+  background: rgba(163,230,53,0.04) !important;
+}
+.oh-sched-item { transition: all 0.22s ease !important; }
+.oh-sched-item:hover { background: rgba(163,230,53,0.05) !important; border-radius: 12px; }
+
+/* ── Float animation ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px);   }
+  50%       { transform: translateY(-10px); }
 }
 
-.oh-sched-item {
-  transition: all 0.25s ease !important;
-}
+/* ── Swiper ── */
+.mySwiper         { width: 100%; padding-top: 50px; padding-bottom: 50px; }
+.swiper-slide     { background-position: center; background-size: cover; width: 300px; height: 300px; }
+.swiper-slide img { display: block; width: 100%; }
 
-.oh-sched-item:hover {
-  background: var(--oh-sched-hover-bg, rgba(255, 255, 255, 0.04)) !important;
-  border-radius: 12px;
-}
-
-/* ── Open House Responsive ── */
+/* ── Responsive ── */
 @media (max-width: 900px) {
-  .oh-section {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-
-  .oh-hero-title {
-    font-size: clamp(2.4rem, 9vw, 3.5rem) !important;
-  }
-
-  .oh-why-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .oh-bento {
-    grid-template-columns: 1fr !important;
-  }
-
-  .oh-stats-row {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
+  .oh-section   { padding-left: 20px !important; padding-right: 20px !important; }
+  .oh-why-grid  { grid-template-columns: 1fr !important; }
+  .oh-bento     { grid-template-columns: 1fr !important; }
+  .oh-stats-row { grid-template-columns: repeat(2, 1fr) !important; }
 }
-
 @media (max-width: 768px) {
-  .oh-hero {
-    min-height: auto !important;
-    padding: 108px 16px 56px !important;
-  }
-
-  .oh-hero-inner {
-    max-width: 100% !important;
-  }
-
-  .oh-hero-badge {
-    margin-bottom: 24px !important;
-    padding: 6px 12px !important;
-  }
-
-  .oh-section {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-
-  .oh-marquee {
-    display: none !important;
-  }
-
-  .oh-hero-subtitle {
-    font-size: 0.98rem !important;
-    line-height: 1.65 !important;
-    margin-bottom: 28px !important;
-  }
-
-  .oh-cd-row {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px !important;
-    max-width: 260px;
-    margin: 0 auto 30px !important;
-  }
-
-  .oh-cd-item {
-    width: 100%;
-  }
-
-  .oh-cd-box {
-    width: 100%;
-    min-width: 0 !important;
-    padding: 12px 8px !important;
-  }
-
-  .oh-cd-box>span {
-    font-size: 1.45rem !important;
-  }
-
-  .oh-hero-cta {
-    width: 100%;
-  }
-
-  .oh-hero-cta>a {
-    width: 100%;
-    justify-content: center;
-    max-width: 260px;
-  }
-
-  .oh-sched-grid {
-    grid-template-columns: minmax(64px, auto) 16px 1fr !important;
-    max-width: 100% !important;
-  }
-
-  .oh-bodies-grid {
-    grid-template-columns: 1fr !important;
-  }
-
+  .oh-hero      { min-height: auto !important; padding: 108px 16px 56px !important; }
+  .oh-section   { padding-left: 16px !important; padding-right: 16px !important; }
+  .oh-marquee   { display: none !important; }
+  .oh-hero-subtitle { font-size: 0.98rem !important; line-height: 1.65 !important; }
   .oh-filter-row {
-    flex-wrap: nowrap !important;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    flex-wrap: nowrap !important; overflow-x: auto;
+    padding-bottom: 4px; -ms-overflow-style: none; scrollbar-width: none;
   }
-
-  .oh-filter-row::-webkit-scrollbar {
-    display: none;
-  }
-
-  .oh-filter-btn {
-    flex: 0 0 auto;
-    white-space: nowrap;
-  }
-
-  .oh-body-card {
-    padding: 16px !important;
-    gap: 12px !important;
-  }
+  .oh-filter-row::-webkit-scrollbar { display: none; }
+  .oh-filter-btn  { flex: 0 0 auto; white-space: nowrap; }
+  .oh-body-card   { padding: 16px !important; gap: 12px !important; }
+  .oh-cd-row { display: grid !important; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px !important; max-width: 260px; margin: 0 auto 30px !important; }
+  .oh-cd-item { width: 100%; }
+  .oh-cd-box  { width: 100%; min-width: 0 !important; padding: 12px 8px !important; }
+  .oh-cd-box > span { font-size: 1.45rem !important; }
+  .oh-hero-cta    { width: 100%; }
+  .oh-hero-cta > a{ width: 100%; justify-content: center; max-width: 260px; }
+  .oh-sched-grid  { grid-template-columns: minmax(64px,auto) 16px 1fr !important; max-width: 100% !important; }
+  .oh-bodies-grid { grid-template-columns: 1fr !important; }
 }
-
 @media (max-width: 480px) {
-
-  .oh-about,
-  .oh-schedule,
-  .oh-bodies-section,
-  .oh-why-section {
-    padding-top: 72px !important;
-    padding-bottom: 56px !important;
-  }
-
-  .oh-stats {
-    padding-top: 40px !important;
-    padding-bottom: 40px !important;
-  }
-
-  .oh-stats-row {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 16px !important;
-  }
-
-  .oh-cd-row {
-    gap: 8px !important;
-  }
+  .oh-about, .oh-schedule, .oh-bodies-section, .oh-why-section { padding-top: 72px !important; padding-bottom: 56px !important; }
+  .oh-stats      { padding-top: 40px !important; padding-bottom: 40px !important; }
+  .oh-stats-row  { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
+  .oh-cd-row     { gap: 8px !important; }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .oh-marquee-track {
-    animation: none !important;
-    transform: translateX(0) !important;
-  }
-
-  .oh-card-hover,
-  .oh-btn-primary,
-  .oh-btn-ghost,
-  .oh-filter-btn,
-  .oh-why-card,
-  .oh-sched-item {
-    transition: none !important;
-  }
-}
-
 @media (max-width: 600px) {
-  .team-view-btn {
-    font-size: 0.7em !important;
-    white-space: nowrap !important;
-    width: auto !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-  }
+  .team-view-btn { font-size: 0.7em !important; white-space: nowrap !important; width: auto !important; min-width: 0 !important; max-width: 100% !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .oh-marquee-track { animation: none !important; transform: translateX(0) !important; }
+  .oh-card-hover, .oh-btn-primary, .oh-btn-ghost, .oh-filter-btn, .oh-why-card, .oh-sched-item { transition: none !important; }
 }

@@ -101,9 +101,9 @@ export default function AchievementsPage() {
     <Box sx={{ padding: { xs: '100px 16px 48px', sm: '90px 24px 48px' } }}>
       {/* Header */}
       <Box sx={{ textAlign: 'center', mb: 5 }}>
-        <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 1.5, mb: 2, px: 2.5, py: 0.8, borderRadius: 100, background: 'linear-gradient(135deg, rgba(251,146,60,0.1), rgba(244,114,182,0.07))', border: '1px solid rgba(251,146,60,0.2)' }}>
-          <EmojiEvents sx={{ fontSize: 16, color: '#fb923c' }} />
-          <Typography sx={{ fontSize: '0.8rem', fontWeight: 600, color: '#fb923c', letterSpacing: '0.01em' }}>
+        <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 1.5, mb: 2, px: 2.5, py: 0.8, borderRadius: 100, background: 'linear-gradient(135deg, rgba(163,230,53,0.1), rgba(74,222,128,0.06))', border: '1px solid rgba(163,230,53,0.22)' }}>
+          <EmojiEvents sx={{ fontSize: 16, color: '#a3e635' }} />
+          <Typography sx={{ fontSize: '0.8rem', fontWeight: 600, color: '#a3e635', letterSpacing: '0.01em' }}>
             Our Pride
           </Typography>
         </Box>

@@ -51,8 +51,8 @@ function LoginContent() {
           height: 500,
           borderRadius: "50%",
           background: isDark
-            ? "radial-gradient(circle, rgba(251,146,60,0.08) 0%, transparent 70%)"
-            : "radial-gradient(circle, rgba(251,146,60,0.12) 0%, transparent 70%)",
+            ? "radial-gradient(circle, rgba(74,222,128,0.1) 0%, transparent 70%)"
+            : "radial-gradient(circle, rgba(21,128,61,0.12) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -65,8 +65,8 @@ function LoginContent() {
           height: 400,
           borderRadius: "50%",
           background: isDark
-            ? "radial-gradient(circle, rgba(244,114,182,0.06) 0%, transparent 70%)"
-            : "radial-gradient(circle, rgba(244,114,182,0.08) 0%, transparent 70%)",
+            ? "radial-gradient(circle, rgba(245,158,11,0.07) 0%, transparent 70%)"
+            : "radial-gradient(circle, rgba(245,158,11,0.09) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
