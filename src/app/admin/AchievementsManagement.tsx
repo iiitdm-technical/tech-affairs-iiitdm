@@ -7,9 +7,7 @@ import {
   Dialog, DialogTitle, DialogContent, DialogActions,
 } from '@mui/material';
 import { Add, Edit, Delete } from '@mui/icons-material';
-import { clubs, teams, societies, communities } from '@/data/orgs';
-
-const ALL_SLUGS = [...clubs, ...teams, ...societies, ...communities].map((o) => o.link.split('/').pop()!);
+import { useOrgs } from '@/hooks/useOrgs';
 
 interface Achievement {
   id: number;
@@ -24,6 +22,8 @@ interface Achievement {
 const EMPTY = { org_slug: '', title: '', description: '', year: new Date().getFullYear().toString(), proof_url: '', logo: '' };
 
 export default function AchievementsManagement() {
+  const allOrgs = useOrgs();
+  const ALL_SLUGS = allOrgs.map((o) => o.link.split('/').pop()!);
   const [items, setItems] = useState<Achievement[]>([]);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState(EMPTY);

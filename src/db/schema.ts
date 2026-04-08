@@ -97,6 +97,33 @@ export const Announcements = pgTable('announcements', {
     created_at: timestamp('created_at').defaultNow().notNull(),
 });
 
+// All clubs, teams, societies, and communities — replaces src/data/orgs.ts.
+// category: 'club' | 'team' | 'society' | 'community'
+export const Orgs = pgTable('orgs', {
+    id: serial('id').primaryKey().notNull(),
+    name: varchar('name').notNull(),
+    image: text('image').notNull(),          // public asset path e.g. /clubs/csclub/logo.webp
+    link: text('link').notNull(),            // URL path e.g. /clubs/cs
+    category: varchar('category', { length: 20 }).notNull(), // club | team | society | community
+    sort_order: integer('sort_order').notNull().default(0),
+});
+
+// Technical Affairs internal team — secretary, joint-secretary, faculty, social media, core teams.
+// type: 'sac' | 'faculty' | 'social' | 'core_team'
+export const TechAffairsTeam = pgTable('tech_affairs_team', {
+    id: serial('id').primaryKey().notNull(),
+    type: varchar('type', { length: 20 }).notNull(), // sac | faculty | social | core_team
+    name: varchar('name').notNull(),
+    position: varchar('position').default(''),       // e.g. "Technical Affairs Secretary"
+    image: text('image').default(''),
+    email: text('email').default(''),
+    linkedin: text('linkedin').default(''),
+    url: text('url').default(''),                    // for social links (instagram/linkedin/youtube)
+    path: text('path').default(''),                  // for core_team nav links
+    sort_order: integer('sort_order').notNull().default(0),
+    active: char('active', { length: 1 }).notNull().default('Y'), // Y = active, N = hidden
+});
+
 // Achievements managed via the org-admin / super-admin dashboard.
 // Replaces / extends the static src/data/achievements.ts for dynamically-added entries.
 export const Achievements = pgTable('achievements', {

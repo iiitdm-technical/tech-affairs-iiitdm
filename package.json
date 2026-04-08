@@ -7,7 +7,12 @@
     "dev:turbo": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "tsx --env-file=.env.local scripts/seed.ts",
+    "seed:org-roles": "tsx --env-file=.env.local scripts/seed-org-roles.ts",
+    "cleanup:org-roles": "tsx --env-file=.env.local scripts/cleanup-old-org-roles.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "node -e \"require('dotenv').config({path:'.env.local'});const pg=require('postgres');const fs=require('fs');(async()=>{const sql=pg(process.env.DATABASE_URL);const files=fs.readdirSync('./supabase/migrations').filter(f=>f.endsWith('.sql')).sort();for(const f of files){const stmts=fs.readFileSync('./supabase/migrations/'+f,'utf8').split('--> statement-breakpoint');for(const s of stmts){try{await sql.unsafe(s.trim())}catch(e){if(!e.message.includes('already exists'))console.error(f,e.message)}}}await sql.end();console.log('Done')})();\""
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

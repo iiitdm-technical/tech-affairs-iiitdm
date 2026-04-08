@@ -7,9 +7,8 @@ import {
 } from '@mui/material';
 import { Close, Campaign, OpenInNew } from '@mui/icons-material';
 import Link from 'next/link';
-import { clubs, teams, societies, communities } from '@/data/orgs';
+import { useOrgs, slugToName } from '@/hooks/useOrgs';
 
-const ALL_ORGS = [...clubs, ...teams, ...societies, ...communities];
 const SESSION_KEY = 'ta_announcements_seen';
 
 interface Announcement {
@@ -21,11 +20,8 @@ interface Announcement {
   created_at: string;
 }
 
-function slugToName(slug: string) {
-  return ALL_ORGS.find((o) => o.link.endsWith('/' + slug.split('/').pop()))?.name ?? slug;
-}
-
 export default function AnnouncementsPopup() {
+  const orgs = useOrgs();
   const [open, setOpen] = useState(false);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
 
@@ -88,7 +84,7 @@ export default function AnnouncementsPopup() {
             {i > 0 && <Divider />}
             <Box sx={{ px: 3, py: 2.5 }}>
               <Box display="flex" alignItems="center" gap={1} mb={1} flexWrap="wrap">
-                <Chip label={slugToName(a.org_slug)} size="small" color="primary" variant="outlined" />
+                <Chip label={slugToName(a.org_slug, orgs)} size="small" color="primary" variant="outlined" />
                 <Typography variant="caption" color="text.secondary" sx={{ ml: 'auto' }}>
                   {new Date(a.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                 </Typography>

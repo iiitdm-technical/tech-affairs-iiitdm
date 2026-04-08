@@ -18,8 +18,8 @@ import {
 import EventsTab from './EventsTab';
 import AchievementsTab from './AchievementsTab';
 import AnnouncementsTab from './AnnouncementsTab';
-import { clubs, teams, societies, communities } from '@/data/orgs';
-import type { OrgItem } from '@/data/orgs';
+import { useOrgs, slugToOrg } from '@/hooks/useOrgs';
+import type { OrgItem } from '@/hooks/useOrgs';
 
 const DRAWER_WIDTH = 260;
 const DRAWER_COLLAPSED = 72;
@@ -29,11 +29,6 @@ const NAV_ITEMS = [
   { label: 'Achievements',  icon: <TrophyIcon /> },
   { label: 'Announcements', icon: <CampaignIcon /> },
 ];
-
-function resolveOrg(slug: string): OrgItem | null {
-  const all = [...clubs, ...teams, ...societies, ...communities];
-  return all.find((o) => o.link.endsWith('/' + slug.split('/').pop())) ?? null;
-}
 
 interface AuthUser {
   id: number;
@@ -47,6 +42,7 @@ interface AuthUser {
 export default function OrgAdminPage() {
   const router = useRouter();
   const theme = useTheme();
+  const allOrgs = useOrgs();
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState(0);
@@ -82,7 +78,7 @@ export default function OrgAdminPage() {
 
   if (!user) return null;
 
-  const orgInfo = resolveOrg(user.orgSlugs[0]);
+  const orgInfo: OrgItem | undefined = slugToOrg(user.orgSlugs[0], allOrgs);
   const drawerWidth = collapsed ? DRAWER_COLLAPSED : DRAWER_WIDTH;
 
   return (
@@ -120,7 +116,7 @@ export default function OrgAdminPage() {
               ) : (
                 <Box sx={{ width: 32, height: 32, borderRadius: 1, bgcolor: 'primary.main', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Typography fontSize="0.75rem" fontWeight={800} color="#fff">
-                    {(orgInfo as OrgItem | null)?.name?.[0] ?? user.orgSlugs[0]?.[0]?.toUpperCase()}
+                    {user.orgSlugs[0]?.[0]?.toUpperCase()}
                   </Typography>
                 </Box>
               )}

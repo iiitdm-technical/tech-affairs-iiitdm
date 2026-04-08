@@ -6,17 +6,7 @@ import {
   Button, CircularProgress,
 } from '@mui/material';
 import { Campaign, OpenInNew } from '@mui/icons-material';
-import { clubs, teams, societies, communities } from '@/data/orgs';
-
-const ALL_ORGS = [...clubs, ...teams, ...societies, ...communities];
-
-function slugToName(slug: string) {
-  return ALL_ORGS.find((o) => o.link.endsWith('/' + slug.split('/').pop()))?.name ?? slug;
-}
-
-function slugToLogo(slug: string) {
-  return ALL_ORGS.find((o) => o.link.endsWith('/' + slug.split('/').pop()))?.image ?? '';
-}
+import { useOrgs, slugToName, slugToLogo } from '@/hooks/useOrgs';
 
 interface Announcement {
   id: number;
@@ -28,6 +18,7 @@ interface Announcement {
 }
 
 export default function AnnouncementsPage() {
+  const orgs = useOrgs();
   const [items, setItems] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -71,8 +62,8 @@ export default function AnnouncementsPage() {
 
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {items.map((item, i) => {
-            const logo = slugToLogo(item.org_slug);
-            const name = slugToName(item.org_slug);
+            const logo = slugToLogo(item.org_slug, orgs);
+            const name = slugToName(item.org_slug, orgs);
             return (
               <Card key={item.id} variant="outlined" sx={{ borderRadius: 3, transition: 'box-shadow 0.15s', '&:hover': { boxShadow: 4 } }}>
                 <CardContent>

@@ -21,6 +21,8 @@ import {
   Groups as GroupsIcon,
   AdminPanelSettings as AdminIcon,
   EmojiEvents as TrophyIcon,
+  AccountTree as OrgIcon,
+  People as PeopleIcon,
   Home as HomeIcon,
   Logout as LogoutIcon,
   Menu as MenuIcon,
@@ -31,16 +33,20 @@ import EventsManagement from './EventsManagement';
 import ClubsManagement from './ClubsManagement';
 import OrgAdminsManagement from './OrgAdminsManagement';
 import AchievementsManagement from './AchievementsManagement';
+import OrgsManagement from './OrgsManagement';
+import TeamManagement from './TeamManagement';
 import { User } from '@/lib/server/user';
 
 const DRAWER_WIDTH = 260;
 const DRAWER_COLLAPSED = 72;
 
 const NAV_ITEMS = [
-  { label: 'Events',       icon: <EventIcon />,  },
-  { label: 'Clubs',        icon: <GroupsIcon />, },
-  { label: 'Org Admins',   icon: <AdminIcon />,  },
-  { label: 'Achievements', icon: <TrophyIcon />, },
+  { label: 'Events',        icon: <EventIcon />,  },
+  { label: 'Clubs',         icon: <GroupsIcon />, },
+  { label: 'Org Admins',    icon: <AdminIcon />,  },
+  { label: 'Achievements',  icon: <TrophyIcon />, },
+  { label: 'Organisations', icon: <OrgIcon />,    },
+  { label: 'Team',          icon: <PeopleIcon />, },
 ];
 
 export default function AdminPage() {
@@ -261,6 +267,8 @@ export default function AdminPage() {
           {tab === 1 && <ClubsManagement />}
           {tab === 2 && <OrgAdminsManagement />}
           {tab === 3 && <AchievementsManagement />}
+          {tab === 4 && <OrgsManagement />}
+          {tab === 5 && <TeamManagement />}
         </Box>
       </Box>
     </Box>

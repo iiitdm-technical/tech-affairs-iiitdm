@@ -8,12 +8,7 @@ import {
   IconButton, CircularProgress, Chip,
 } from '@mui/material';
 import { Add, Delete } from '@mui/icons-material';
-import { clubs, teams, societies, communities } from '@/data/orgs';
-
-const ALL_SLUGS = [...clubs, ...teams, ...societies, ...communities].map((o) => ({
-  slug: o.link.split('/').pop()!,
-  name: o.name,
-}));
+import { useOrgs } from '@/hooks/useOrgs';
 
 interface OrgAdmin {
   id: number;
@@ -22,6 +17,8 @@ interface OrgAdmin {
 }
 
 export default function OrgAdminsManagement() {
+  const allOrgs = useOrgs();
+  const ALL_SLUGS = allOrgs.map((o) => ({ slug: o.link.split('/').pop()!, name: o.name }));
   const [rows, setRows] = useState<OrgAdmin[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   GridLegacy as Grid,
@@ -14,6 +14,7 @@ import {
   Modal,
   Backdrop,
   Fade,
+  CircularProgress,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
@@ -21,25 +22,35 @@ import {
   Instagram,
   LinkedIn,
   YouTube,
-  Email,
-  Download as DownloadIcon,
   Close as CloseIcon,
+  Download as DownloadIcon,
 } from "@mui/icons-material";
 import Link from "next/link";
-import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { Tabs, Tab, useMediaQuery } from "@mui/material";
-import { usePathname } from "next/navigation";
+import { useOrgsByCategory } from "@/hooks/useOrgs";
 
-import { teamData, socialMediaLinks, facultyHeads, coreTeams } from "@/data/team";
-import { clubs, teams, societies, communities } from "@/data/orgs";
+interface TeamRow {
+  id: number;
+  type: string; // sac | faculty | social | core_team
+  name: string;
+  position: string;
+  image: string;
+  email: string;
+  linkedin: string;
+  url: string;
+  path: string;
+  sort_order: number;
+}
 
-const tabOptions = [
-  { label: "Clubs",       data: clubs,       route: "clubs" },
-  { label: "Teams",       data: teams,       route: "teams" },
-  { label: "Societies",   data: societies,   route: "societies" },
-  { label: "Communities", data: communities, route: "communities" },
-];
+interface Member {
+  name: string;
+  role?: string;
+  position?: string;
+  image: string;
+  email?: string;
+  linkedin?: string;
+}
 
 const TeamMemberCard = styled(Card)(({ theme }) => ({
   height: "100%",
@@ -58,16 +69,6 @@ const TeamMemberCard = styled(Card)(({ theme }) => ({
     width: 120,
   },
 }));
-
-interface Member {
-  name: string;
-  role?: string;
-  position?: string;
-  image: string;
-  email?: string;
-  linkedin?: string;
-  roll?: string;
-}
 
 function MemberGrid({
   members,
@@ -112,10 +113,7 @@ function MemberGrid({
               <Avatar
                 src={member.image}
                 alt={member.name}
-                sx={{
-                  width: { xs: 70, sm: 90, md: 110 },
-                  height: { xs: 70, sm: 90, md: 110 },
-                }}
+                sx={{ width: { xs: 70, sm: 90, md: 110 }, height: { xs: 70, sm: 90, md: 110 } }}
               />
             </Box>
             <Typography
@@ -127,16 +125,7 @@ function MemberGrid({
                 mb: { xs: 0.5, sm: 0.75, md: 0.75 },
                 width: "100%",
                 textAlign: "center",
-                overflowWrap: {
-                  xs: "break-word",
-                  sm: "break-word",
-                  md: "break-word",
-                },
-                wordBreak: {
-                  xs: "break-word",
-                  sm: "break-word",
-                  md: "break-word",
-                },
+                wordBreak: "break-word",
               }}
             >
               {member.name}
@@ -170,26 +159,39 @@ function MemberGrid({
   );
 }
 
-function Committee() {
+export default function Committee() {
   const theme = useTheme();
+  const [teamRows, setTeamRows] = useState<TeamRow[]>([]);
+  const [loadingTeam, setLoadingTeam] = useState(true);
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
-  const [value, setValue] = useState(0);
+  const [orgTab, setOrgTab] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
+  const clubs       = useOrgsByCategory('club');
+  const teams       = useOrgsByCategory('team');
+  const societies   = useOrgsByCategory('society');
+  const communities = useOrgsByCategory('community');
+  const tabOptions  = [
+    { label: "Clubs",       data: clubs },
+    { label: "Teams",       data: teams },
+    { label: "Societies",   data: societies },
+    { label: "Communities", data: communities },
+  ];
 
-  const handleOpen = (image: string) => {
-    setSelectedImage(image);
-    setOpen(true);
-  };
+  useEffect(() => {
+    fetch('/api/team')
+      .then((r) => (r.ok ? r.json() : []))
+      .then(setTeamRows)
+      .finally(() => setLoadingTeam(false));
+  }, []);
 
-  const handleClose = () => {
-    setOpen(false);
-    setSelectedImage("");
-  };
+  const sacMembers: Member[]      = teamRows.filter((r) => r.type === 'sac').map((r) => ({ name: r.name, position: r.position, image: r.image, email: r.email, linkedin: r.linkedin }));
+  const facultyMembers: Member[]  = teamRows.filter((r) => r.type === 'faculty').map((r) => ({ name: r.name, role: r.position, image: r.image }));
+  const socialLinks               = teamRows.filter((r) => r.type === 'social');
+  const coreTeamLinks             = teamRows.filter((r) => r.type === 'core_team');
 
+  const handleOpen = (image: string) => { setSelectedImage(image); setOpen(true); };
+  const handleClose = () => { setOpen(false); setSelectedImage(""); };
   const handleDownload = () => {
     const link = document.createElement("a");
     link.href = selectedImage;
@@ -199,113 +201,56 @@ function Committee() {
     document.body.removeChild(link);
   };
 
-  const titleStyle = {
-    color: theme.palette.primary.main,
-    fontWeight: "bold",
-    marginBottom: "1rem",
+  const titleStyle = { color: theme.palette.primary.main, fontWeight: "bold", marginBottom: "1rem" };
+  const cardStyle = {
+    display: "flex", flexDirection: "column", alignItems: "center",
+    justifyContent: "flex-start", p: 1.5, boxShadow: 3,
+    transition: "transform 0.2s", "&:hover": { transform: "scale(1.05)" },
   };
 
-  const cardStyle = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    p: 1.5,
-    boxShadow: 3,
-    transition: "transform 0.2s",
-    "&:hover": { transform: "scale(1.05)" },
-  };
+  if (loadingTeam) {
+    return (
+      <Box sx={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Container maxWidth="lg" sx={{ py: 12 }}>
       {/* Our Family Section */}
       <Box sx={{ width: "100%", typography: "body1", mb: 6 }}>
-        <Typography
-          variant="h4"
-          component="h2"
-          align="center"
-          gutterBottom
-          sx={titleStyle}
-        >
+        <Typography variant="h4" component="h2" align="center" gutterBottom sx={titleStyle}>
           Our Family
         </Typography>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="family tabs"
-            centered
-          >
-            {tabOptions.map((tab, index) => (
-              <Tab label={tab.label} key={tab.label} />
-            ))}
+          <Tabs value={orgTab} onChange={(_, v) => setOrgTab(v)} aria-label="family tabs" centered>
+            {tabOptions.map((tab) => <Tab label={tab.label} key={tab.label} />)}
           </Tabs>
         </Box>
         <Box sx={{ p: { xs: 1.5, sm: 3 } }}>
-          <Grid
-            container
-            spacing={{ xs: 1.5, sm: 2.5, md: 3 }}
-            justifyContent="center"
-          >
-            {tabOptions[value].data.map((item) => (
-              <Grid
-                item
-                key={item.name}
-                xs={6}
-                sm={4}
-                md={3}
-                lg={2}
-                sx={{ display: "flex", justifyContent: "center" }}
-              >
-                <Link
-                  href={item.link}
-                  passHref
-                  style={{
-                    textDecoration: "none",
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Card
-                    sx={{
-                      ...cardStyle,
-                      width: { xs: "100%", sm: 160 },
-                      maxWidth: { xs: 150, sm: 160 },
-                      minHeight: { xs: 150, sm: 160 },
-                      p: { xs: 1, sm: 1.5 },
-                    }}
-                  >
+          <Grid container spacing={{ xs: 1.5, sm: 2.5, md: 3 }} justifyContent="center">
+            {tabOptions[orgTab].data.map((item) => (
+              <Grid item key={item.name} xs={6} sm={4} md={3} lg={2}
+                sx={{ display: "flex", justifyContent: "center" }}>
+                <Link href={item.link} passHref
+                  style={{ textDecoration: "none", width: "100%", display: "flex", justifyContent: "center" }}>
+                  <Card sx={{
+                    ...cardStyle,
+                    width: { xs: "100%", sm: 160 },
+                    maxWidth: { xs: 150, sm: 160 },
+                    minHeight: { xs: 150, sm: 160 },
+                    p: { xs: 1, sm: 1.5 },
+                  }}>
                     <CardMedia
                       component="img"
                       image={item.image}
                       alt={item.name}
-                      sx={{
-                        width: { xs: "66%", sm: "70%" },
-                        margin: "auto",
-                        objectFit: "contain",
-                        pt: { xs: 1.25, sm: 2 },
-                        height: { xs: "62%", sm: "65%" },
-                      }}
+                      sx={{ width: { xs: "66%", sm: "70%" }, margin: "auto", objectFit: "contain", pt: { xs: 1.25, sm: 2 }, height: { xs: "62%", sm: "65%" } }}
                     />
-                    <CardContent
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        height: "35%",
-                        px: { xs: 0.5, sm: 1 },
-                      }}
-                    >
-                      <Typography
-                        variant="body2"
-                        align="center"
-                        sx={{
-                          width: "100%",
-                          fontWeight: "medium",
-                          fontSize: { xs: "0.78rem", sm: "0.875rem" },
-                          lineHeight: 1.25,
-                        }}
-                      >
+                    <CardContent sx={{ display: "flex", alignItems: "center", height: "35%", px: { xs: 0.5, sm: 1 } }}>
+                      <Typography variant="body2" align="center"
+                        sx={{ width: "100%", fontWeight: "medium", fontSize: { xs: "0.78rem", sm: "0.875rem" }, lineHeight: 1.25 }}>
                         {item.name}
                       </Typography>
                     </CardContent>
@@ -317,114 +262,50 @@ function Committee() {
         </Box>
       </Box>
 
+      {/* Faculty Heads */}
       <Box sx={{ mb: 6 }}>
-        <Typography
-          variant="h4"
-          component="h2"
-          align="center"
-          gutterBottom
-          sx={titleStyle}
-        >
+        <Typography variant="h4" component="h2" align="center" gutterBottom sx={titleStyle}>
           Faculty Heads
         </Typography>
-
-        <MemberGrid members={facultyHeads} handleOpen={handleOpen} />
+        <MemberGrid members={facultyMembers} handleOpen={handleOpen} />
       </Box>
 
+      {/* SAC */}
       <Box sx={{ mb: 6 }}>
-        <Typography
-          variant="h4"
-          component="h2"
-          align="center"
-          gutterBottom
-          sx={titleStyle}
-        >
+        <Typography variant="h4" component="h2" align="center" gutterBottom sx={titleStyle}>
           SAC
         </Typography>
-        <MemberGrid
-          members={[teamData.secretary, teamData.jointSecretary]}
-          handleOpen={handleOpen}
-        />
+        <MemberGrid members={sacMembers} handleOpen={handleOpen} />
       </Box>
 
-      {/* Core Team Navigation Section */}
+      {/* Core Teams */}
       <Box sx={{ mb: 6 }}>
-        <Typography
-          variant="h4"
-          component="h2"
-          align="center"
-          gutterBottom
-          sx={titleStyle}
-        >
+        <Typography variant="h4" component="h2" align="center" gutterBottom sx={titleStyle}>
           Our Core Teams
         </Typography>
         <Grid container spacing={{ xs: 1, sm: 2 }} justifyContent="center">
-          {coreTeams.map((team) => (
-            <Grid
-              item
-              xs={6}
-              sm={6}
-              md={2}
-              key={team.label}
-              sx={{ display: "flex", justifyContent: "center" }}
-            >
-              <Card
-                sx={{
-                  width: { xs: 180, sm: 160 },
-                  height: { xs: 170, sm: 130 },
-                  minWidth: { xs: 180, sm: 160 },
-                  minHeight: { xs: 170, sm: 130 },
-                  maxWidth: { xs: 180, sm: 160 },
-                  maxHeight: { xs: 170, sm: 130 },
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "flex-start",
-                  p: 1.5,
-                  boxShadow: 3,
-                  transition: "transform 0.2s",
-                  "&:hover": { transform: "scale(1.05)" },
-                }}
-              >
-                <Box
-                  sx={{
-                    flexGrow: 1,
-                    width: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Typography
-                    variant="h6"
-                    align="center"
-                    sx={{
-                      fontSize: { xs: "1.1rem", sm: "1rem" },
-                      fontWeight: 700,
-                      letterSpacing: 1,
-                      color: "primary.main",
-                      textShadow: "0 1px 4px rgba(25, 118, 210, 0.15)",
-                    }}
-                  >
-                    {team.label}
+          {coreTeamLinks.map((team) => (
+            <Grid item xs={6} sm={6} md={2} key={team.name}
+              sx={{ display: "flex", justifyContent: "center" }}>
+              <Card sx={{
+                width: { xs: 180, sm: 160 }, height: { xs: 170, sm: 130 },
+                minWidth: { xs: 180, sm: 160 }, minHeight: { xs: 170, sm: 130 },
+                maxWidth: { xs: 180, sm: 160 }, maxHeight: { xs: 170, sm: 130 },
+                display: "flex", flexDirection: "column", alignItems: "center",
+                justifyContent: "flex-start", p: 1.5, boxShadow: 3,
+                transition: "transform 0.2s", "&:hover": { transform: "scale(1.05)" },
+              }}>
+                <Box sx={{ flexGrow: 1, width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <Typography variant="h6" align="center"
+                    sx={{ fontSize: { xs: "1.1rem", sm: "1rem" }, fontWeight: 700, letterSpacing: 1, color: "primary.main", textShadow: "0 1px 4px rgba(25,118,210,0.15)" }}>
+                    {team.name}
                   </Typography>
                 </Box>
                 <Link
                   className="team-view-btn"
-                  style={{
-                    alignSelf: "center",
-                    fontSize: "0.9em",
-                    padding: "0.5em 1.2em",
-                    minWidth: 0,
-                    borderRadius: "0.5em",
-                    color: "#fb923c",
-                    fontWeight: 700,
-                    border: "none",
-                    cursor: "pointer",
-                    boxShadow: "0 2px 8px rgba(25, 118, 210, 0.08)",
-                    marginTop: "0.3em",
-                    marginBottom: "0.3em",
-                  }}
+                  style={{ alignSelf: "center", fontSize: "0.9em", padding: "0.5em 1.2em", minWidth: 0,
+                    borderRadius: "0.5em", color: "#fb923c", fontWeight: 700, border: "none", cursor: "pointer",
+                    boxShadow: "0 2px 8px rgba(25,118,210,0.08)", marginTop: "0.3em", marginBottom: "0.3em" }}
                   href={team.path}
                 >
                   View Team
@@ -435,136 +316,49 @@ function Committee() {
         </Grid>
       </Box>
 
-      {/* Social Media Section */}
+      {/* Social Media */}
       <Box sx={{ textAlign: "center", mt: 4 }}>
         <Typography variant="h4" component="h2" gutterBottom sx={titleStyle}>
           Connect With Us
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
-          <IconButton
-            color="primary"
-            href={socialMediaLinks.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Instagram fontSize="large" />
-          </IconButton>
-          <IconButton
-            color="primary"
-            href={socialMediaLinks.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <LinkedIn fontSize="large" />
-          </IconButton>
-          <IconButton
-            color="primary"
-            href={socialMediaLinks.youtube}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <YouTube fontSize="large" />
-          </IconButton>
+          {socialLinks.map((s) => (
+            <IconButton key={s.name} color="primary" href={s.url} target="_blank" rel="noopener noreferrer">
+              {s.name === 'Instagram' && <Instagram fontSize="large" />}
+              {s.name === 'LinkedIn'  && <LinkedIn  fontSize="large" />}
+              {s.name === 'YouTube'   && <YouTube   fontSize="large" />}
+            </IconButton>
+          ))}
         </Box>
       </Box>
 
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="image-modal"
-        aria-describedby="image-modal-description"
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-            style: { backgroundColor: "rgba(255, 255, 255, 0.5)" },
-          },
-        }}
-      >
+      {/* Image modal */}
+      <Modal open={open} onClose={handleClose} closeAfterTransition slots={{ backdrop: Backdrop }}
+        slotProps={{ backdrop: { timeout: 500, style: { backgroundColor: "rgba(255,255,255,0.5)" } } }}>
         <Fade in={open}>
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: { xs: "60vw", sm: "50vw", md: "35vw", lg: "25vw" },
-              maxWidth: "300px",
-              maxHeight: "50vh",
-              bgcolor: "background.paper",
-              boxShadow: 24,
-              p: 2,
-              borderRadius: 2,
-              outline: "none",
-              border: `2px solid ${theme.palette.divider}`,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <IconButton
-              aria-label="close"
-              onClick={handleClose}
-              sx={{
-                position: "absolute",
-                top: 8,
-                right: 8,
-                color: (theme) => theme.palette.grey[500],
-                zIndex: 1,
-              }}
-            >
+          <Box sx={{
+            position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)",
+            width: { xs: "60vw", sm: "50vw", md: "35vw", lg: "25vw" },
+            maxWidth: "300px", maxHeight: "50vh",
+            bgcolor: "background.paper", boxShadow: 24, p: 2, borderRadius: 2, outline: "none",
+            border: `2px solid ${theme.palette.divider}`,
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <IconButton aria-label="close" onClick={handleClose}
+              sx={{ position: "absolute", top: 8, right: 8, color: (t) => t.palette.grey[500], zIndex: 1 }}>
               <CloseIcon />
             </IconButton>
-            <Box
-              sx={{
-                position: "relative",
-                width: "100%",
-                height: "100%",
-              }}
-            >
-              <Box
-                sx={{
-                  backgroundColor: "#fff",
-                  padding: "1rem",
-                  borderRadius: "4px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  height: "100%",
-                }}
-              >
+            <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
+              <Box sx={{ backgroundColor: "#fff", padding: "1rem", borderRadius: "4px",
+                display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
                 {selectedImage && (
-                  <Image
-                    src={selectedImage}
-                    alt="Faculty Head"
-                    width={300}
-                    height={300}
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                      maxHeight: "40vh",
-                      objectFit: "contain",
-                    }}
-                  />
+                  <Image src={selectedImage} alt="Team member" width={300} height={300}
+                    style={{ width: "100%", height: "auto", maxHeight: "40vh", objectFit: "contain" }} />
                 )}
               </Box>
-              <IconButton
-                aria-label="download"
-                onClick={handleDownload}
-                className="download-icon"
-                sx={{
-                  position: "absolute",
-                  top: 16,
-                  right: 16,
-                  color: "primary.main",
-                  backgroundColor: "rgba(255, 255, 255, 0.7)",
-                  transition: "background-color 0.3s ease-in-out",
-                  "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.9)",
-                  },
-                }}
-              >
+              <IconButton aria-label="download" onClick={handleDownload}
+                sx={{ position: "absolute", top: 16, right: 16, color: "primary.main",
+                  backgroundColor: "rgba(255,255,255,0.7)", "&:hover": { backgroundColor: "rgba(255,255,255,0.9)" } }}>
                 <DownloadIcon fontSize="large" />
               </IconButton>
             </Box>
@@ -574,5 +368,3 @@ function Committee() {
     </Container>
   );
 }
-
-export default Committee;

@@ -8,10 +8,12 @@ import {
   CardMedia,
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import { clubs, teams } from '@/data/orgs';
+import { useOrgsByCategory } from '@/hooks/useOrgs';
 
 const OurFamily = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const clubs = useOrgsByCategory('club');
+  const teams = useOrgsByCategory('team');
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);

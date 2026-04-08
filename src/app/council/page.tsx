@@ -16,14 +16,7 @@ import { styled, useTheme } from "@mui/material/styles";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-import { clubs, teams, societies, communities } from "@/data/orgs";
-
-const tabOptions = [
-  { label: "Clubs",       data: clubs,       route: "clubs",       color: "#f472b6" },
-  { label: "Teams",       data: teams,       route: "teams",       color: "#34d399" },
-  { label: "Societies",   data: societies,   route: "societies",   color: "#a78bfa" },
-  { label: "Communities", data: communities, route: "communities", color: "#38bdf8" },
-];
+import { useOrgsByCategory } from "@/hooks/useOrgs";
 
 const TeamCard = styled(Card)(({ theme }) => ({
   width: 140,
@@ -52,16 +45,29 @@ const TeamCard = styled(Card)(({ theme }) => ({
   },
 }));
 
+const TAB_META = [
+  { label: "Clubs",       category: "club",      route: "clubs",       color: "#f472b6" },
+  { label: "Teams",       category: "team",      route: "teams",       color: "#34d399" },
+  { label: "Societies",   category: "society",   route: "societies",   color: "#a78bfa" },
+  { label: "Communities", category: "community", route: "communities", color: "#38bdf8" },
+];
+
 export default function Council() {
   const pathname = usePathname();
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const isXs = useMediaQuery(theme.breakpoints.only("xs"));
 
+  const clubs      = useOrgsByCategory('club');
+  const teams      = useOrgsByCategory('team');
+  const societies  = useOrgsByCategory('society');
+  const communities = useOrgsByCategory('community');
+  const orgsByTab  = [clubs, teams, societies, communities];
+
   const getTabFromPath = useCallback(() => {
     const parts = pathname.split("/");
     if (parts.length >= 3) {
-      const idx = tabOptions.findIndex(
+      const idx = TAB_META.findIndex(
         (opt) => opt.route === parts[2].toLowerCase()
       );
       return idx !== -1 ? idx : 0;
@@ -79,8 +85,8 @@ export default function Council() {
     setTab(newValue);
   };
 
-  const currentList = tabOptions[tab].data;
-  const currentColor = tabOptions[tab].color;
+  const currentList = orgsByTab[tab];
+  const currentColor = TAB_META[tab].color;
 
   const tabsVariant: "fullWidth" | "scrollable" | "standard" = isXs ? "scrollable" : "fullWidth";
   const scrollButtons = isXs;
@@ -157,7 +163,7 @@ export default function Council() {
             },
           }}
         >
-          {tabOptions.map((option) => (
+          {TAB_META.map((option) => (
             <Tab
               key={option.label}
               label={option.label}

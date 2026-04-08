@@ -3,28 +3,23 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Select, MenuItem, FormControl, GridLegacy as Grid, Card, CardContent, Divider, CircularProgress } from '@mui/material';
 import { styled } from '@mui/system';
-import { achievements as staticAchievements } from '@/data/achievements';
-import { clubs, teams, societies, communities } from '@/data/orgs';
-
-const ALL_ORGS = [...clubs, ...teams, ...societies, ...communities];
-
-function slugToLogo(slug: string): string {
-  const org = ALL_ORGS.find((o) => o.link.endsWith('/' + slug.split('/').pop()));
-  return org?.image ?? '';
-}
-
-function slugToName(slug: string): string {
-  const org = ALL_ORGS.find((o) => o.link.endsWith('/' + slug.split('/').pop()));
-  return org?.name ?? slug;
-}
 
 interface Achievement {
   id: number;
+  org_slug: string;
   title: string;
   description: string;
   year: string;
-  club: string;
   logo: string;
+  org_name?: string;
+}
+
+interface OrgRow {
+  id: number;
+  name: string;
+  image: string;
+  link: string;
+  category: string;
 }
 
 const GradientTitle = styled(Typography)(({ theme }) => ({
@@ -51,32 +46,38 @@ const StyledCard = styled(Card)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: { flexDirection: 'column', alignItems: 'center', textAlign: 'center' },
 }));
 
+function slugToOrg(slug: string, orgs: OrgRow[]): OrgRow | undefined {
+  // Match by last path segment of link against org_slug
+  return orgs.find((o) => o.link.endsWith('/' + slug.split('/').pop()));
+}
+
 export default function AchievementsPage() {
-  const [allData, setAllData] = useState<Achievement[]>([]);
+  const [achievements, setAchievements] = useState<Achievement[]>([]);
+  const [orgs, setOrgs] = useState<OrgRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedClub, setSelectedClub] = useState('all');
+  const [selectedOrg, setSelectedOrg] = useState('all');
   const [selectedYear, setSelectedYear] = useState('all');
 
   useEffect(() => {
-    fetch('/api/achievements')
-      .then(async (res) => {
-        const dbRows = res.ok ? await res.json() : [];
-        const dbMapped: Achievement[] = dbRows.map((r: { id: number; title: string; description: string; year: string; org_slug: string; logo?: string }) => ({
-          id: r.id + 10000, // avoid ID collision with static data
-          title: r.title,
-          description: r.description,
-          year: r.year,
-          club: slugToName(r.org_slug),
-          logo: r.logo || slugToLogo(r.org_slug),
-        }));
-        // DB entries come first (newer), then static entries
-        setAllData([...dbMapped, ...staticAchievements]);
-      })
-      .finally(() => setLoading(false));
+    Promise.all([
+      fetch('/api/achievements').then((r) => (r.ok ? r.json() : [])),
+      fetch('/api/orgs').then((r) => (r.ok ? r.json() : [])),
+    ]).then(([achRows, orgRows]) => {
+      const enriched: Achievement[] = achRows.map((a: Achievement) => {
+        const org = slugToOrg(a.org_slug, orgRows);
+        return {
+          ...a,
+          org_name: org?.name ?? a.org_slug,
+          logo: a.logo || org?.image || '',
+        };
+      });
+      setAchievements(enriched);
+      setOrgs(orgRows);
+    }).finally(() => setLoading(false));
   }, []);
 
-  const filtered = allData
-    .filter((a) => selectedClub === 'all' || a.club === selectedClub)
+  const filtered = achievements
+    .filter((a) => selectedOrg === 'all' || a.org_name === selectedOrg)
     .filter((a) => selectedYear === 'all' || a.year === selectedYear)
     .sort((a, b) => {
       if (b.year !== a.year) return parseInt(b.year) - parseInt(a.year);
@@ -89,8 +90,8 @@ export default function AchievementsPage() {
     return acc;
   }, {});
 
-  const clubs_list = ['all', ...Array.from(new Set(allData.map((a) => a.club))).sort()];
-  const years_list = ['all', ...Array.from(new Set(allData.map((a) => a.year))).sort((a, b) => parseInt(b) - parseInt(a))];
+  const orgNames = ['all', ...Array.from(new Set(achievements.map((a) => a.org_name ?? a.org_slug))).sort()];
+  const years = ['all', ...Array.from(new Set(achievements.map((a) => a.year))).sort((a, b) => parseInt(b) - parseInt(a))];
 
   return (
     <Box sx={{ padding: { xs: '100px 16px 32px', sm: '80px 24px 32px' }, textAlign: 'center' }}>
@@ -106,15 +107,15 @@ export default function AchievementsPage() {
             alignItems: { xs: 'stretch', sm: 'center' },
           }}>
             <FormControl sx={{ minWidth: 160 }} size="small">
-              <Select value={selectedClub} onChange={(e) => setSelectedClub(e.target.value)} displayEmpty>
-                {clubs_list.map((c) => (
+              <Select value={selectedOrg} onChange={(e) => setSelectedOrg(e.target.value)} displayEmpty>
+                {orgNames.map((c) => (
                   <MenuItem key={c} value={c}>{c === 'all' ? 'All Clubs/Teams' : c}</MenuItem>
                 ))}
               </Select>
             </FormControl>
             <FormControl sx={{ minWidth: 120 }} size="small">
               <Select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} displayEmpty>
-                {years_list.map((y) => (
+                {years.map((y) => (
                   <MenuItem key={y} value={y}>{y === 'all' ? 'All Years' : y}</MenuItem>
                 ))}
               </Select>
@@ -140,7 +141,7 @@ export default function AchievementsPage() {
                             }}>
                               <Box component="img"
                                 sx={{ height: 'auto', maxHeight: { xs: 120, sm: 100 }, width: { xs: '80%', sm: '100%' }, objectFit: 'contain' }}
-                                alt={`${a.club} logo`}
+                                alt={`${a.org_name} logo`}
                                 src={a.logo}
                               />
                             </Box>
@@ -153,7 +154,7 @@ export default function AchievementsPage() {
                               {a.description}
                             </Typography>
                             <Typography variant="caption" display="block" sx={{ mt: 1 }}>
-                              {a.club}
+                              {a.org_name}
                             </Typography>
                           </CardContent>
                         </StyledCard>

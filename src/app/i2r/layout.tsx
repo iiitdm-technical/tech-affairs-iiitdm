@@ -15,8 +15,8 @@ export default async function I2RLayout({
     redirect("/login/google");
   }
 
-  // Check if user has access to i2r system
-  if (user.role !== 'U' && user.role !== 'A') {
+  // All logged-in IIITDM users can access i2r (U = student, O = org admin, A = super admin)
+  if (!['U', 'O', 'A'].includes(user.role)) {
     return (
       <Box 
         sx={{ 
