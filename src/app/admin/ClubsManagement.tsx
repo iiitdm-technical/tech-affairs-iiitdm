@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import {
   Box, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions,
   TextField, Snackbar, Alert, GridLegacy as Grid, CircularProgress,
-  Card, CardContent, CardActions, CardMedia, Chip,
+  Card, CardContent, CardActions, Chip,
 } from '@mui/material';
 import { Add, Edit, Delete, Upload } from '@mui/icons-material';
 
@@ -160,10 +160,19 @@ export default function ClubsManagement() {
         {clubs.map((club) => (
           <Grid item xs={12} sm={6} md={4} key={club.club_id}>
             <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              {club.iconUrl && (
-                <CardMedia component="img" height="120" image={club.iconUrl} alt={club.name}
-                  sx={{ objectFit: 'contain', pt: 1 }} />
-              )}
+              {/* Fixed-height image box so logos don't blow up */}
+              <Box sx={{
+                height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                bgcolor: 'action.hover', overflow: 'hidden',
+                borderRadius: '4px 4px 0 0',
+              }}>
+                {club.iconUrl ? (
+                  <Box component="img" src={club.iconUrl} alt={club.name}
+                    sx={{ maxWidth: '80%', maxHeight: '140px', objectFit: 'contain' }} />
+                ) : (
+                  <Typography color="text.disabled" fontSize="0.8rem">No image</Typography>
+                )}
+              </Box>
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography variant="h6" fontWeight={700} gutterBottom>{club.name}</Typography>
                 {club.org_slug && (

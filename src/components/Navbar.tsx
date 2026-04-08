@@ -158,8 +158,8 @@ const Navbar = ({ user }: NavbarProps) => {
                 fontWeight: isActive(item.path) ? 700 : 500,
                 bgcolor: isActive(item.path)
                   ? theme.palette.mode === "dark"
-                    ? "rgba(251,146,60,0.1)"
-                    : "rgba(251,146,60,0.08)"
+                    ? "rgba(163,230,53,0.1)"
+                    : "rgba(163,230,53,0.08)"
                   : "transparent",
                 borderLeft: isActive(item.path)
                   ? "3px solid"
@@ -169,8 +169,8 @@ const Navbar = ({ user }: NavbarProps) => {
                 "&:hover": {
                   bgcolor:
                     theme.palette.mode === "dark"
-                      ? "rgba(251,146,60,0.08)"
-                      : "rgba(251,146,60,0.05)",
+                      ? "rgba(163,230,53,0.08)"
+                      : "rgba(163,230,53,0.05)",
                   color: "primary.main",
                 },
               }}
@@ -220,6 +220,15 @@ const Navbar = ({ user }: NavbarProps) => {
 
         {user ? (
           <>
+            <ListItemButton
+              component="a"
+              href="/profile"
+              onClick={handleDrawerToggle}
+              sx={{ borderRadius: 2, py: 1.2, px: 2, mb: 0.5, color: 'text.primary',
+                '&:hover': { bgcolor: 'rgba(163,230,53,0.08)' } }}>
+              <ListItemText primary="Profile & Settings"
+                primaryTypographyProps={{ fontSize: '0.9rem', fontWeight: 500 }} />
+            </ListItemButton>
             <ListItemButton
               component="a"
               href="/logout"
@@ -410,13 +419,19 @@ const Navbar = ({ user }: NavbarProps) => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  <MenuItem disabled>
-                    <Typography textAlign="center">{user.name}</Typography>
+                  <MenuItem disabled sx={{ opacity: '1 !important' }}>
+                    <Box>
+                      <Typography fontWeight={700} fontSize="0.9rem">{user.name}</Typography>
+                      <Typography fontSize="0.75rem" color="text.secondary">{user.email}</Typography>
+                    </Box>
                   </MenuItem>
                   <Divider />
+                  <MenuItem component="a" href="/profile" onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">Profile & Settings</Typography>
+                  </MenuItem>
                   {user.role === 'A' && (
                     <MenuItem component="a" href="/admin" onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">Admin</Typography>
+                      <Typography textAlign="center">Admin Dashboard</Typography>
                     </MenuItem>
                   )}
                   {user.role === 'O' && (
@@ -424,8 +439,10 @@ const Navbar = ({ user }: NavbarProps) => {
                       <Typography textAlign="center">Org Dashboard</Typography>
                     </MenuItem>
                   )}
-                  <MenuItem component="a" href="/logout" onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Logout</Typography>
+                  <Divider />
+                  <MenuItem component="a" href="/logout" onClick={handleCloseUserMenu}
+                    sx={{ color: 'error.main' }}>
+                    <Typography textAlign="center">Sign out</Typography>
                   </MenuItem>
                 </Menu>
               </Box>
@@ -470,7 +487,7 @@ const Navbar = ({ user }: NavbarProps) => {
             width: 280,
             bgcolor:
               theme.palette.mode === "dark"
-                ? "rgba(10, 10, 30, 0.95)"
+                ? "rgba(3, 10, 6, 0.97)"
                 : "rgba(255, 255, 255, 0.97)",
             backdropFilter: "blur(20px) saturate(1.4)",
             borderLeft:

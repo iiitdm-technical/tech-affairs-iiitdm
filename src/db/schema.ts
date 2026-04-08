@@ -106,6 +106,8 @@ export const Orgs = pgTable('orgs', {
     link: text('link').notNull(),            // URL path e.g. /clubs/cs
     category: varchar('category', { length: 20 }).notNull(), // club | team | society | community
     sort_order: integer('sort_order').notNull().default(0),
+    authorized_email: text('authorized_email').default(''), // org-admin email for this org
+    club_ref_id: integer('club_ref_id'),     // FK back to clubs table (for events)
 });
 
 // Technical Affairs internal team — secretary, joint-secretary, faculty, social media, core teams.
@@ -122,6 +124,21 @@ export const TechAffairsTeam = pgTable('tech_affairs_team', {
     path: text('path').default(''),                  // for core_team nav links
     sort_order: integer('sort_order').notNull().default(0),
     active: char('active', { length: 1 }).notNull().default('Y'), // Y = active, N = hidden
+});
+
+// Members within each core team (management, innovation, etc.)
+// sub_role: 'core' | 'coordinator'
+export const TeamMembers = pgTable('team_members', {
+    id: serial('id').primaryKey().notNull(),
+    team_slug: varchar('team_slug', { length: 50 }).notNull(), // management | innovation | media-and-marketing | social-outreach | tech-development
+    sub_role: varchar('sub_role', { length: 20 }).notNull().default('coordinator'), // core | coordinator
+    name: varchar('name').notNull(),
+    roll: varchar('roll', { length: 20 }).default(''),
+    email: text('email').default(''),
+    linkedin: text('linkedin').default(''),
+    image: text('image').default(''),
+    sort_order: integer('sort_order').notNull().default(0),
+    active: char('active', { length: 1 }).notNull().default('Y'),
 });
 
 // Achievements managed via the org-admin / super-admin dashboard.

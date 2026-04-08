@@ -130,28 +130,21 @@ function MemberGrid({
             >
               {member.name}
             </Typography>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              gutterBottom
-              sx={{
-                fontSize: { xs: "0.6rem", sm: "0.7rem", md: "0.8rem" },
-                mb: { xs: 0.25, sm: 0.25, md: 0.5 },
-                wordBreak: "break-word",
-                overflowWrap: "anywhere",
-              }}
-            >
-              {member.email ? (
-                <a
-                  href={`mailto:${member.email}`}
-                  style={{ color: "inherit", textDecoration: "underline" }}
-                >
-                  {member.email}
-                </a>
-              ) : (
-                member.role || member.position
-              )}
-            </Typography>
+            {(member.role || member.position) && (
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                gutterBottom
+                sx={{
+                  fontSize: { xs: "0.6rem", sm: "0.7rem", md: "0.8rem" },
+                  mb: { xs: 0.25, sm: 0.25, md: 0.5 },
+                  wordBreak: "break-word",
+                  overflowWrap: "anywhere",
+                }}
+              >
+                {member.role || member.position}
+              </Typography>
+            )}
           </TeamMemberCard>
         </Grid>
       ))}
@@ -304,8 +297,10 @@ export default function Committee() {
                 <Link
                   className="team-view-btn"
                   style={{ alignSelf: "center", fontSize: "0.9em", padding: "0.5em 1.2em", minWidth: 0,
-                    borderRadius: "0.5em", color: "#fb923c", fontWeight: 700, border: "none", cursor: "pointer",
-                    boxShadow: "0 2px 8px rgba(25,118,210,0.08)", marginTop: "0.3em", marginBottom: "0.3em" }}
+                    borderRadius: "0.5em", fontWeight: 700, border: "none", cursor: "pointer",
+                    marginTop: "0.3em", marginBottom: "0.3em",
+                    color: theme.palette.primary.main,
+                  }}
                   href={team.path}
                 >
                   View Team
