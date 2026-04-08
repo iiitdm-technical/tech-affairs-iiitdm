@@ -16,7 +16,8 @@ import { styled, useTheme } from "@mui/material/styles";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-import { useOrgsByCategory } from "@/hooks/useOrgs";
+import { useOrgsByCategory, useOrgs } from "@/hooks/useOrgs";
+import { Skeleton } from "@mui/material";
 
 const TeamCard = styled(Card)(({ theme }) => ({
   width: 140,
@@ -58,11 +59,13 @@ export default function Council() {
   const isDark = theme.palette.mode === "dark";
   const isXs = useMediaQuery(theme.breakpoints.only("xs"));
 
-  const clubs      = useOrgsByCategory('club');
-  const teams      = useOrgsByCategory('team');
-  const societies  = useOrgsByCategory('society');
+  const allOrgs     = useOrgs();
+  const orgsLoaded  = allOrgs.length > 0;
+  const clubs       = useOrgsByCategory('club');
+  const teams       = useOrgsByCategory('team');
+  const societies   = useOrgsByCategory('society');
   const communities = useOrgsByCategory('community');
-  const orgsByTab  = [clubs, teams, societies, communities];
+  const orgsByTab   = [clubs, teams, societies, communities];
 
   const getTabFromPath = useCallback(() => {
     const parts = pathname.split("/");
@@ -193,7 +196,19 @@ export default function Council() {
             mx: "auto",
           }}
         >
-          {currentList.map((item) => (
+          {!orgsLoaded && [...Array(6)].map((_, i) => (
+            <Grid item key={i} xs={6} sm={4} md={3} sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Skeleton variant="rounded" width={140} height={180} sx={{ borderRadius: '18px' }} />
+            </Grid>
+          ))}
+          {orgsLoaded && currentList.length === 0 && (
+            <Grid item xs={12}>
+              <Box textAlign="center" py={6}>
+                <Typography color="text.secondary">No organisations in this category yet.</Typography>
+              </Box>
+            </Grid>
+          )}
+          {orgsLoaded && currentList.map((item) => (
             <Grid
               item
               key={item.name}

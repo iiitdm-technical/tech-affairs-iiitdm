@@ -34,7 +34,7 @@ async function run() {
   // Fetch all org_admins rows
   const allRows = await db.execute(sql`SELECT id, email, org_slug FROM org_admins`);
 
-  const toDelete = (allRows as { id: number; email: string; org_slug: string }[])
+  const toDelete = (allRows as unknown as { id: number; email: string; org_slug: string }[])
     .filter((r) => !KEEP_EMAILS.has(r.email));
 
   if (toDelete.length === 0) {
@@ -60,7 +60,7 @@ async function run() {
 
   if ((staleRoles as unknown[]).length > 0) {
     console.log(`\nDeleting ${(staleRoles as unknown[]).length} stale user_roles entries:`);
-    for (const r of staleRoles as { email: string }[]) {
+    for (const r of staleRoles as unknown as { email: string }[]) {
       console.log(`  [user_roles] DELETE  ${r.email}`);
       await db.execute(sql`DELETE FROM user_roles WHERE email = ${r.email} AND role = 'O'`);
     }

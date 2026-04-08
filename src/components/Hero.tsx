@@ -134,20 +134,27 @@ const Hero = () => {
               alignItems: 'center',
             }}
           >
-            {/* <Button
+            <Button
               variant="contained"
               size="large"
-              href="/events"
+              href="/announcements"
               sx={{
                 px: { xs: 3, sm: 4 },
                 py: { xs: 1.2, sm: 1.5 },
                 fontSize: { xs: '0.95rem', sm: '1rem' },
                 borderRadius: 3.5,
                 minWidth: { xs: 220, sm: 'auto' },
+                background: 'linear-gradient(135deg, #fb923c, #f472b6)',
+                boxShadow: '0 4px 14px -3px rgba(251,146,60,0.4)',
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #ea7c28, #ec4899)',
+                  boxShadow: '0 6px 20px -3px rgba(251,146,60,0.5)',
+                  transform: 'translateY(-1px)',
+                },
               }}
             >
-              Upcoming Events
-            </Button> */}
+              Latest Announcements
+            </Button>
             <Button
               variant="outlined"
               size="large"
