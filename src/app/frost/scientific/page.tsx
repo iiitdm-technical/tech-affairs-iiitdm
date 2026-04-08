@@ -5,46 +5,69 @@ import Link from "next/link";
 import { Box, Container, Typography, Card, CardContent, Button, Chip } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
-import { ArrowBack } from "@mui/icons-material";
+import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { SiOctave, SiPython, SiR } from "react-icons/si";
-import { BsGpuCard } from "react-icons/bs";
+import { TbAtom, TbChartHistogram, TbBuildingBridge } from "react-icons/tb";
+import { GiMolecule } from "react-icons/gi";
 
-const SECTIONS = [
+const TOOLS = [
   {
-    title: "Engineering & CAD",
-    color: "#a3e635",
-    icon: <BsGpuCard size={28} />,
-    items: [
-      { name: "ANSYS",       desc: "Multiphysics simulation — FEA, CFD, structural analysis." },
-      { name: "Abaqus",      desc: "Advanced finite element analysis for complex simulations." },
-      { name: "SolidWorks",  desc: "3D CAD design — parts, assemblies, drawings." },
-      { name: "AutoCAD",     desc: "Industry-standard 2D/3D drafting and design." },
-    ],
-  },
-  {
-    title: "Numerical Computing",
+    title: "MATLAB",
+    slug: "matlab",
+    icon: <SiOctave size={32} />,
     color: "#f59e0b",
-    icon: <SiOctave size={28} />,
-    items: [
-      { name: "MATLAB",       desc: "High-level language for numerical computation and visualization." },
-      { name: "COMSOL",       desc: "Multiphysics simulation with coupled physics models." },
-      { name: "Intel Compilers", desc: "Optimized compilers for high-performance scientific code." },
-      { name: "PGI Compilers",   desc: "High-performance Fortran / C / C++ compilers." },
-    ],
+    tag: "Numerical Computing",
+    desc: "Matrix-based language for numerical computation, data analysis, and algorithm development.",
   },
   {
-    title: "Data & Materials",
+    title: "ANSYS",
+    slug: "ansys",
+    icon: <TbBuildingBridge size={32} />,
+    color: "#a3e635",
+    tag: "Simulation",
+    desc: "Industry-leading FEA, CFD, and multiphysics simulation suite for engineering analysis.",
+  },
+  {
+    title: "COMSOL",
+    slug: "comsol",
+    icon: <TbAtom size={32} />,
     color: "#4ade80",
-    icon: <SiPython size={28} />,
-    items: [
-      { name: "Materials Studio", desc: "Molecular modeling and materials simulation platform." },
-      { name: "Python (Scientific)", desc: "NumPy, SciPy, pandas, matplotlib — the full scientific stack." },
-      { name: "R",              desc: "Statistical computing and graphics environment." },
-    ],
+    tag: "Multiphysics",
+    desc: "Coupled physics simulation — thermal, structural, electrical, fluid in one model.",
+  },
+  {
+    title: "Abaqus",
+    slug: "abaqus",
+    icon: <TbChartHistogram size={32} />,
+    color: "#86efac",
+    tag: "FEA",
+    desc: "Advanced nonlinear finite element analysis for materials, structures, and crash simulations.",
+  },
+  {
+    title: "Python",
+    slug: "python",
+    icon: <SiPython size={32} />,
+    color: "#60a5fa",
+    tag: "Scientific Computing",
+    desc: "NumPy, SciPy, pandas, matplotlib — the complete open-source scientific computing stack.",
+  },
+  {
+    title: "R",
+    slug: "r",
+    icon: <SiR size={32} />,
+    color: "#818cf8",
+    tag: "Statistics",
+    desc: "Statistical computing and publication-quality graphics for data analysis and research.",
+  },
+  {
+    title: "Materials Studio",
+    slug: "materials-studio",
+    icon: <GiMolecule size={32} />,
+    color: "#f472b6",
+    tag: "Materials Science",
+    desc: "Molecular modeling, crystal structure prediction, and quantum chemistry simulations.",
   },
 ];
-
-const ALL_TOOLS = ["ANSYS", "MATLAB", "COMSOL", "Abaqus", "SolidWorks", "AutoCAD", "Materials Studio", "Python", "R", "Intel Compilers"];
 
 export default function ScientificPage() {
   const theme = useTheme();
@@ -63,71 +86,44 @@ export default function ScientificPage() {
             sx={{ fontSize: { xs: "2rem", md: "2.8rem" } }}>
             Scientific Software
           </Typography>
-          <Typography color="text.secondary" mb={3} maxWidth={580} lineHeight={1.75}>
-            Research-grade simulation, CAD, and numerical computing tools available for IIITDM faculty and students.
+          <Typography color="text.secondary" mb={6} maxWidth={580} lineHeight={1.75}>
+            Research-grade simulation, numerical computing, and data analysis tools — download guides and usage tips for each.
           </Typography>
 
-          {/* Quick tag cloud */}
-          <Box display="flex" flexWrap="wrap" gap={0.75} mb={6}>
-            {ALL_TOOLS.map((t) => (
-              <Chip key={t} label={t} size="small" variant="outlined"
-                sx={{ fontSize: "0.72rem", borderColor: "rgba(163,230,53,0.25)", color: "text.secondary" }} />
-            ))}
-          </Box>
-
-          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3,1fr)" }, gap: 3 }}>
-            {SECTIONS.map((section, i) => (
-              <motion.div key={section.title}
-                initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}>
-                <Card sx={{
-                  height: "100%", display: "flex", flexDirection: "column",
-                  bgcolor: isDark ? "rgba(5,46,22,0.45)" : "background.paper",
-                  border: `1px solid ${isDark ? "rgba(163,230,53,0.1)" : "rgba(0,0,0,0.08)"}`,
-                  borderRadius: 3, transition: "all 0.22s",
-                  "&:hover": {
-                    borderColor: section.color,
-                    boxShadow: isDark ? `0 8px 28px -4px ${section.color}18` : "0 8px 24px -4px rgba(0,0,0,0.1)",
-                  },
-                }}>
-                  <CardContent sx={{ p: 3 }}>
-                    <Box sx={{
-                      display: "inline-flex", alignItems: "center", justifyContent: "center",
-                      width: 52, height: 52, borderRadius: 2, mb: 2.5,
-                      bgcolor: `${section.color}14`, color: section.color,
-                    }}>
-                      {section.icon}
-                    </Box>
-                    <Typography fontWeight={800} fontSize="1rem" mb={2.5} letterSpacing="-0.01em">
-                      {section.title}
+          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "repeat(3,1fr)", lg: "repeat(4,1fr)" }, gap: 2.5 }}>
+            {TOOLS.map((tool, i) => (
+              <motion.div key={tool.slug}
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: i * 0.07 }}>
+                <Card component={Link} href={`/frost/scientific/${tool.slug}`}
+                  sx={{
+                    height: "100%", display: "flex", flexDirection: "column",
+                    textDecoration: "none",
+                    bgcolor: isDark ? "rgba(5,46,22,0.45)" : "background.paper",
+                    border: `1px solid ${isDark ? "rgba(163,230,53,0.1)" : "rgba(0,0,0,0.08)"}`,
+                    borderRadius: 3, transition: "all 0.22s",
+                    "&:hover": {
+                      borderColor: tool.color, transform: "translateY(-3px)",
+                      boxShadow: isDark ? `0 8px 24px -4px ${tool.color}20` : "0 8px 24px -4px rgba(0,0,0,0.1)",
+                    },
+                  }}>
+                  <CardContent sx={{ p: 2.5, display: "flex", flexDirection: "column", height: "100%" }}>
+                    <Box sx={{ color: tool.color, mb: 1.5 }}>{tool.icon}</Box>
+                    <Chip label={tool.tag} size="small"
+                      sx={{ alignSelf: "flex-start", mb: 1.25, fontSize: "0.65rem", height: 20,
+                        bgcolor: `${tool.color}14`, color: tool.color, border: "none" }} />
+                    <Typography fontWeight={700} mb={0.75}>{tool.title}</Typography>
+                    <Typography color="text.secondary" fontSize="0.78rem" lineHeight={1.65} mb={2} flexGrow={1}>
+                      {tool.desc}
                     </Typography>
-                    <Box display="flex" flexDirection="column" gap={1.5}>
-                      {section.items.map((item) => (
-                        <Box key={item.name}>
-                          <Typography fontSize="0.85rem" fontWeight={650} mb={0.25}>
-                            {item.name}
-                          </Typography>
-                          <Typography fontSize="0.78rem" color="text.secondary" lineHeight={1.6}>
-                            {item.desc}
-                          </Typography>
-                        </Box>
-                      ))}
+                    <Box display="flex" alignItems="center" gap={0.5}
+                      sx={{ color: tool.color, fontWeight: 600, fontSize: "0.78rem" }}>
+                      Download guide <ArrowForward sx={{ fontSize: 13 }} />
                     </Box>
                   </CardContent>
                 </Card>
               </motion.div>
             ))}
-          </Box>
-
-          {/* Contact note */}
-          <Box mt={5} p={2.5} sx={{
-            borderRadius: 2,
-            bgcolor: isDark ? "rgba(163,230,53,0.05)" : "rgba(22,163,74,0.04)",
-            border: `1px solid ${isDark ? "rgba(163,230,53,0.12)" : "rgba(22,163,74,0.12)"}`,
-          }}>
-            <Typography fontSize="0.875rem" color="text.secondary" lineHeight={1.75}>
-              <strong style={{ color: "#a3e635" }}>Access:</strong> Licensed software is available on department lab machines. For personal device installation or license keys, contact the CSC Helpdesk with your IIITDM ID.
-            </Typography>
           </Box>
         </motion.div>
       </Container>
