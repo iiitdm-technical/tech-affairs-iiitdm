@@ -1,55 +1,58 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Box } from "@mui/material";
+import React from "react";
+import { Typography, Box } from "@mui/material";
+import FrostContentPage from "@/components/FrostContentPage";
 
 export default function Office365Page() {
   return (
-    <Box sx={{ minHeight: '100vh', width: '100%', bgcolor: 'background.default', color: 'text.primary', position: 'relative', py: 8 }}>
-      <div className="relative z-10 max-w-4xl mx-auto p-8">
-        <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-blue-400">
-          Microsoft Office 365
-        </h1>
+    <FrostContentPage
+      title="Microsoft Office 365"
+      subtitle="Free for all IIITDM students, staff, and faculty with your institutional account."
+      backHref="/frost/windows"
+      backLabel="Back to Windows Software"
+      breadcrumbs={[
+        { label: "FROST", href: "/frost" },
+        { label: "Windows", href: "/frost/windows" },
+      ]}
+      accentColor="#a3e635"
+    >
+      <Box className="frost-section">
+        <Typography className="frost-p">
+          IIITDMK has subscribed to <strong>Microsoft 365</strong> along with the Microsoft Campus Agreement for all faculty, staff and students.
+          Office 365 includes access to Office applications plus cloud services (OneDrive storage) as well as the full desktop versions of
+          Word, Excel, PowerPoint, OneNote, Outlook, Publisher, and Access — installable across multiple devices including PCs, Macs, Android, and iOS.
+        </Typography>
+        <Typography className="frost-p">
+          With an active subscription you always have the most up-to-date version of all applications.
+        </Typography>
+      </Box>
 
-        <div className="prose prose-invert max-w-none">
-          <p>
-            IIITDMK has subscribed the Microsoft 365 for a along with
-            Microsoft Campus Agreement for all faculty, staff and students.
-            "Microsoft Office 365" refers to subscription plans that include
-            access to Office applications plus other productivity services that
-            are enabled over the Internet (cloud services) on cloud storage
-            OneDrive. It also include the desktop version of the latest Office
-            applications, which users can install across multiple computers and
-            devices. The fully installed applications include: Word, Excel,
-            PowerPoint, OneNote, Outlook, Publisher, and Access (Publisher and
-            Access are available on PC only) and you can install them across
-            multiple devices, including PCs, Macs, Android tablets, Android
-            phones, iPad, and iPhone. When you have an active Office 365
-            subscription that includes the desktop version of Office, you always
-            have the most up-to-date version of the applications. To use and
-            install one has to login at{' '}
-            <a
-              href="https://office.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:underline"
-            >
-              https://office.com
-            </a>{' '}
-            using IIITDM User ID and Password.
-          </p>
+      <Box className="frost-section">
+        <Typography className="frost-h2">How to Sign In</Typography>
+        <Typography className="frost-p">
+          Visit{" "}
+          <a href="https://office.com" target="_blank" rel="noopener noreferrer" className="frost-link">
+            office.com
+          </a>{" "}
+          and sign in using your IIITDM credentials. Your username format is:
+        </Typography>
+        <Box component="pre" className="frost-pre">{`<userid>@iiitdm.ac.in`}</Box>
+        <Typography className="frost-p">
+          For example, if your User ID is <Box component="span" className="frost-code">xyz</Box>, sign in as{" "}
+          <Box component="span" className="frost-code">xyz@iiitdm.ac.in</Box> with your IIITDM Kerberos password.
+        </Typography>
+      </Box>
 
-          <p>
-            <strong>Note:</strong> Users Database is being Synced with IIITDM
-            database. If someone has changed Password in IIITDM,
-          </p>
-
-          <p>
-            To sign in suffix is "@iiitdm.ac.in" as if User ID is “xyz” then sign
-            in user must be xyz@iiitdm.ac.in.
-          </p>
-        </div>
-      </div>
-    </Box>
+      <Box className="frost-section">
+        <Typography className="frost-h2">Important Notes</Typography>
+        <Box className="frost-note">
+          <strong>Password sync:</strong> The user database is synced with IIITDM&apos;s main directory. If you recently changed your IIITDM password, use the updated password here as well. Allow up to a few hours for the sync to propagate.
+        </Box>
+        <Typography className="frost-p">
+          Office 365 applications can be installed on up to 5 PCs or Macs, 5 tablets, and 5 smartphones simultaneously under a single account.
+        </Typography>
+      </Box>
+    </FrostContentPage>
   );
 }

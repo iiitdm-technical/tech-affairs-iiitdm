@@ -1,59 +1,65 @@
 "use client";
 
-import { Box } from "@mui/material";
+import React from "react";
+import { Typography, Box } from "@mui/material";
+import FrostContentPage from "@/components/FrostContentPage";
 
-export default function LinuxMint() {
+export default function LinuxMintPage() {
   return (
-    <Box sx={{ minHeight: '100vh', width: '100%', bgcolor: 'background.default', color: 'text.primary', position: 'relative', py: 8 }}>
-      {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto p-8">
-        {/* Header */}
-        <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-blue-400">
-          Linux Mint Overview
-        </h1>
+    <FrostContentPage
+      title="Linux Mint"
+      subtitle="Elegant, familiar, and easy — the ideal Linux distribution for users switching from Windows."
+      backHref="/frost/linux"
+      backLabel="Back to Linux"
+      breadcrumbs={[
+        { label: "FROST", href: "/frost" },
+        { label: "Linux", href: "/frost/linux" },
+      ]}
+      accentColor="#4ade80"
+    >
+      <Box className="frost-section">
+        <Typography className="frost-h2">Overview</Typography>
+        <Typography className="frost-p">
+          Linux Mint Debian Edition (LMDE) is a semi-rolling release distribution based directly on Debian — not Ubuntu.
+          LMDE provides the same polished Mint experience (Cinnamon desktop, software center, familiar layout) while building
+          on Debian&apos;s rock-solid foundation.
+        </Typography>
+        <Typography className="frost-p">
+          Since LMDE uses the Debian package format and APT,{" "}
+          <Box component="span" className="frost-code">apt-cacher-ng</Box> works out of the box.
+          Refer to the <a href="/frost/linux/debian" className="frost-link">Debian section</a> for proxy and repository configuration.
+        </Typography>
+      </Box>
 
-        {/* Overview Section */}
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-3 text-blue-400">Overview</h2>
-          <p className="mb-4 text-gray-300">
-            Linux Mint Debian Edition (LMDE) is a semi-rolling release distribution based on Debian.
-            Instead of the traditional Ubuntu base, LMDE aims to provide the same Mint experience
-            directly on top of Debian.
-          </p>
-          <p className="mb-4 text-gray-300">
-            Since LMDE uses the Debian package format,{" "}
-            <code className="bg-gray-800 px-1 rounded">apt-cacher-ng</code> should work.
-            Please refer to the Debian section for more details.
-          </p>
-        </section>
+      <Box className="frost-section">
+        <Typography className="frost-h2">Key Features</Typography>
+        <Box component="ul" className="frost-ul">
+          <li>Based on Debian — not Ubuntu — for a cleaner, leaner base</li>
+          <li>Semi-rolling release: Debian testing packages with periodic stable snapshots</li>
+          <li>Cinnamon desktop — Windows-like taskbar layout, easy to navigate</li>
+          <li>Nemo file manager — polished, feature-rich file browser</li>
+          <li>APT package management — same tooling as Debian and Ubuntu</li>
+          <li>Timeshift snapshots — built-in system restore points</li>
+        </Box>
+      </Box>
 
-        {/* Features Section */}
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-3 text-blue-400">Key Features</h2>
-          <ul className="list-disc list-inside space-y-2 text-gray-300">
-            <li>Based on Debian instead of Ubuntu</li>
-            <li>Semi-rolling release model</li>
-            <li>Same Cinnamon desktop experience as Linux Mint</li>
-            <li>Uses Debian’s APT package management</li>
-          </ul>
-        </section>
-
-        {/* Downloads Section */}
-        <section>
-          <h2 className="text-2xl font-semibold mb-3 text-blue-400">Downloads</h2>
-          <p className="mb-4 text-gray-300">
-            Official ISO images and torrents can be downloaded from the{" "}
-            <a
-              href="https://www.linuxmint.com/download_lmde.php"
-              target="_blank"
-              className="text-blue-400 hover:underline"
-            >
-              Linux Mint website
-            </a>
-            .
-          </p>
-        </section>
-      </div>
-    </Box>
+      <Box className="frost-section">
+        <Typography className="frost-h2">Download</Typography>
+        <Typography className="frost-p">
+          Official LMDE ISO images and torrents are available from the Linux Mint website:{" "}
+          <a
+            href="https://www.linuxmint.com/download_lmde.php"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="frost-link"
+          >
+            linuxmint.com/download_lmde.php
+          </a>
+        </Typography>
+        <Box className="frost-note">
+          After installation, configure the APT proxy (see the Debian page) to route package downloads through the IIITDM campus mirror for faster speeds.
+        </Box>
+      </Box>
+    </FrostContentPage>
   );
 }

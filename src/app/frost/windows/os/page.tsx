@@ -1,227 +1,120 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Box } from "@mui/material";
+import React from "react";
+import { Typography, Box } from "@mui/material";
+import FrostContentPage from "@/components/FrostContentPage";
 
 export default function OsPage() {
   return (
-    <Box sx={{ minHeight: '100vh', width: '100%', bgcolor: 'background.default', color: 'text.primary', position: 'relative', py: 8 }}>
-      <div className="relative z-10 max-w-4xl mx-auto p-8">
-        <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-blue-400">
-          Windows/Office Installation and Activation
-        </h1>
+    <FrostContentPage
+      title="Windows OS — Install & Activate"
+      subtitle="Step-by-step guide to obtaining, installing, and activating a licensed Windows OS via IIITDM's volume agreement."
+      backHref="/frost/windows"
+      backLabel="Back to Windows Software"
+      breadcrumbs={[
+        { label: "FROST", href: "/frost" },
+        { label: "Windows", href: "/frost/windows" },
+      ]}
+      accentColor="#4ade80"
+    >
+      <Box className="frost-section">
+        <Typography className="frost-h2">Prerequisites</Typography>
+        <Typography className="frost-p">
+          Windows Volume License covers <strong>upgrades only</strong>. You must first have a qualifying, genuine Windows license
+          (typically purchased with your hardware from an OEM). When procuring hardware, ensure the OEM provides an underlying Windows
+          starter license that can be upgraded under IIITDM&apos;s volume agreement.
+        </Typography>
+        <Box className="frost-warning">
+          <strong>Important:</strong> Without a qualifying base license from your OEM, the volume license upgrade cannot be applied.
+          Contact your hardware OEM if unsure.
+        </Box>
+      </Box>
 
-        <div className="prose prose-invert max-w-none">
-          <h2 className="text-2xl font-semibold mt-8 mb-3 text-blue-400">
-            Prerequisites
-          </h2>
-          <p>
-            Windows Volume License is for upgrades only. Before you try to
-            upgrade, you must first purchase an underlying, qualifying, and
-            genuine Windows license. For more information, visit the following
-            Microsoft website:{' '}
-            <a
-              href="http://www.microsoft.com/piracy/knowthefacts/legalizationsolutions.aspx"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:underline"
-            >
-              http://www.microsoft.com/piracy/knowthefacts/legalizationsolutions.aspx
-            </a>
-          </p>
-          <p>
-            While procuring hardware from OEM it is important to ensure that
-            you have purchased an underlying, qualifying, and genuine Windows
-            license which can be upgraded under the volume license agreement.
-            This may require you purchase a low cost starter kit from the OEM.
-            Please get in touch with the OEM in case of any doubt. Also view
-            Bios Marker Issue
-          </p>
+      <Box className="frost-section">
+        <Typography className="frost-h2">1 — Obtain the ISO Image</Typography>
+        <Typography className="frost-p">
+          Map the network folder as a drive in Windows (My Computer → Tools → Map Network Drive, without &quot;reconnect at login&quot;, using different credentials):
+        </Typography>
+        <Box component="pre" className="frost-pre">{`\\\\filer02.iiitdm.ac.in\\winisos`}</Box>
+        <Typography className="frost-p">
+          On Mac or Linux, mount the CIFS share:
+        </Typography>
+        <Box component="pre" className="frost-pre">{`cifs://filer02.iiitdm.ac.in/winisos`}</Box>
+        <Typography className="frost-p">
+          Sign in using your IIITDM Kerberos credentials. Copy the required ISO image, burn it to a USB or DVD, then disconnect the network drive.
+        </Typography>
+      </Box>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-3 text-blue-400">
-            Obtain the ISO image and install
-          </h2>
-          <p>
-            Map the folder filer02.iiitdm.ac.inwinisos as a network drive in a
-            Windows machine (from My Computer -{">"} Tools -{">"} Map Network
-            Drive, without reconnect at login and connect using different
-            credentials) using your ACADIITDuserid as your username and your
-            Kerberos password. In Mac or Linux mount the CIFS share
-            cifs://filer02.iiitdm.ac.in/winisos.
-          </p>
-          <p>
-            Copy the required ISO image (CD/DVD image) and burn a CD/DVD using
-            your favourite software.
-          </p>
-          <p>Disconnect the network drive.</p>
-          <p>Install Windows OS or Office using the CD/DVD.</p>
-          <p>
-            Configure your Windows machine for IIITDM network using DHCP. In case
-            you require to configure with a static IP, please get in touch with
-            your departmental system administrators for the network parameters.
-          </p>
-          <p>
-            Make sure that ACAD.WINDOWS.IIITDM.AC.IN is set as the DNS search
-            string (suffix) from network properties.
-          </p>
-          <p>
-            Make sure that ntp.iiitdm.ac.in is set as the internet time server in
-            your Date/Time settings.
-          </p>
+      <Box className="frost-section">
+        <Typography className="frost-h2">2 — Install Windows</Typography>
+        <Typography className="frost-p">Boot from the USB/DVD and follow the on-screen installer. After installation:</Typography>
+        <Box component="ul" className="frost-ul">
+          <li>Configure networking with DHCP (or contact your department sysadmin for static IP parameters)</li>
+          <li>Set DNS search suffix to <Box component="span" className="frost-code">ACAD.WINDOWS.IIITDM.AC.IN</Box></li>
+          <li>Set internet time server to <Box component="span" className="frost-code">ntp.iiitdm.ac.in</Box></li>
+        </Box>
+      </Box>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-3 text-blue-400">
-            Activate Windows
-          </h2>
-          <h3 className="text-xl font-semibold mt-6 mb-2 text-blue-400">
-            Activation and Re-activation
-          </h3>
-          <p>
-            After installation, activate the copy of windows within a grace
-            period of 30 days. Windows can be activated or reactivated for a
-            period of 180 days by the following procedure at any time during
-            the grace period or at any time during the activated period. For
-            this the machine must be connected to IIITDM LAN. Staff members who
-            may have to travel outside campus should install and configure VPN
-            access. Reactivation can be done any number of times. The product
-            will notify the user if it needs to be activated to be used.
-          </p>
-          <p>
-            Make sure that ntp.iiitdm.ac.in is set as the internet time server in
-            your Date/Time settings and ACAD.WINDOWS.IIITDM.AC.IN is set as the
-            DNS search string (suffix) from network properties.
-          </p>
-          <p>
-            Type{' '}
-            <code className="bg-gray-800 px-1 rounded">
-              slmgr /skms ccwds.acad.windows.iiitdm.ac.in
-            </code>{' '}
-            from the administrator elevated DOS command prompt (run as
-            Administrator).
-          </p>
-          <p>
-            Open{' '}
-            <a
-              href="https://kmsproxy.iiitdm.ac.in/kms.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:underline"
-            >
-              https://kmsproxy.iiitdm.ac.in/kms.html
-            </a>{' '}
-            and login using your IIITDM user id and password.
-          </p>
-          <p>
-            Within the next 30 minutes activate or reactivate your Windows OS
-            by issuing the command{' '}
-            <code className="bg-gray-800 px-1 rounded">slmgr /ato</code> at the
-            administrator elevated DOS command prompt.
-          </p>
-          <p>
-            You can check the activation expiry date using the command{' '}
-            <code className="bg-gray-800 px-1 rounded">slmgr /xpr</code> or
-            check the license details using the command{' '}
-            <code className="bg-gray-800 px-1 rounded">slmgr /dli</code> (or{' '}
-            <code className="bg-gray-800 px-1 rounded">slmgr /dlv</code> for
-            more details).
-          </p>
-          <p>Logout of your browser window.</p>
-          <p>
-            <strong>Warning:</strong> On expiry of either the grace period or
-            activation period, the OS will go in to the Reduced Functionality
-            Mode (RFM) which may eventually lead to an unusable state. Fresh
-            installation would be required in this case.
-          </p>
+      <Box className="frost-section">
+        <Typography className="frost-h2">3 — Activate Windows</Typography>
+        <Typography className="frost-p">
+          Windows must be activated within the 30-day grace period. Your machine must be on the IIITDM LAN (or connected via VPN for off-campus staff).
+        </Typography>
+        <Typography className="frost-p">
+          Run as <strong>Administrator</strong> in Command Prompt:
+        </Typography>
+        <Box component="pre" className="frost-pre">{`slmgr /skms ccwds.acad.windows.iiitdm.ac.in`}</Box>
+        <Typography className="frost-p">
+          Then open{" "}
+          <a href="https://kmsproxy.iiitdm.ac.in/kms.html" target="_blank" rel="noopener noreferrer" className="frost-link">
+            kmsproxy.iiitdm.ac.in/kms.html
+          </a>{" "}
+          and log in with your IIITDM credentials. Within the next 30 minutes, run:
+        </Typography>
+        <Box component="pre" className="frost-pre">{`slmgr /ato`}</Box>
+        <Typography className="frost-p">Useful diagnostic commands:</Typography>
+        <Box component="pre" className="frost-pre">{`slmgr /xpr    # check activation expiry date
+slmgr /dli    # license details (summary)
+slmgr /dlv    # license details (verbose)`}</Box>
+      </Box>
 
-          <h3 className="text-xl font-semibold mt-6 mb-2 text-blue-400">
-            Grace period
-          </h3>
-          <p>
-            You can renew the grace period for another 30 days by issuing the
-            command{' '}
-            <code className="bg-gray-800 px-1 rounded">slmgr /rearm</code> at
-            the administrator elevated DOS command prompt before the expiry of
-            the grace period or before the expiry of the activated period (see
-            below). Note that the machine need not be connected to the IITD LAN
-            for this operation and and this can be done at most three times.
-          </p>
+      <Box className="frost-section">
+        <Typography className="frost-h2">Grace Period Extension</Typography>
+        <Typography className="frost-p">
+          The grace period can be extended for an additional 30 days (up to 3 times total) without a LAN connection:
+        </Typography>
+        <Box component="pre" className="frost-pre">{`slmgr /rearm`}</Box>
+        <Box className="frost-warning">
+          On expiry of the grace or activation period, Windows enters <strong>Reduced Functionality Mode (RFM)</strong>.
+          Re-activate before this happens. A fresh installation may be required if the OS becomes unusable.
+        </Box>
+      </Box>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-3 text-blue-400">
-            Activate Office
-          </h2>
-          <p>
-            Make sure that ntp.iitd.ac.in is set as the internet time server in
-            your Date/Time settings and ACAD.WINDOWS.IIITDM.AC.IN is set as the
-            DNS search string (suffix) from network properties.
-          </p>
-          <p>
-            Change to one of the following directories depending on the version
-            of Office you installed using the following syntax in italics:
-          </p>
-          <p>
-            <strong>Note:</strong> You can determine the version of Office
-            running by launching Word and then navigating to File {">"} Help .
-            The version will be listed on the right under “About Microsoft
-            Word”.
-          </p>
-          <p>
-            Office 32-bit in Windows 32-bit OS:
-            <br />
-            <code className="bg-gray-800 px-1 rounded">
-              cd C:Program FilesMicrosoft OfficeOffice1X
-            </code>
-          </p>
-          <p>
-            Office 32-bit in Windows 64-bit OS:
-            <br />
-            <code className="bg-gray-800 px-1 rounded">
-              cd C:Program Files (x86)Microsoft OfficeOffice1X
-            </code>
-          </p>
-          <p>
-            Office 64-bit in Windows 64-bit OS:
-            <br />
-            <code className="bg-gray-800 px-1 rounded">
-              cd C:Program FilesMicrosoft OfficeOffice1X
-            </code>
-          </p>
-          <p>
-            Type{' '}
-            <code className="bg-gray-800 px-1 rounded">
-              cscript ospp.vbs /sethst:ccwds.acad.windows.iitd.ac.in
-            </code>{' '}
-            from the administrator elevated DOS command prompt.
-          </p>
-          <p>
-            Open{' '}
-            <a
-              href="https://kmsproxy.iitd.ac.in/kms.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:underline"
-            >
-              https://kmsproxy.iitd.ac.in/kms.html
-            </a>{' '}
-            and login using your IIITDM user id and password.
-          </p>
-          <p>
-            Within the next 30 minutes activate or reactivate Office using the
-            command{' '}
-            <code className="bg-gray-800 px-1 rounded">
-              cscript ospp.vbs /act
-            </code>{' '}
-            at the administrator elevated DOS command prompt.
-          </p>
-          <p>
-            You can check the activation expiry date using the command{' '}
-            <code className="bg-gray-800 px-1 rounded">
-              cscript ospp.vbs /dstatus
-            </code>
-          </p>
-          <p>Logout of your browser window.</p>
+      <Box className="frost-section">
+        <Typography className="frost-h2">Activate Office</Typography>
+        <Typography className="frost-p">
+          Navigate to your Office installation directory (replace <Box component="span" className="frost-code">1X</Box> with your Office version number, e.g. <Box component="span" className="frost-code">16</Box>):
+        </Typography>
+        <Box component="pre" className="frost-pre">{`# Office 32-bit on Windows 32-bit:
+cd "C:\\Program Files\\Microsoft Office\\Office1X"
 
-          
-        </div>
-      </div>
-    </Box>
+# Office 32-bit on Windows 64-bit:
+cd "C:\\Program Files (x86)\\Microsoft Office\\Office1X"
+
+# Office 64-bit on Windows 64-bit:
+cd "C:\\Program Files\\Microsoft Office\\Office1X"`}</Box>
+        <Typography className="frost-p">Set the KMS host then activate:</Typography>
+        <Box component="pre" className="frost-pre">{`cscript ospp.vbs /sethst:ccwds.acad.windows.iiitdm.ac.in
+cscript ospp.vbs /act`}</Box>
+        <Typography className="frost-p">
+          Log in to{" "}
+          <a href="https://kmsproxy.iiitdm.ac.in/kms.html" target="_blank" rel="noopener noreferrer" className="frost-link">
+            kmsproxy.iiitdm.ac.in/kms.html
+          </a>{" "}
+          before running <Box component="span" className="frost-code">/act</Box>. Check activation status:
+        </Typography>
+        <Box component="pre" className="frost-pre">{`cscript ospp.vbs /dstatus`}</Box>
+      </Box>
+    </FrostContentPage>
   );
 }

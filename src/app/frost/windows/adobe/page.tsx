@@ -1,46 +1,63 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Box } from "@mui/material";
+import React from "react";
+import { Typography, Box } from "@mui/material";
+import FrostContentPage from "@/components/FrostContentPage";
 
 export default function AdobePage() {
   return (
-    <Box sx={{ minHeight: '100vh', width: '100%', bgcolor: 'background.default', color: 'text.primary', position: 'relative', py: 8 }}>
-      <div className="relative z-10 max-w-4xl mx-auto p-8">
-        <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-blue-400">
-          Adobe Creative Cloud
-        </h1>
+    <FrostContentPage
+      title="Adobe Creative Cloud"
+      subtitle="Full Creative Cloud suite — free for all active IIITDM faculty, staff and students."
+      backHref="/frost/windows"
+      backLabel="Back to Windows Software"
+      breadcrumbs={[
+        { label: "FROST", href: "/frost" },
+        { label: "Windows", href: "/frost/windows" },
+      ]}
+      accentColor="#86efac"
+    >
+      <Box className="frost-section">
+        <Typography className="frost-p">
+          IIITDM has subscribed to <strong>Adobe Creative Cloud</strong> for all active faculty, staff and students.
+          The subscription includes access to all major Adobe products — Acrobat Reader, Photoshop, Illustrator, Premiere Pro,
+          Lightroom, and more — with 100 GB of cloud storage per user.
+        </Typography>
+        <Typography className="frost-p">
+          Applications can be installed on multiple devices: PCs, Macs, Android, and iOS. You always get the latest version automatically.
+        </Typography>
+      </Box>
 
-        <div className="prose prose-invert max-w-none">
-          <p>
-            IIITDM has subscribed the Adobe creative cloud licences for all
-            active faculty, staff and students. "Adobe Creative cloud" refers
-            to subscription plan that include access to all major Adobe
-            Products such as Acrobat Reader, Photoshop, Illustrator, Premiere
-            Pro, Lightroom, with 100GB of storage per user. It includes the
-            desktop version of the latest Adobe applications, which users can
-            install them across multiple devices, including PCs, Macs, Android
-            tablets, Android phones, iPad, and iPhone. When you have an Adobe
-            creative cloud subscription it includes the most up-to-date version
-            of the applications. To start using Creative Cloud Shared Device
-            Access for Higher Education, use "user@department.iiitdm.ac.in" to
-            sign in to Adobe at:{" "}
-            <a
-              href="https://account.adobe.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:underline"
-            >
-              https://account.adobe.com/
-            </a>{" "}
-            Users shall receive an OTP on their mail, and after entering the
-            OTP, the user can set up a password and start using Adobe
-            products. It’s recommended to download Creative cloud application
-            from where users can manage all Adobe products.
-          </p>
-        
-        </div>
-      </div>
-    </Box>
+      <Box className="frost-section">
+        <Typography className="frost-h2">Included Apps</Typography>
+        <Box component="ul" className="frost-ul">
+          <li>Acrobat Pro DC — PDF creation, editing, and signing</li>
+          <li>Photoshop — professional photo and image editing</li>
+          <li>Illustrator — vector graphics and illustration</li>
+          <li>Premiere Pro — video editing and production</li>
+          <li>Lightroom — photo management and editing</li>
+          <li>InDesign — print and digital layout design</li>
+          <li>After Effects — motion graphics and visual effects</li>
+          <li>100 GB Creative Cloud storage per user</li>
+        </Box>
+      </Box>
+
+      <Box className="frost-section">
+        <Typography className="frost-h2">How to Access</Typography>
+        <Typography className="frost-p">
+          Sign in at{" "}
+          <a href="https://account.adobe.com/" target="_blank" rel="noopener noreferrer" className="frost-link">
+            account.adobe.com
+          </a>{" "}
+          using your institutional email address in the format:
+        </Typography>
+        <Box component="pre" className="frost-pre">{`<userid>@<department>.iiitdm.ac.in`}</Box>
+        <Typography className="frost-p">
+          Adobe will send an OTP to your email. Enter the OTP, set a password, and you&apos;re ready.
+          It&apos;s recommended to then download the{" "}
+          <strong>Creative Cloud desktop app</strong> to manage and install individual Adobe products.
+        </Typography>
+      </Box>
+    </FrostContentPage>
   );
 }

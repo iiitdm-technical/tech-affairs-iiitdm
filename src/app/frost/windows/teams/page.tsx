@@ -1,87 +1,96 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Box } from "@mui/material";
+import React from "react";
+import { Typography, Box } from "@mui/material";
+import FrostContentPage from "@/components/FrostContentPage";
 
 export default function TeamsPage() {
   return (
-    <Box sx={{ minHeight: '100vh', width: '100%', bgcolor: 'background.default', color: 'text.primary', position: 'relative', py: 8 }}>
-      <div className="relative z-10 max-w-4xl mx-auto p-8">
-        <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-blue-400">
-          Microsoft Teams
-        </h1>
+    <FrostContentPage
+      title="Microsoft Teams"
+      subtitle="Online teaching, meetings, and collaboration — powered by your IIITDM account."
+      backHref="/frost/windows"
+      backLabel="Back to Windows Software"
+      breadcrumbs={[
+        { label: "FROST", href: "/frost" },
+        { label: "Windows", href: "/frost/windows" },
+      ]}
+      accentColor="#f59e0b"
+    >
+      <Box className="frost-section">
+        <Typography className="frost-p">
+          Microsoft Teams is the primary platform for online teaching, meetings, and collaboration at IIITDM.
+          Teams is included with the Microsoft Office subscription. Sign in using your IIITDM Kerberos credentials:
+        </Typography>
+        <Box component="pre" className="frost-pre">{`<userid>@iiitdm.ac.in`}</Box>
+      </Box>
 
-        <div className="prose prose-invert max-w-none">
-          <p>
-            Microsoft Teams is an application that can be used for online
-            teaching, meeting and other collaboration related needs. Teams is
-            part of Microsoft Office which IIITDM has subscription. You will
-            need to use your IIITDM Kerbos username (xxx@iiitd.ac.in) and
-            password to access all the functions.
-          </p>
-          <p>
-            Open this link ({" "}
-            <a
-              href="https://csc.iiitdm.ac.in/services-software-windows-os"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:underline"
-            >
-              https://csc.iiitdm.ac.in/services-software-windows-os
-            </a>{" "}
-            ) and read the instructions. We have access to other applications
-            beyond Teams.
-          </p>
-          <p>
-            You can download Teams both desktop and mobile versions (
-            <a
-              href="https://www.microsoft.com/en-in/microsoft-365/microsoft-teams/download-app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:underline"
-            >
-              https://www.microsoft.com/en-in/microsoft-365/microsoft-teams/download-app
-            </a>{" "}
-            ).
-          </p>
-          <p>
-            You may like to see these starter videos to learn about using the
-            teams, after logged in:
-          </p>
-          <p>
-            <a
-              href="https://support.office.com/en-us/article/microsoft-teams-video-training-4f108e54-240b-4351-8084-b1089f0d21d7"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:underline"
-            >
-              https://support.office.com/en-us/article/microsoft-teams-video-training-4f108e54-240b-4351-8084-b1089f0d21d7
-            </a>
-          </p>
-          <p>Without log in, you can access Tutorial Videos</p>
-          <p>
-            Teams allows to add-on or integrate multiple apps. View list of
-            apps
-          </p>
-          <p>
-            You may like to explore OneNote. You can dictate, write equations,
-            take notes and other related activities.{" "}
-            <a
-              href="https://www.microsoft.com/en-in/microsoft-365/onenote/digital-note-taking-app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:underline"
-            >
-              https://www.microsoft.com/en-in/microsoft-365/onenote/digital-note-taking-app
-            </a>
-          </p>
-          <p>
-            You may also like to read the tutorial guide on using Teams for
-            online meeting here: Quick Start Guide
-          </p>
-          <p>Future updates & best practices in MS Team</p>
-        </div>
-      </div>
-    </Box>
+      <Box className="frost-section">
+        <Typography className="frost-h2">Download Teams</Typography>
+        <Typography className="frost-p">
+          Teams is available on all platforms. Download the desktop and mobile apps from Microsoft:{" "}
+          <a
+            href="https://www.microsoft.com/en-in/microsoft-365/microsoft-teams/download-app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="frost-link"
+          >
+            microsoft.com/teams/download-app
+          </a>
+        </Typography>
+        <Typography className="frost-p">
+          Alternatively, Teams is accessible directly in your browser at{" "}
+          <a href="https://teams.microsoft.com" target="_blank" rel="noopener noreferrer" className="frost-link">
+            teams.microsoft.com
+          </a>{" "}
+          without any installation.
+        </Typography>
+      </Box>
+
+      <Box className="frost-section">
+        <Typography className="frost-h2">Full Software Catalog</Typography>
+        <Typography className="frost-p">
+          IIITDM&apos;s CSC page has detailed instructions for all Microsoft software available under the campus agreement:{" "}
+          <a
+            href="https://csc.iiitdm.ac.in/services-software-windows-os"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="frost-link"
+          >
+            csc.iiitdm.ac.in/services-software-windows-os
+          </a>
+        </Typography>
+      </Box>
+
+      <Box className="frost-section">
+        <Typography className="frost-h2">Learning Resources</Typography>
+        <Typography className="frost-p">
+          Official Microsoft video training for Teams:{" "}
+          <a
+            href="https://support.office.com/en-us/article/microsoft-teams-video-training-4f108e54-240b-4351-8084-b1089f0d21d7"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="frost-link"
+          >
+            Microsoft Teams Video Training
+          </a>
+        </Typography>
+      </Box>
+
+      <Box className="frost-section">
+        <Typography className="frost-h2">OneNote Integration</Typography>
+        <Typography className="frost-p">
+          OneNote is bundled with Teams and Office 365. You can dictate notes, write equations, sketch ideas, and sync across all your devices.{" "}
+          <a
+            href="https://www.microsoft.com/en-in/microsoft-365/onenote/digital-note-taking-app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="frost-link"
+          >
+            Learn more about OneNote
+          </a>
+        </Typography>
+      </Box>
+    </FrostContentPage>
   );
 }

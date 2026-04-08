@@ -1,139 +1,86 @@
 "use client";
+
 import React from "react";
+import { Typography, Box } from "@mui/material";
+import FrostContentPage from "@/components/FrostContentPage";
 
 export default function UbuntuPage() {
   return (
-    <div className="min-h-screen w-full bg-black text-white relative">
-      {/* Background grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
+    <FrostContentPage
+      title="Ubuntu"
+      subtitle="The most widely used Linux distribution on campus — beginner-friendly with long-term support releases and a massive community."
+      backHref="/frost/linux"
+      backLabel="Back to Linux"
+      breadcrumbs={[
+        { label: "FROST", href: "/frost" },
+        { label: "Linux", href: "/frost/linux" },
+      ]}
+      accentColor="#f97316"
+    >
+      <Box className="frost-section">
+        <Typography className="frost-h2">Campus Mirror</Typography>
+        <Typography className="frost-p">
+          IIITDM maintains a full Ubuntu mirror in compliance with official guidelines.
+          Updates reach the campus server with a maximum delay of <strong>6 hours</strong>.
+          This means you get fast, on-campus download speeds while still receiving timely security patches.
+        </Typography>
+        <Typography className="frost-p">
+          Check the{" "}
+          <a href="https://ubuntu.com/about/release-cycle" target="_blank" rel="noopener noreferrer" className="frost-link">
+            Ubuntu release cycle
+          </a>{" "}
+          to see which versions are currently supported.
+        </Typography>
+      </Box>
 
-      {/* Page Content */}
-      <div className="relative z-10 max-w-6xl mx-auto p-8 sm:p-12">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-10">
-          <img
-            src="/linux/ubuntu-logo.webp"
-            alt="Ubuntu Logo"
-            className="h-20 w-20 object-contain"
-          />
-          <h1 className="text-4xl sm:text-5xl font-bold text-blue-400">
-            Ubuntu
-          </h1>
-        </div>
+      <Box className="frost-section">
+        <Typography className="frost-h2">APT Repository Configuration</Typography>
+        <Typography className="frost-p">
+          Replace <Box component="span" className="frost-code">&lt;release&gt;</Box> with your Ubuntu codename (e.g.{" "}
+          <Box component="span" className="frost-code">noble</Box>,{" "}
+          <Box component="span" className="frost-code">jammy</Box>,{" "}
+          <Box component="span" className="frost-code">focal</Box>) in{" "}
+          <Box component="span" className="frost-code">/etc/apt/sources.list</Box>:
+        </Typography>
+        <Box component="pre" className="frost-pre">{`deb http://repo.iiitdm.ac.in/ubuntu <release> main restricted universe multiverse
+deb http://repo.iiitdm.ac.in/ubuntu <release>-updates main restricted universe multiverse
+deb http://repo.iiitdm.ac.in/ubuntu <release>-security main restricted universe multiverse
+# deb http://repo.iiitdm.ac.in/ubuntu <release>-backports main restricted universe multiverse
+# deb http://repo.iiitdm.ac.in/ubuntu <release>-proposed main restricted universe multiverse`}</Box>
+        <Typography className="frost-p">
+          After editing, run <Box component="span" className="frost-code">sudo apt update</Box> to refresh the package lists.
+        </Typography>
+      </Box>
 
-        {/* Description */}
-        <p className="mb-12 text-gray-300 text-lg leading-relaxed">
-          Ubuntu is the most used Linux flavour on campus, supporting a
-          significant chunk of our critical infrastructure.
-        </p>
+      <Box className="frost-section">
+        <Typography className="frost-h2">Supported Release ISOs</Typography>
+        <Typography className="frost-p">
+          CD/DVD images for all currently supported releases are available from the official Ubuntu image server:{" "}
+          <a href="http://cdimage.ubuntu.com" target="_blank" rel="noopener noreferrer" className="frost-link">
+            cdimage.ubuntu.com
+          </a>
+        </Typography>
+      </Box>
 
-        {/* Sections */}
-        <div className="space-y-12">
-          {/* Overview */}
-          <section>
-            <h2 className="text-2xl font-semibold mb-4 text-blue-300">
-              Overview
-            </h2>
-            <p className="mb-3 text-gray-300">
-              This mirror is in full compliance with official guidelines, and
-              the maximum delay in updates reaching this server is{" "}
-              <strong>6 hours</strong>.
-            </p>
-            <p className="mb-2">
-              <a
-                href="https://ubuntu.com/about/release-cycle"
-                target="_blank"
-                className="text-blue-400 hover:underline"
-              >
-                Support status of releases is listed here
-              </a>
-              .
-            </p>
-          </section>
-
-          {/* Supported Releases */}
-          <section>
-            <h2 className="text-2xl font-semibold mb-4 text-blue-300">
-              Supported Releases
-            </h2>
-            <p className="mb-3 text-gray-300">
-              CD Images of all supported releases can be obtained{" "}
-              <a
-                href="http://cdimage.ubuntu.com"
-                className="text-blue-400 hover:underline"
-                target="_blank"
-              >
-                here
-              </a>
-              .
-            </p>
-            <p className="text-gray-300">
-              Repositories of all officially supported releases are mirrored{" "}
-              <a
-                href="http://repo.iitd.ernet.in/ubuntu"
-                className="text-blue-400 hover:underline"
-                target="_blank"
-              >
-                here
-              </a>
-              . EOL releases stop functioning to force users to upgrade.
-            </p>
-          </section>
-
-          {/* Releases past EOL */}
-          <section>
-            <h2 className="text-2xl font-semibold mb-4 text-blue-300">
-              Releases past EOL
-            </h2>
-            <p className="mb-3 text-gray-300">
-              Legacy software may still need to be run. CD Images of all EOL
-              releases:{" "}
-              <a
-                href="http://old-releases.ubuntu.com/releases/"
-                className="text-blue-400 hover:underline"
-                target="_blank"
-              >
-                here
-              </a>
-              .
-            </p>
-            <p className="mb-3 text-gray-300">
-              All EOL releases are available{" "}
-              <a
-                href="http://old-releases.ubuntu.com/ubuntu/"
-                className="text-blue-400 hover:underline"
-                target="_blank"
-              >
-                here
-              </a>
-              . Users should understand the{" "}
-              <strong>security implications</strong>.
-            </p>
-            <p className="text-gray-300">
-              Requests to EOL repos are transparently proxied to the Ubuntu old
-              releases archive; intermediate directories are not browsable.
-            </p>
-          </section>
-
-          {/* APT Configuration */}
-          <section>
-            <h2 className="text-2xl font-semibold mb-4 text-blue-300">
-              APT Configuration
-            </h2>
-            <p className="mb-4 text-gray-300">
-              Replace <code>&lt;release&gt;</code> with your Ubuntu version in
-              your <code>sources.list</code>.
-            </p>
-            <pre className="bg-gray-900 border border-blue-900 text-green-400 p-5 rounded-xl overflow-x-auto shadow-lg">
-{`deb http://repo.iiitdm.ernet.in/ubuntu <release> main restricted universe multiverse
-deb http://repo.iiitdm.ernet.in/ubuntu <release>-updates main restricted universe multiverse
-deb http://repo.iiitdm.ernet.in/ubuntu <release>-security main restricted universe multiverse
-# deb http://repo.iiitdm.ernet.in/ubuntu <release>-backports main restricted universe multiverse
-# deb http://repo.iiitdm.ernet.in/ubuntu <release>-proposed main restricted universe multiverse`}
-            </pre>
-          </section>
-        </div>
-      </div>
-    </div>
+      <Box className="frost-section">
+        <Typography className="frost-h2">End-of-Life (EOL) Releases</Typography>
+        <Typography className="frost-p">
+          Legacy software sometimes requires an EOL Ubuntu release. CD images for EOL versions:{" "}
+          <a href="http://old-releases.ubuntu.com/releases/" target="_blank" rel="noopener noreferrer" className="frost-link">
+            old-releases.ubuntu.com/releases
+          </a>
+        </Typography>
+        <Typography className="frost-p">
+          Package repositories for all EOL releases are available at{" "}
+          <a href="http://old-releases.ubuntu.com/ubuntu/" target="_blank" rel="noopener noreferrer" className="frost-link">
+            old-releases.ubuntu.com/ubuntu
+          </a>.
+          Requests to EOL repos are transparently proxied — intermediate directories are not browsable.
+        </Typography>
+        <Box className="frost-warning">
+          EOL releases no longer receive security updates. Understand the security implications before running EOL software in any production or network-connected environment.
+        </Box>
+      </Box>
+    </FrostContentPage>
   );
 }

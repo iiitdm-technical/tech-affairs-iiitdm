@@ -16,6 +16,7 @@ import {
   Logout as LogoutIcon,
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
+  AccountCircle as ProfileIcon,
 } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import EventsManagement from './EventsManagement';
@@ -225,12 +226,16 @@ export default function AdminPage() {
               </Typography>
             </Box>
           </Box>
-          <Avatar
-            src={(user as unknown as { picture?: string }).picture}
-            sx={{ width: 34, height: 34, fontSize: '0.8rem', flexShrink: 0 }}
-          >
-            {user.name?.[0]}
-          </Avatar>
+          <IconButton size="small" onClick={() => router.push('/profile')}
+            title="Profile & Settings"
+            sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
+            <Avatar
+              src={(user as unknown as { picture?: string }).picture}
+              sx={{ width: 34, height: 34, fontSize: '0.8rem' }}
+            >
+              {user.name?.[0]}
+            </Avatar>
+          </IconButton>
         </Box>
 
         {/* Page content — extra bottom padding on mobile for bottom nav */}
@@ -260,7 +265,10 @@ export default function AdminPage() {
         >
           <BottomNavigation
             value={tab}
-            onChange={(_, v) => setTab(v)}
+            onChange={(_, v) => {
+              if (v === NAV_ITEMS.length) { router.push('/profile'); return; }
+              setTab(v);
+            }}
             sx={{
               bgcolor: 'transparent', height: 60,
               '& .MuiBottomNavigationAction-root': {
@@ -281,6 +289,7 @@ export default function AdminPage() {
                 icon={item.icon}
               />
             ))}
+            <BottomNavigationAction label="Profile" icon={<ProfileIcon />} />
           </BottomNavigation>
         </Paper>
       )}
