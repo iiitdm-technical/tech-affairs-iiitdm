@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentSession } from '@/lib/server/session';
 import { db } from '@/db';
 import { Events, Clubs, Orgs } from '@/db/schema';
-import { eq, inArray, isNotNull } from 'drizzle-orm';
+import { eq, inArray, isNotNull, and } from 'drizzle-orm';
 
 // Helper: resolve club_ids for an org-admin via two methods:
 // 1. clubs.org_slug matches their orgSlugs
@@ -17,8 +17,7 @@ async function getAllowedClubIds(orgSlugs: string[], email: string): Promise<num
     email
       ? db.select({ club_id: Orgs.club_ref_id })
           .from(Orgs)
-          .where(eq(Orgs.authorized_email, email))
-          .where(isNotNull(Orgs.club_ref_id))
+          .where(and(eq(Orgs.authorized_email, email), isNotNull(Orgs.club_ref_id)))
       : [],
   ]);
 

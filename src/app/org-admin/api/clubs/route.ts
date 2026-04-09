@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentSession } from '@/lib/server/session';
 import { db } from '@/db';
 import { Clubs, Orgs } from '@/db/schema';
-import { inArray, isNotNull, eq } from 'drizzle-orm';
+import { inArray, isNotNull, eq, and } from 'drizzle-orm';
 
 function isOrgAdmin(user: { role: string; orgSlugs: string[] }) {
   return user.role === 'A' || (user.role === 'O' && user.orgSlugs.length > 0);
@@ -35,8 +35,7 @@ export async function GET(request: NextRequest) {
     db.select({ club_id: Orgs.club_ref_id, name: Clubs.name })
       .from(Orgs)
       .innerJoin(Clubs, eq(Clubs.club_id, Orgs.club_ref_id))
-      .where(eq(Orgs.authorized_email, user.email))
-      .where(isNotNull(Orgs.club_ref_id)),
+      .where(and(eq(Orgs.authorized_email, user.email), isNotNull(Orgs.club_ref_id))),
   ]);
 
   // Merge and deduplicate by club_id
