@@ -3,6 +3,8 @@
 import { usePathname } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import NotificationBell from '@/components/NotificationBell';
+import PWAInstallBanner from '@/components/PWAInstallBanner';
 import { User } from '@/lib/server/user';
 
 const SHELL_EXCLUDED = ['/admin', '/org-admin', '/login'];
@@ -16,6 +18,8 @@ export default function ConditionalShell({ user, children }: { user: User | null
       {!hideShell && <Navbar user={user} />}
       {children}
       {!hideShell && <Footer />}
+      {!hideShell && <NotificationBell />}
+      <PWAInstallBanner />
     </>
   );
 }

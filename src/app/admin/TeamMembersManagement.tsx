@@ -112,8 +112,9 @@ export default function TeamMembersManagement() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(form),
         });
-        if (!res.ok) throw new Error((await res.json()).error || 'Failed');
-        memberId = (await res.json()).member?.id;
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed');
+        memberId = data.member?.id;
       } else {
         const res = await fetch('/admin/api/team-members', {
           method: 'PATCH',

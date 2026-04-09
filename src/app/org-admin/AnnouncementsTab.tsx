@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Box, Typography, Button, TextField, Dialog, DialogTitle, DialogContent,
   DialogActions, Snackbar, Alert, CircularProgress, Card, CardContent,
-  CardActions, Chip, Switch, FormControlLabel,
+  CardActions, Chip, Switch, FormControlLabel, LinearProgress,
 } from '@mui/material';
-import { Add, Edit, Delete } from '@mui/icons-material';
+import { Add, Edit, Delete, CloudUpload, AttachFile, PictureAsPdf } from '@mui/icons-material';
 
 interface Announcement {
   id: number;
@@ -14,11 +14,12 @@ interface Announcement {
   title: string;
   body: string;
   link: string;
+  media_url: string;
   active: string;
   created_at: string;
 }
 
-const EMPTY = { org_slug: '', title: '', body: '', link: '', active: 'Y' };
+const EMPTY = { org_slug: '', title: '', body: '', link: '', media_url: '', active: 'Y' };
 
 export default function AnnouncementsTab({ orgSlugs }: { orgSlugs: string[] }) {
   const [items, setItems] = useState<Announcement[]>([]);
@@ -30,6 +31,9 @@ export default function AnnouncementsTab({ orgSlugs }: { orgSlugs: string[] }) {
   const [snack, setSnack] = useState<{ open: boolean; msg: string; sev: 'success' | 'error' }>({
     open: false, msg: '', sev: 'success',
   });
+  const [uploading, setUploading] = useState(false);
+  const [savedId, setSavedId] = useState<number | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const toast = (msg: string, sev: 'success' | 'error' = 'success') => setSnack({ open: true, msg, sev });
 
@@ -43,11 +47,13 @@ export default function AnnouncementsTab({ orgSlugs }: { orgSlugs: string[] }) {
 
   function openAdd() {
     setForm({ ...EMPTY, org_slug: orgSlugs[0] ?? '' });
+    setSavedId(null);
     setDialog({ open: true, mode: 'add', item: null });
   }
 
   function openEdit(item: Announcement) {
-    setForm({ org_slug: item.org_slug, title: item.title, body: item.body, link: item.link ?? '', active: item.active });
+    setForm({ org_slug: item.org_slug, title: item.title, body: item.body, link: item.link ?? '', media_url: item.media_url ?? '', active: item.active });
+    setSavedId(item.id);
     setDialog({ open: true, mode: 'edit', item });
   }
 
@@ -66,6 +72,12 @@ export default function AnnouncementsTab({ orgSlugs }: { orgSlugs: string[] }) {
     });
 
     if (res.ok) {
+      const data = await res.json();
+      const annId = dialog.mode === 'add' ? data.id : dialog.item!.id;
+      // Upload pending attachment for new announcements
+      if (dialog.mode === 'add' && fileInputRef.current?.files?.[0] && annId) {
+        await uploadMedia(fileInputRef.current.files[0], annId);
+      }
       toast(dialog.mode === 'add' ? 'Announcement posted' : 'Updated');
       setDialog({ open: false, mode: 'add', item: null });
       load();
@@ -74,6 +86,40 @@ export default function AnnouncementsTab({ orgSlugs }: { orgSlugs: string[] }) {
       let msg = 'Failed';
       try { msg = JSON.parse(text).error || msg; } catch {}
       toast(msg, 'error');
+    }
+  }
+
+  async function uploadMedia(file: File, id: number): Promise<string | undefined> {
+    setUploading(true);
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('announcementId', String(id));
+    const res = await fetch('/org-admin/api/upload/announcement', { method: 'POST', body: fd });
+    setUploading(false);
+    if (res.ok) {
+      const { url } = await res.json();
+      setForm(p => ({ ...p, media_url: url }));
+      // Patch media_url onto existing announcement
+      await fetch('/org-admin/api/announcements', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, media_url: url }),
+      });
+      toast('Attachment uploaded');
+      return url;
+    } else {
+      toast('Attachment upload failed', 'error');
+    }
+  }
+
+  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (dialog.mode === 'edit' && savedId) {
+      const url = await uploadMedia(file, savedId);
+      if (url) load();
+    } else {
+      setForm(p => ({ ...p, media_url: `pending:${file.name}` }));
     }
   }
 
@@ -91,6 +137,11 @@ export default function AnnouncementsTab({ orgSlugs }: { orgSlugs: string[] }) {
       body: JSON.stringify({ id: item.id, active: item.active === 'Y' ? 'N' : 'Y' }),
     });
     load();
+  }
+
+  function mediaIcon(url: string) {
+    if (url.endsWith('.pdf')) return <PictureAsPdf fontSize="small" color="error" />;
+    return <AttachFile fontSize="small" color="primary" />;
   }
 
   if (loading) return <Box display="flex" justifyContent="center" py={6}><CircularProgress /></Box>;
@@ -114,6 +165,30 @@ export default function AnnouncementsTab({ orgSlugs }: { orgSlugs: string[] }) {
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         {items.map((item) => (
           <Card key={item.id} variant="outlined" sx={{ borderRadius: 2, opacity: item.active === 'Y' ? 1 : 0.5 }}>
+            {/* Media preview */}
+            {item.media_url && !item.media_url.startsWith('pending:') && (
+              item.media_url.endsWith('.pdf') ? (
+                <Box sx={{ px: 2, pt: 1.5 }}>
+                  <Button
+                    size="small"
+                    startIcon={<PictureAsPdf />}
+                    href={item.media_url}
+                    target="_blank"
+                    color="error"
+                    variant="outlined"
+                  >
+                    View PDF
+                  </Button>
+                </Box>
+              ) : (
+                <Box
+                  component="img"
+                  src={item.media_url}
+                  alt="attachment"
+                  sx={{ width: '100%', maxHeight: 180, objectFit: 'cover', borderRadius: '8px 8px 0 0' }}
+                />
+              )
+            )}
             <CardContent sx={{ pb: 0 }}>
               <Box display="flex" alignItems="center" gap={1} mb={0.5}>
                 <Chip label={item.org_slug} size="small" variant="outlined" color="primary" />
@@ -163,6 +238,43 @@ export default function AnnouncementsTab({ orgSlugs }: { orgSlugs: string[] }) {
             <TextField fullWidth label="Link (optional)" value={form.link}
               onChange={(e) => setForm(p => ({ ...p, link: e.target.value }))}
               placeholder="https://..." />
+
+            {/* Media upload */}
+            <Box>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*,application/pdf"
+                style={{ display: 'none' }}
+                onChange={handleFileChange}
+              />
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+                <Button
+                  variant="outlined"
+                  startIcon={<CloudUpload />}
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploading}
+                  size="small"
+                >
+                  {uploading ? 'Uploading…' : 'Attach Image / PDF'}
+                </Button>
+                {form.media_url && (
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                    {mediaIcon(form.media_url)}
+                    <Typography variant="caption" color="success.main">
+                      {form.media_url.startsWith('pending:')
+                        ? form.media_url.replace('pending:', '') + ' (will upload on save)'
+                        : 'Attachment set'}
+                    </Typography>
+                  </Box>
+                )}
+              </Box>
+              {uploading && <LinearProgress sx={{ mt: 1 }} />}
+              <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
+                Image or PDF shown alongside the announcement
+              </Typography>
+            </Box>
+
             {dialog.mode === 'edit' && (
               <FormControlLabel
                 control={<Switch checked={form.active === 'Y'} onChange={(e) => setForm(p => ({ ...p, active: e.target.checked ? 'Y' : 'N' }))} />}
@@ -173,7 +285,9 @@ export default function AnnouncementsTab({ orgSlugs }: { orgSlugs: string[] }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialog({ ...dialog, open: false })}>Cancel</Button>
-          <Button variant="contained" onClick={handleSubmit}>{dialog.mode === 'add' ? 'Post' : 'Update'}</Button>
+          <Button variant="contained" onClick={handleSubmit} disabled={uploading}>
+            {dialog.mode === 'add' ? 'Post' : 'Update'}
+          </Button>
         </DialogActions>
       </Dialog>
 

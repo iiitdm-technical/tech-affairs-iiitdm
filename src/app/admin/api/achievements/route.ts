@@ -21,14 +21,14 @@ export async function POST(request: NextRequest) {
   const { err } = await requireAdmin();
   if (err) return err;
 
-  const { org_slug, title, description, year, proof_url, logo } = await request.json();
+  const { org_slug, title, description, year, proof_url, logo, image } = await request.json();
   if (!org_slug || !title || !description || !year) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
 
   const [row] = await db
     .insert(Achievements)
-    .values({ org_slug, title, description, year, proof_url: proof_url || '', logo: logo || '' })
+    .values({ org_slug, title, description, year, proof_url: proof_url || '', logo: logo || '', image: image || '' })
     .returning();
   return NextResponse.json({ success: true, achievement: row });
 }
@@ -42,7 +42,7 @@ export async function PATCH(request: NextRequest) {
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 });
 
   const updateData: Record<string, unknown> = {};
-  for (const key of ['org_slug', 'title', 'description', 'year', 'proof_url', 'logo'] as const) {
+  for (const key of ['org_slug', 'title', 'description', 'year', 'proof_url', 'logo', 'image'] as const) {
     if (fields[key] !== undefined) updateData[key] = fields[key];
   }
 

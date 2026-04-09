@@ -36,8 +36,8 @@ const ScrollToTopButton = () => {
         aria-label="scroll back to top"
         sx={{
           position: 'fixed',
-          bottom: 50,
-          right: 20,
+          bottom: { xs: 84, md: 92 },
+          right: { xs: 16, md: 24 },
           backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
           backdropFilter: 'blur(8px)',
           '&:hover': {

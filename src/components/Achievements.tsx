@@ -20,6 +20,7 @@ interface AchievementRow {
   description: string;
   year: string;
   logo: string;
+  image: string;
   org_name?: string;
 }
 
@@ -42,7 +43,7 @@ const Achievements = () => {
   const isDark = theme.palette.mode === 'dark';
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [items, setItems] = useState<{ title: string; description: string; image: string; date: string; category: string; color: string }[]>([]);
+  const [items, setItems] = useState<{ title: string; description: string; image: string; logo: string; date: string; category: string; color: string }[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -63,7 +64,8 @@ const Achievements = () => {
         .map((a, i) => ({
           title: a.title,
           description: a.description,
-          image: a.logo,
+          image: a.image || '',
+          logo: a.logo,
           date: a.year,
           category: a.org_name,
           color: ACCENT_COLORS[i % ACCENT_COLORS.length],
@@ -120,13 +122,19 @@ const Achievements = () => {
                   key={`${achievement.title}-${idx}`}
                   sx={{ minWidth: '100%', boxSizing: 'border-box', p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
                 >
-                  <Box sx={{ width: { xs: 80, sm: 100 }, height: { xs: 80, sm: 100 }, borderRadius: 3.5, background: `${achievement.color}10`, border: `1px solid ${achievement.color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2.5 }}>
-                    {achievement.image ? (
-                      <Box component="img" src={achievement.image} alt={achievement.title} sx={{ width: { xs: 60, sm: 70 }, height: { xs: 60, sm: 70 }, objectFit: 'contain' }} />
-                    ) : (
-                      <Typography sx={{ fontSize: '2rem', fontWeight: 800, color: achievement.color }}>{achievement.category?.[0]}</Typography>
-                    )}
-                  </Box>
+                  {achievement.image ? (
+                    <Box sx={{ width: '100%', maxWidth: 640, borderRadius: 3, overflow: 'hidden', mb: 2.5, border: `1px solid ${achievement.color}20` }}>
+                      <Box component="img" src={achievement.image} alt={achievement.title} sx={{ width: '100%', height: { xs: 200, sm: 280 }, objectFit: 'cover', display: 'block' }} />
+                    </Box>
+                  ) : (
+                    <Box sx={{ width: { xs: 80, sm: 100 }, height: { xs: 80, sm: 100 }, borderRadius: 3.5, background: `${achievement.color}10`, border: `1px solid ${achievement.color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2.5 }}>
+                      {achievement.logo ? (
+                        <Box component="img" src={achievement.logo} alt={achievement.title} sx={{ width: { xs: 60, sm: 70 }, height: { xs: 60, sm: 70 }, objectFit: 'contain' }} />
+                      ) : (
+                        <Typography sx={{ fontSize: '2rem', fontWeight: 800, color: achievement.color }}>{achievement.category?.[0]}</Typography>
+                      )}
+                    </Box>
+                  )}
 
                   <Box sx={{ display: 'inline-block', fontSize: '0.65rem', fontWeight: 650, color: achievement.color, background: `${achievement.color}12`, px: 1.5, py: 0.4, borderRadius: 1.5, letterSpacing: '0.03em', mb: 1.5 }}>
                     {achievement.category}

@@ -53,8 +53,9 @@ export default function OrgAdminPage() {
       const res = await fetch('/api/auth/me');
       if (!res.ok) { router.push('/login'); return; }
       const data: AuthUser = await res.json();
-      if (data.role === 'A') { router.push('/admin'); return; }
-      if (data.role !== 'O' || data.orgSlugs.length === 0) { router.push('/'); return; }
+      // Allow both Super Admins ('A') and Org Admins ('O') with org slugs
+      if (data.role !== 'A' && data.role !== 'O') { router.push('/'); return; }
+      if (data.orgSlugs.length === 0) { router.push('/'); return; }
       setUser(data);
       setLoading(false);
     })();
@@ -82,7 +83,7 @@ export default function OrgAdminPage() {
   const drawerWidth = collapsed ? DRAWER_COLLAPSED : DRAWER_WIDTH;
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: theme.palette.mode === 'dark' ? '#0f1117' : '#f4f6fb' }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: theme.palette.mode === 'dark' ? '#030a06' : '#f4f6fb' }}>
 
       {/* Sidebar */}
       <Drawer
@@ -93,9 +94,9 @@ export default function OrgAdminPage() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            bgcolor: theme.palette.mode === 'dark' ? '#13151f' : '#ffffff',
+            bgcolor: theme.palette.mode === 'dark' ? '#05150a' : '#ffffff',
             borderRight: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'rgba(163,230,53,0.1)' : 'divider',
             transition: 'width 0.2s ease',
             overflowX: 'hidden',
           },
@@ -108,7 +109,7 @@ export default function OrgAdminPage() {
         }}>
           {!collapsed && (
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-              {orgInfo ? (
+              {orgInfo?.image ? (
                 <Box component="img" src={orgInfo.image} alt={orgInfo.name}
                   sx={{ width: 32, height: 32, objectFit: 'contain', borderRadius: 1 }}
                   onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.style.display = 'none'; }}
@@ -228,7 +229,7 @@ export default function OrgAdminPage() {
         {/* Top bar */}
         <Box sx={{
           px: 4, py: 2.5,
-          bgcolor: theme.palette.mode === 'dark' ? '#13151f' : '#ffffff',
+          bgcolor: theme.palette.mode === 'dark' ? '#05150a' : '#ffffff',
           borderBottom: '1px solid', borderColor: 'divider',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           position: 'sticky', top: 0, zIndex: 10,
@@ -250,7 +251,7 @@ export default function OrgAdminPage() {
 
         {/* Page content */}
         <Box sx={{ flexGrow: 1, p: { xs: 2, md: 4 }, overflowY: 'auto' }}>
-          {tab === 0 && <EventsTab clubId={0} />}
+          {tab === 0 && <EventsTab orgSlugs={user.orgSlugs} />}
           {tab === 1 && <AchievementsTab orgSlugs={user.orgSlugs} />}
           {tab === 2 && <AnnouncementsTab orgSlugs={user.orgSlugs} />}
         </Box>

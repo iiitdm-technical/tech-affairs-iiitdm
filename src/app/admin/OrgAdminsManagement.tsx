@@ -6,6 +6,7 @@ import {
   Table, TableHead, TableRow, TableCell, TableBody, Paper,
   Dialog, DialogTitle, DialogContent, DialogActions,
   IconButton, CircularProgress, Chip,
+  Select, MenuItem, FormControl, InputLabel, ListItemText, ListItemAvatar, Avatar,
 } from '@mui/material';
 import { Add, Delete } from '@mui/icons-material';
 import { useOrgs } from '@/hooks/useOrgs';
@@ -18,7 +19,7 @@ interface OrgAdmin {
 
 export default function OrgAdminsManagement() {
   const allOrgs = useOrgs();
-  const ALL_SLUGS = allOrgs.map((o) => ({ slug: o.link.split('/').pop()!, name: o.name }));
+  const ALL_SLUGS = allOrgs.map((o) => ({ slug: o.link.split('/').pop()!, name: o.name, image: o.image }));
   const [rows, setRows] = useState<OrgAdmin[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -134,15 +135,34 @@ export default function OrgAdminsManagement() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="csclub@iiitdm.ac.in"
             />
-            <TextField
-              fullWidth
-              label="Org Slug"
-              value={orgSlug}
-              onChange={(e) => setOrgSlug(e.target.value)}
-              placeholder="cs"
-              helperText={`Available: ${ALL_SLUGS.map((o) => o.slug).join(', ')}`}
-              FormHelperTextProps={{ sx: { fontSize: '0.72rem' } }}
-            />
+            <FormControl fullWidth required>
+              <InputLabel>Organisation</InputLabel>
+              <Select
+                label="Organisation"
+                value={orgSlug}
+                onChange={(e) => setOrgSlug(e.target.value)}
+                renderValue={(val) => {
+                  const o = ALL_SLUGS.find(x => x.slug === val);
+                  return o ? `${o.name} (${o.slug})` : val;
+                }}
+              >
+                {ALL_SLUGS.map((o) => (
+                  <MenuItem key={o.slug} value={o.slug}>
+                    <ListItemAvatar sx={{ minWidth: 36 }}>
+                      <Avatar src={o.image} sx={{ width: 24, height: 24, fontSize: '0.65rem' }}>
+                        {o.name[0]}
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={o.name}
+                      secondary={o.slug}
+                      primaryTypographyProps={{ fontSize: '0.875rem' }}
+                      secondaryTypographyProps={{ fontSize: '0.72rem' }}
+                    />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Box>
         </DialogContent>
         <DialogActions>

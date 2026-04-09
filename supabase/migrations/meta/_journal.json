@@ -36,6 +36,20 @@
       "when": 1775626071107,
       "tag": "0004_mushy_madame_hydra",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1775736416960,
+      "tag": "0005_brief_luke_cage",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1775737894435,
+      "tag": "0006_keen_frightful_four",
+      "breakpoints": true
     }
   ]
 }

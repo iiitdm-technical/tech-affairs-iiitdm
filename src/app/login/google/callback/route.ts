@@ -11,16 +11,21 @@ import type { OAuth2Tokens } from "arctic";
 import { createUser, getUserFromGoogleId } from "@/lib/server/user";
 
 async function getRedirectPath(email: string): Promise<string> {
-    const roleRows = await db
-        .select({ role: User_roles.role })
-        .from(User_roles)
-        .where(eq(User_roles.email, email));
+    try {
+        const roleRows = await db
+            .select({ role: User_roles.role })
+            .from(User_roles)
+            .where(eq(User_roles.email, email));
 
-    const role = roleRows.length > 0 ? roleRows[0].role : 'U';
+        const role = roleRows.length > 0 ? roleRows[0].role : 'U';
 
-    if (role === 'A') return '/admin';
-    if (role === 'O') return '/org-admin';
-    return '/';
+        if (role === 'A') return '/admin';
+        if (role === 'O') return '/org-admin';
+        return '/';
+    } catch {
+        // DB timeout — session cookie is already set, just send home
+        return '/';
+    }
 }
 
 export async function GET(request: Request): Promise<Response> {
@@ -61,14 +66,26 @@ export async function GET(request: Request): Promise<Response> {
         redirect("/login?error=non_iiitdm");
     }
 
-    const existingUser = await getUserFromGoogleId(googleUserId);
-
     let userId: number;
-    if (existingUser !== null) {
-        userId = existingUser.id;
-    } else {
-        const newUser = await createUser(googleUserId, email, username, picture);
-        userId = newUser.id;
+    // Retry once on transient DB errors (Supabase pooler connection drops)
+    for (let attempt = 0; attempt <= 1; attempt++) {
+        try {
+            const existingUser = await getUserFromGoogleId(googleUserId);
+            if (existingUser !== null) {
+                userId = existingUser.id;
+            } else {
+                const newUser = await createUser(googleUserId, email, username, picture);
+                userId = newUser.id;
+            }
+            break; // success
+        } catch (err) {
+            if (attempt === 1) {
+                console.error('Login DB error after retry:', err);
+                return new Response(null, { status: 302, headers: { Location: '/login?error=db_error' } });
+            }
+            // Wait 1.5s then retry
+            await new Promise(r => setTimeout(r, 1500));
+        }
     }
 
     const sessionToken = await generateSessionToken();

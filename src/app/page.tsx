@@ -4,10 +4,11 @@
 import React from 'react';
 import { Box } from '@mui/material';
 
-// Import section components
 import Hero from '../components/Hero';
 import About from '../components/About';
 import Achievements from '../components/Achievements';
+import Highlights from '../components/Highlights';
+import SponsorsSection from '../components/SponsorsSection';
 import Techfest from '../components/Techfest';
 import AnnouncementsPopup from '../components/AnnouncementsPopup';
 
@@ -18,9 +19,11 @@ function Home() {
       <Hero />
       <About />
       <Achievements />
+      <Highlights />
+      <SponsorsSection />
       <Techfest />
     </Box>
   );
 }
 
-export default Home; 
+export default Home;

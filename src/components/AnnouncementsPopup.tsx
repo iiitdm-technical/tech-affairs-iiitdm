@@ -5,7 +5,7 @@ import {
   Dialog, DialogTitle, DialogContent, DialogActions,
   Button, Typography, Box, Chip, Divider, IconButton,
 } from '@mui/material';
-import { Close, Campaign, OpenInNew } from '@mui/icons-material';
+import { Close, Campaign, OpenInNew, PictureAsPdf } from '@mui/icons-material';
 import Link from 'next/link';
 import { useOrgs, slugToName } from '@/hooks/useOrgs';
 
@@ -17,6 +17,7 @@ interface Announcement {
   title: string;
   body: string;
   link: string;
+  media_url: string;
   created_at: string;
 }
 
@@ -91,6 +92,30 @@ export default function AnnouncementsPopup() {
               </Box>
               <Typography fontWeight={700} fontSize="1rem" mb={0.75}>{a.title}</Typography>
               <Typography variant="body2" color="text.secondary" lineHeight={1.6}>{a.body}</Typography>
+              {a.media_url && !a.media_url.startsWith('pending:') && (
+                a.media_url.endsWith('.pdf') ? (
+                  <Button
+                    component="a"
+                    href={a.media_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    size="small"
+                    startIcon={<PictureAsPdf fontSize="small" />}
+                    color="error"
+                    variant="outlined"
+                    sx={{ mt: 1.5, textTransform: 'none', borderRadius: 2 }}
+                  >
+                    View PDF
+                  </Button>
+                ) : (
+                  <Box
+                    component="img"
+                    src={a.media_url}
+                    alt="attachment"
+                    sx={{ mt: 1.5, width: '100%', maxHeight: 200, objectFit: 'cover', borderRadius: 2 }}
+                  />
+                )
+              )}
               {a.link && (
                 <Button
                   component="a"

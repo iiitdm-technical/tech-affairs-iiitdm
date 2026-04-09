@@ -1,4 +1,4 @@
-import { integer, varchar, char, pgTable, serial, text, timestamp, primaryKey } from 'drizzle-orm/pg-core';
+import { boolean, integer, varchar, char, pgTable, serial, text, timestamp, primaryKey } from 'drizzle-orm/pg-core';
 
 
 export const Users = pgTable('users', {
@@ -93,6 +93,7 @@ export const Announcements = pgTable('announcements', {
     title: varchar('title').notNull(),
     body: text('body').notNull(),
     link: text('link').default(''),
+    media_url: text('media_url').default(''), // optional image or PDF attachment
     active: char('active', { length: 1 }).notNull().default('Y'), // Y = visible, N = hidden
     created_at: timestamp('created_at').defaultNow().notNull(),
 });
@@ -141,8 +142,53 @@ export const TeamMembers = pgTable('team_members', {
     active: char('active', { length: 1 }).notNull().default('Y'),
 });
 
+// Highlights — Media & Marketing team uploads (external programs, events, reels, etc.)
+export const Highlights = pgTable('highlights', {
+    id: serial('id').primaryKey().notNull(),
+    title: varchar('title').notNull(),
+    subtitle: text('subtitle').default(''),    // short caption
+    image: text('image').notNull(),            // Supabase public URL
+    link: text('link').default(''),            // optional external link
+    tag: varchar('tag', { length: 40 }).default(''), // e.g. 'Workshop', 'External Program', 'Vaidehi'
+    sort_order: integer('sort_order').notNull().default(0),
+    active: char('active', { length: 1 }).notNull().default('Y'),
+    created_at: timestamp('created_at').defaultNow().notNull(),
+});
+
+// Sponsors — can be managed by super-admin
+export const Sponsors = pgTable('sponsors', {
+    id: serial('id').primaryKey().notNull(),
+    name: varchar('name').notNull(),
+    logo: text('logo').notNull(),              // Supabase public URL or public asset path
+    website: text('website').default(''),
+    tier: varchar('tier', { length: 20 }).default('general'), // 'title' | 'gold' | 'silver' | 'general'
+    year: varchar('year', { length: 9 }).default(''),         // e.g. '2025-26'
+    sort_order: integer('sort_order').notNull().default(0),
+    active: char('active', { length: 1 }).notNull().default('Y'),
+});
+
 // Achievements managed via the org-admin / super-admin dashboard.
 // Replaces / extends the static src/data/achievements.ts for dynamically-added entries.
+// Frost open contributions — community-submitted additions/corrections to FROST pages.
+// status: 'pending' | 'approved' | 'rejected'
+// action_type: 'add' | 'edit' | 'delete'
+export const FrostContributions = pgTable('frost_contributions', {
+    id: serial('id').primaryKey().notNull(),
+    page_path: text('page_path').notNull(),       // e.g. '/frost/linux/debian'
+    page_title: varchar('page_title').notNull(),  // e.g. 'Debian'
+    title: varchar('title').notNull(),            // contribution title/section name
+    body: text('body').notNull(),                 // markdown content
+    author_id: integer('author_id').notNull().references(() => Users.user_id),
+    author_name: varchar('author_name').notNull(),
+    author_email: text('author_email').notNull(),
+    status: varchar('status', { length: 10 }).notNull().default('pending'), // pending | approved | rejected
+    reviewed_by: text('reviewed_by').default(''), // admin name who reviewed
+    reviewed_at: timestamp('reviewed_at'),
+    created_at: timestamp('created_at').defaultNow().notNull(),
+    deleted_at: timestamp('deleted_at'),          // set when admin deletes
+    deleted_by: text('deleted_by').default(''),
+});
+
 export const Achievements = pgTable('achievements', {
     id: serial('id').primaryKey().notNull(),
     org_slug: text('org_slug').notNull(),   // e.g. 'nira', 'cs'
@@ -151,6 +197,7 @@ export const Achievements = pgTable('achievements', {
     year: varchar('year', { length: 4 }).notNull(),
     proof_url: text('proof_url').default(''),
     logo: text('logo').default(''),         // optional override; falls back to org logo
+    image: text('image').default(''),       // competition photo shown in carousel
     created_at: timestamp('created_at').defaultNow().notNull(),
 });
 

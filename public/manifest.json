@@ -1,6 +1,7 @@
 {
-  "short_name": "Technical Affairs IIITDM",
-  "name": "Official Website of Technical Affairs IIITDM",
+  "short_name": "Tech Affairs",
+  "name": "Technical Affairs IIITDM Kancheepuram",
+  "description": "Official website of the Technical Affairs Student Council, IIITDM Kancheepuram — clubs, teams, societies, achievements, and events.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,18 +9,40 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "/logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
-      "src": "logo512.png",
+      "src": "/logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "orientation": "portrait",
+  "theme_color": "#030a06",
+  "background_color": "#030a06",
+  "categories": ["education", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Announcements",
+      "url": "/announcements",
+      "description": "Latest announcements from Technical Affairs"
+    },
+    {
+      "name": "Achievements",
+      "url": "/achievements",
+      "description": "Our achievements"
+    },
+    {
+      "name": "Council",
+      "url": "/council",
+      "description": "Explore the council"
+    }
+  ]
 }

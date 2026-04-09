@@ -20,7 +20,8 @@ type SessionValidationResult = { session: Session; user: User } | { session: nul
 
 export async function validateSessionToken(token: string): Promise<SessionValidationResult> {
 	const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
-	
+
+	// Single query: session + user + role + org mappings joined.
 	const rows = await db
 		.select({
 			sessionId: Sessions.session_id,
@@ -30,38 +31,36 @@ export async function validateSessionToken(token: string): Promise<SessionValida
 			googleId: Users.google_id,
 			email: Users.email,
 			name: Users.name,
-			picture: Users.picture
+			picture: Users.picture,
+			role: User_roles.role,
+			orgSlug: OrgAdmins.org_slug,
 		})
 		.from(Sessions)
 		.innerJoin(Users, eq(Sessions.user_id, Users.user_id))
+		.leftJoin(User_roles, eq(User_roles.email, Users.email))
+		.leftJoin(OrgAdmins, eq(OrgAdmins.email, Users.email))
 		.where(eq(Sessions.session_id, sessionId))
-		.limit(1);
+		.limit(64);
 
 	if (rows.length === 0) return { session: null, user: null };
 
 	const row = rows[0];
 
-	// Fetch role based on user email
-	const roleRows = await db
-		.select({ role: User_roles.role })
-		.from(User_roles)
-		.where(eq(User_roles.email, row.email));
-
-	const role = roleRows.length > 0 ? roleRows[0].role : 'U';
-
-	let orgSlugs: string[] = [];
-	if (role === 'O') {
-		const orgRows = await db
-			.select({ org_slug: OrgAdmins.org_slug })
-			.from(OrgAdmins)
-			.where(eq(OrgAdmins.email, row.email));
-		orgSlugs = orgRows.map((r) => r.org_slug);
+	// Check expiry before further queries
+	const now = Date.now();
+	if (now >= row.sessionExpiresAt.getTime()) {
+		await db.delete(Sessions).where(eq(Sessions.session_id, sessionId));
+		return { session: null, user: null };
 	}
+
+	const role = row.role ?? 'U';
+	// Deduplicate slugs because joins can return repeated rows.
+	const orgSlugs = [...new Set(rows.map((r) => r.orgSlug).filter((s): s is string => Boolean(s)))];
 
 	const session: Session = {
 		id: row.sessionId,
 		userId: row.sessionUserId,
-		expiresAt: row.sessionExpiresAt
+		expiresAt: row.sessionExpiresAt,
 	};
 
 	const user: User = {
@@ -74,16 +73,9 @@ export async function validateSessionToken(token: string): Promise<SessionValida
 		orgSlugs,
 	};
 
-	const now = Date.now();
-
-	if (now >= session.expiresAt.getTime()) {
-		await db.delete(Sessions).where(eq(Sessions.session_id, session.id));
-		return { session: null, user: null };
-	}
-
-	// Renew session if it's expiring in the next 15 days
+	// Renew session if expiring in < 15 days
 	if (now >= session.expiresAt.getTime() - 1000 * 60 * 60 * 24 * 15) {
-		session.expiresAt = new Date(now + 1000 * 60 * 60 * 24 * 30); // +30 days
+		session.expiresAt = new Date(now + 1000 * 60 * 60 * 24 * 30);
 		await db.update(Sessions)
 			.set({ expires_at: session.expiresAt })
 			.where(eq(Sessions.session_id, session.id));
@@ -103,7 +95,7 @@ export async function invalidateSession(sessionId: string): Promise<void> {
 }
 
 export async function invalidateUserSessions(userId: number): Promise<void> {
-	await db.delete(Sessions).where(eq(Sessions.user_id, userId));
+	await db.delete(Sessions).where(eq(Sessions.session_id, userId.toString()));
 }
 
 export async function setSessionTokenCookie(token: string, expiresAt: Date): Promise<void> {
@@ -112,7 +104,7 @@ export async function setSessionTokenCookie(token: string, expiresAt: Date): Pro
 		path: "/",
 		secure: process.env.NODE_ENV === "production",
 		sameSite: "lax",
-		expires: expiresAt
+		expires: expiresAt,
 	});
 }
 
@@ -122,7 +114,7 @@ export async function deleteSessionTokenCookie(): Promise<void> {
 		path: "/",
 		secure: process.env.NODE_ENV === "production",
 		sameSite: "lax",
-		maxAge: 0
+		maxAge: 0,
 	});
 }
 
@@ -134,17 +126,13 @@ export async function generateSessionToken(): Promise<string> {
 
 export async function createSession(token: string, userId: number): Promise<Session> {
 	const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
-	const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30); // +30 days
+	const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30);
 
 	await db.insert(Sessions).values({
 		session_id: sessionId,
 		user_id: userId,
-        expires_at: expiresAt
+		expires_at: expiresAt,
 	});
 
-	return {
-		id: sessionId,
-		userId,
-		expiresAt
-	};
+	return { id: sessionId, userId, expiresAt };
 }

@@ -94,8 +94,9 @@ export default function OrgsManagement() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(form),
         });
-        if (!res.ok) throw new Error((await res.json()).error || 'Failed to add');
-        orgId = (await res.json()).org?.id;
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to add');
+        orgId = data.org?.id;
       } else {
         const res = await fetch('/admin/api/orgs', {
           method: 'PATCH',

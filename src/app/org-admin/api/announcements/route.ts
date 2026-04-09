@@ -28,11 +28,11 @@ export async function POST(request: NextRequest) {
   if (!session || !user) return unauth();
   if (user.role !== 'O' && user.role !== 'A') return forbidden();
 
-  const { org_slug, title, body, link } = await request.json();
+  const { org_slug, title, body, link, media_url } = await request.json();
   if (!org_slug || !title || !body) return NextResponse.json({ error: 'org_slug, title and body required' }, { status: 400 });
   if (user.role === 'O' && !user.orgSlugs.includes(org_slug)) return forbidden();
 
-  const [row] = await db.insert(Announcements).values({ org_slug, title, body, link: link ?? '', active: 'Y' }).returning();
+  const [row] = await db.insert(Announcements).values({ org_slug, title, body, link: link ?? '', media_url: media_url ?? '', active: 'Y' }).returning();
   return NextResponse.json(row);
 }
 
@@ -41,7 +41,7 @@ export async function PATCH(request: NextRequest) {
   if (!session || !user) return unauth();
   if (user.role !== 'O' && user.role !== 'A') return forbidden();
 
-  const { id, title, body, link, active } = await request.json();
+  const { id, title, body, link, media_url, active } = await request.json();
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 });
 
   const [existing] = await db.select().from(Announcements).where(eq(Announcements.id, id));
@@ -52,6 +52,7 @@ export async function PATCH(request: NextRequest) {
   if (title !== undefined) update.title = title;
   if (body !== undefined) update.body = body;
   if (link !== undefined) update.link = link;
+  if (media_url !== undefined) update.media_url = media_url;
   if (active !== undefined) update.active = active;
 
   const [row] = await db.update(Announcements).set(update).where(eq(Announcements.id, id)).returning();

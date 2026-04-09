@@ -17,6 +17,9 @@ import {
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
   AccountCircle as ProfileIcon,
+  AutoAwesome as HighlightIcon,
+  Handshake as HandshakeIcon,
+  Article as FrostIcon,
 } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import EventsManagement from './EventsManagement';
@@ -24,17 +27,23 @@ import ClubsOrgsManagement from './ClubsOrgsManagement';
 import OrgAdminsManagement from './OrgAdminsManagement';
 import AchievementsManagement from './AchievementsManagement';
 import TeamFullManagement from './TeamFullManagement';
+import HighlightsManagement from './HighlightsManagement';
+import SponsorsManagement from './SponsorsManagement';
+import FrostManagement from './FrostManagement';
 import { User } from '@/lib/server/user';
 
 const DRAWER_WIDTH = 260;
 const DRAWER_COLLAPSED = 72;
 
 const NAV_ITEMS = [
-  { label: 'Events',       icon: <EventIcon />,  },
-  { label: 'Clubs & Orgs', icon: <OrgIcon />,    },
-  { label: 'Org Admins',   icon: <AdminIcon />,  },
-  { label: 'Achievements', icon: <TrophyIcon />, },
-  { label: 'Team',         icon: <PeopleIcon />, },
+  { label: 'Events',       icon: <EventIcon />,       },
+  { label: 'Clubs & Orgs', icon: <OrgIcon />,         },
+  { label: 'Org Admins',   icon: <AdminIcon />,       },
+  { label: 'Achievements', icon: <TrophyIcon />,      },
+  { label: 'Highlights',   icon: <HighlightIcon />,   },
+  { label: 'Sponsors',     icon: <HandshakeIcon />,   },
+  { label: 'Team',         icon: <PeopleIcon />,      },
+  { label: 'FROST',        icon: <FrostIcon />,       },
 ];
 
 export default function AdminPage() {
@@ -249,7 +258,10 @@ export default function AdminPage() {
           {tab === 1 && <ClubsOrgsManagement />}
           {tab === 2 && <OrgAdminsManagement />}
           {tab === 3 && <AchievementsManagement />}
-          {tab === 4 && <TeamFullManagement />}
+          {tab === 4 && <HighlightsManagement />}
+          {tab === 5 && <SponsorsManagement />}
+          {tab === 6 && <TeamFullManagement />}
+          {tab === 7 && <FrostManagement />}
         </Box>
       </Box>
 
@@ -267,6 +279,7 @@ export default function AdminPage() {
             value={tab}
             onChange={(_, v) => {
               if (v === NAV_ITEMS.length) { router.push('/profile'); return; }
+              if (v === NAV_ITEMS.length + 1) { router.push('/'); return; }
               setTab(v);
             }}
             sx={{
