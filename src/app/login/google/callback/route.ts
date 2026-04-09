@@ -66,7 +66,7 @@ export async function GET(request: Request): Promise<Response> {
         redirect("/login?error=non_iiitdm");
     }
 
-    let userId: number;
+    let userId: number | undefined;
     // Retry once on transient DB errors (Supabase pooler connection drops)
     for (let attempt = 0; attempt <= 1; attempt++) {
         try {
@@ -86,6 +86,9 @@ export async function GET(request: Request): Promise<Response> {
             // Wait 1.5s then retry
             await new Promise(r => setTimeout(r, 1500));
         }
+    }
+    if (userId === undefined) {
+        return new Response(null, { status: 302, headers: { Location: '/login?error=db_error' } });
     }
 
     const sessionToken = await generateSessionToken();
