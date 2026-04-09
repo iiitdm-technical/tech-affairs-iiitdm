@@ -1,17 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentSession } from '@/lib/server/session';
 import { db } from '@/db';
-import { Events, Clubs } from '@/db/schema';
-import { eq, inArray } from 'drizzle-orm';
+import { Events, Clubs, Orgs } from '@/db/schema';
+import { eq, inArray, isNotNull } from 'drizzle-orm';
 
-// Helper: resolve club_ids that belong to the current org-admin's org slugs
-async function getAllowedClubIds(orgSlugs: string[]): Promise<number[]> {
-  if (orgSlugs.length === 0) return [];
-  const rows = await db
-    .select({ club_id: Clubs.club_id })
-    .from(Clubs)
-    .where(inArray(Clubs.name, orgSlugs)); // Clubs.name stores the slug/name
-  return rows.map((r) => r.club_id);
+// Helper: resolve club_ids for an org-admin via two methods:
+// 1. clubs.org_slug matches their orgSlugs
+// 2. orgs.authorized_email matches their email → club_ref_id
+async function getAllowedClubIds(orgSlugs: string[], email: string): Promise<number[]> {
+  if (orgSlugs.length === 0 && !email) return [];
+
+  const [direct, viaOrgs] = await Promise.all([
+    orgSlugs.length > 0
+      ? db.select({ club_id: Clubs.club_id }).from(Clubs).where(inArray(Clubs.org_slug, orgSlugs))
+      : [],
+    email
+      ? db.select({ club_id: Orgs.club_ref_id })
+          .from(Orgs)
+          .where(eq(Orgs.authorized_email, email))
+          .where(isNotNull(Orgs.club_ref_id))
+      : [],
+  ]);
+
+  const ids = new Set<number>();
+  for (const r of [...direct, ...viaOrgs]) {
+    if (r.club_id) ids.add(r.club_id);
+  }
+  return [...ids];
 }
 
 function isOrgAdmin(user: { role: string; orgSlugs: string[] }) {
@@ -45,7 +60,7 @@ export async function GET(request: NextRequest) {
           .leftJoin(Clubs, eq(Events.club_id, Clubs.club_id))
           .orderBy(Events.start_time)
       : await (async () => {
-          const ids = await getAllowedClubIds(user.orgSlugs);
+          const ids = await getAllowedClubIds(user.orgSlugs, user.email);
           if (ids.length === 0) return [];
           return db
             .select({
@@ -85,7 +100,7 @@ export async function POST(request: NextRequest) {
 
   // Org-admins may only post to their own clubs
   if (user.role === 'O') {
-    const allowed = await getAllowedClubIds(user.orgSlugs);
+    const allowed = await getAllowedClubIds(user.orgSlugs, user.email);
     if (!allowed.includes(Number(club_id))) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
@@ -124,7 +139,7 @@ export async function PATCH(request: NextRequest) {
   if (user.role === 'O') {
     const [existing] = await db.select().from(Events).where(eq(Events.event_id, Number(event_id)));
     if (!existing) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-    const allowed = await getAllowedClubIds(user.orgSlugs);
+    const allowed = await getAllowedClubIds(user.orgSlugs, user.email);
     if (!allowed.includes(existing.club_id)) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
@@ -161,7 +176,7 @@ export async function DELETE(request: NextRequest) {
   if (!existing) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
   if (user.role === 'O') {
-    const allowed = await getAllowedClubIds(user.orgSlugs);
+    const allowed = await getAllowedClubIds(user.orgSlugs, user.email);
     if (!allowed.includes(existing.club_id)) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }

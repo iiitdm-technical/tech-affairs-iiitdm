@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
     db.select({ club_id: Orgs.club_ref_id, name: Clubs.name })
       .from(Orgs)
       .innerJoin(Clubs, eq(Clubs.club_id, Orgs.club_ref_id))
-      .where(inArray(Orgs.authorized_email, [user.email ?? '']))
+      .where(eq(Orgs.authorized_email, user.email))
       .where(isNotNull(Orgs.club_ref_id)),
   ]);
 
