@@ -41,9 +41,11 @@ export const Events = pgTable('events', {
 
 
 export const User_roles = pgTable('user_roles', {
-    email: text('email').notNull().primaryKey(),
-    role: char('role', { length: 1 }).notNull(), // A for admin, U for user
-});
+    email: text('email').notNull(),
+    role: char('role', { length: 1 }).notNull(), // A = super-admin, O = org-admin, U = user
+}, (table) => [
+    primaryKey({ columns: [table.email, table.role] }),
+]);
 
 export const i2r_equipment = pgTable('equipment', {
     equipment_id: serial('eq_id').primaryKey().notNull(),

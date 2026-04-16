@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     await db
       .insert(User_roles)
       .values({ email: authorized_email, role: 'O' })
-      .onConflictDoUpdate({ target: User_roles.email, set: { role: 'O' } });
+      .onConflictDoNothing({ target: [User_roles.email, User_roles.role] });
   }
 
   bust(CACHE_TAGS.orgs);
@@ -74,7 +74,7 @@ export async function PATCH(request: NextRequest) {
       // Downgrade role if no other org_admin rows for this email
       const remaining = await db.select().from(OrgAdmins).where(eq(OrgAdmins.email, oldEmail));
       if (remaining.length === 0) {
-        await db.update(User_roles).set({ role: 'U' }).where(eq(User_roles.email, oldEmail));
+        await db.delete(User_roles).where(and(eq(User_roles.email, oldEmail), eq(User_roles.role, 'O')));
       }
     }
   }
@@ -90,7 +90,7 @@ export async function PATCH(request: NextRequest) {
     await db
       .insert(User_roles)
       .values({ email: newEmail, role: 'O' })
-      .onConflictDoUpdate({ target: User_roles.email, set: { role: 'O' } });
+      .onConflictDoNothing({ target: [User_roles.email, User_roles.role] });
   }
 
   bust(CACHE_TAGS.orgs);
@@ -115,7 +115,7 @@ export async function DELETE(request: NextRequest) {
     );
     const remaining = await db.select().from(OrgAdmins).where(eq(OrgAdmins.email, club.authorized_email));
     if (remaining.length === 0) {
-      await db.update(User_roles).set({ role: 'U' }).where(eq(User_roles.email, club.authorized_email));
+      await db.delete(User_roles).where(and(eq(User_roles.email, club.authorized_email), eq(User_roles.role, 'O')));
     }
   }
 

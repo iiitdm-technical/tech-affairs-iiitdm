@@ -37,7 +37,8 @@ export interface User {
   googleId: string;
   name: string;
   picture: string;
-  role: string;       // 'A' = super-admin, 'O' = org-admin, 'U' = user
+  role: string;       // Primary role: A > O > U
+  roles?: string[];   // All roles for multi-role users
   orgSlugs: string[];
 }
 
@@ -56,6 +57,8 @@ const Navbar = ({ user }: NavbarProps) => {
   const [mounted, setMounted] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const pathname = usePathname();
+  const hasAdminRole = Boolean(user && (user.roles?.includes('A') || user.role === 'A'));
+  const hasOrgAdminRole = Boolean(user && (user.roles?.includes('O') || user.role === 'O'));
 
   useEffect(() => {
     setMounted(true);
@@ -252,7 +255,7 @@ const Navbar = ({ user }: NavbarProps) => {
                 primaryTypographyProps={{ fontSize: "0.9rem", fontWeight: 500 }}
               />
             </ListItemButton>
-            {user.role === "A" && (
+            {hasAdminRole && (
               <ListItemButton
                 component="a"
                 href="/admin"
@@ -276,7 +279,7 @@ const Navbar = ({ user }: NavbarProps) => {
                 />
               </ListItemButton>
             )}
-            {user.role === "O" && (
+            {hasOrgAdminRole && (
               <ListItemButton
                 component="a"
                 href="/org-admin"
@@ -296,6 +299,30 @@ const Navbar = ({ user }: NavbarProps) => {
               >
                 <ListItemText
                   primary="Org Dashboard"
+                  primaryTypographyProps={{ fontSize: "0.9rem", fontWeight: 500 }}
+                />
+              </ListItemButton>
+            )}
+            {hasAdminRole && hasOrgAdminRole && (
+              <ListItemButton
+                component="a"
+                href="/dashboard"
+                onClick={handleDrawerToggle}
+                sx={{
+                  borderRadius: 2,
+                  py: 1.2,
+                  px: 2,
+                  color: "text.primary",
+                  "&:hover": {
+                    bgcolor:
+                      theme.palette.mode === "dark"
+                        ? "rgba(255,255,255,0.05)"
+                        : "rgba(0,0,0,0.04)",
+                  },
+                }}
+              >
+                <ListItemText
+                  primary="Choose Dashboard"
                   primaryTypographyProps={{ fontSize: "0.9rem", fontWeight: 500 }}
                 />
               </ListItemButton>
@@ -372,7 +399,7 @@ const Navbar = ({ user }: NavbarProps) => {
                 {item.name}
               </Button>
             ))}
-              {user?.role === 'A' && (
+              {hasAdminRole && (
                 <Button
                   component="a"
                   href="/admin"
@@ -429,14 +456,19 @@ const Navbar = ({ user }: NavbarProps) => {
                   <MenuItem component="a" href="/profile" onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">Profile & Settings</Typography>
                   </MenuItem>
-                  {user.role === 'A' && (
+                  {hasAdminRole && (
                     <MenuItem component="a" href="/admin" onClick={handleCloseUserMenu}>
                       <Typography textAlign="center">Admin Dashboard</Typography>
                     </MenuItem>
                   )}
-                  {user.role === 'O' && (
+                  {hasOrgAdminRole && (
                     <MenuItem component="a" href="/org-admin" onClick={handleCloseUserMenu}>
                       <Typography textAlign="center">Org Dashboard</Typography>
+                    </MenuItem>
+                  )}
+                  {hasAdminRole && hasOrgAdminRole && (
+                    <MenuItem component="a" href="/dashboard" onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">Choose Dashboard</Typography>
                     </MenuItem>
                   )}
                   <Divider />

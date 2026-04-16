@@ -18,6 +18,12 @@ export interface Session {
 
 type SessionValidationResult = { session: Session; user: User } | { session: null; user: null };
 
+function derivePrimaryRole(roles: string[]): string {
+	if (roles.includes('A')) return 'A';
+	if (roles.includes('O')) return 'O';
+	return 'U';
+}
+
 export async function validateSessionToken(token: string): Promise<SessionValidationResult> {
 	const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
 
@@ -53,7 +59,9 @@ export async function validateSessionToken(token: string): Promise<SessionValida
 		return { session: null, user: null };
 	}
 
-	const role = row.role ?? 'U';
+	const roles = [...new Set(rows.map((r) => r.role).filter((r): r is string => Boolean(r)))];
+	const effectiveRoles = roles.length > 0 ? roles : ['U'];
+	const role = derivePrimaryRole(effectiveRoles);
 	// Deduplicate slugs because joins can return repeated rows.
 	const orgSlugs = [...new Set(rows.map((r) => r.orgSlug).filter((s): s is string => Boolean(s)))];
 
@@ -70,6 +78,7 @@ export async function validateSessionToken(token: string): Promise<SessionValida
 		name: row.name,
 		picture: row.picture,
 		role,
+		roles: effectiveRoles,
 		orgSlugs,
 	};
 

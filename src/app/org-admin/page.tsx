@@ -36,6 +36,7 @@ interface AuthUser {
   email: string;
   picture: string;
   role: string;
+  roles?: string[];
   orgSlugs: string[];
 }
 
@@ -54,7 +55,9 @@ export default function OrgAdminPage() {
       if (!res.ok) { router.push('/login'); return; }
       const data: AuthUser = await res.json();
       // Allow both Super Admins ('A') and Org Admins ('O') with org slugs
-      if (data.role !== 'A' && data.role !== 'O') { router.push('/'); return; }
+      const isAdmin = (Array.isArray(data.roles) && data.roles.includes('A')) || data.role === 'A';
+      const isOrgAdmin = (Array.isArray(data.roles) && data.roles.includes('O')) || data.role === 'O';
+      if (!isAdmin && !isOrgAdmin) { router.push('/'); return; }
       if (data.orgSlugs.length === 0) { router.push('/'); return; }
       setUser(data);
       setLoading(false);

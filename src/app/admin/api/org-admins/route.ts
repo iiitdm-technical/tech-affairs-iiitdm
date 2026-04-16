@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentSession } from '@/lib/server/session';
 import { db } from '@/db';
 import { OrgAdmins, User_roles } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 
 function requireAdmin(user: { role: string } | null) {
   if (!user || user.role !== 'A') {
@@ -30,13 +30,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'email and org_slug are required' }, { status: 400 });
   }
 
-  // Upsert role to 'O' so session picks it up
-  const existing = await db.select().from(User_roles).where(eq(User_roles.email, email));
-  if (existing.length === 0) {
-    await db.insert(User_roles).values({ email, role: 'O' });
-  } else if (existing[0].role !== 'A') {
-    await db.update(User_roles).set({ role: 'O' }).where(eq(User_roles.email, email));
-  }
+  // Ensure org-admin role exists without touching other roles.
+  await db
+    .insert(User_roles)
+    .values({ email, role: 'O' })
+    .onConflictDoNothing({ target: [User_roles.email, User_roles.role] });
 
   const [row] = await db.insert(OrgAdmins).values({ email, org_slug }).returning();
   return NextResponse.json({ success: true, row });
@@ -58,7 +56,7 @@ export async function DELETE(request: NextRequest) {
   if (email) {
     const remaining = await db.select().from(OrgAdmins).where(eq(OrgAdmins.email, email));
     if (remaining.length === 0) {
-      await db.update(User_roles).set({ role: 'U' }).where(eq(User_roles.email, email));
+      await db.delete(User_roles).where(and(eq(User_roles.email, email), eq(User_roles.role, 'O')));
     }
   }
 

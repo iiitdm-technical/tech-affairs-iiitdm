@@ -59,7 +59,8 @@ export default function AdminPage() {
     fetch('/api/auth/me').then(async (res) => {
       if (res.ok) {
         const u = await res.json();
-        if (u.role !== 'A') { router.push('/'); return; }
+        const isAdmin = (u.roles && Array.isArray(u.roles) ? u.roles.includes('A') : false) || u.role === 'A';
+        if (!isAdmin) { router.push('/'); return; }
         setUser(u);
       } else {
         router.push('/login');

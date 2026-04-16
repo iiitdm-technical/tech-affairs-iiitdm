@@ -17,10 +17,13 @@ async function getRedirectPath(email: string): Promise<string> {
             .from(User_roles)
             .where(eq(User_roles.email, email));
 
-        const role = roleRows.length > 0 ? roleRows[0].role : 'U';
+        const roles = [...new Set(roleRows.map((r) => r.role).filter(Boolean))];
+        const hasAdmin = roles.includes('A');
+        const hasOrgAdmin = roles.includes('O');
 
-        if (role === 'A') return '/admin';
-        if (role === 'O') return '/org-admin';
+        if (hasAdmin && hasOrgAdmin) return '/dashboard';
+        if (hasAdmin) return '/admin';
+        if (hasOrgAdmin) return '/org-admin';
         return '/';
     } catch {
         // DB timeout — session cookie is already set, just send home

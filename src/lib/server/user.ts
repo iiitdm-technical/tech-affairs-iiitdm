@@ -8,8 +8,15 @@ export interface User {
     googleId: string;
     name: string;
     picture: string;
-    role: string;       // 'A' = super-admin, 'O' = org-admin, 'U' = regular user
-    orgSlugs: string[]; // populated for role 'O'; empty for others
+    role: string;       // Primary role for backward compatibility: A > O > U
+    roles: string[];    // All roles assigned to this user
+    orgSlugs: string[]; // org slugs this user can manage (if role O is present)
+}
+
+function derivePrimaryRole(roles: string[]): string {
+    if (roles.includes('A')) return 'A';
+    if (roles.includes('O')) return 'O';
+    return 'U';
 }
 
 async function getOrgSlugs(email: string): Promise<string[]> {
@@ -35,6 +42,7 @@ export async function createUser(googleId: string, email: string, name: string, 
         name,
         picture,
         role: 'U',
+        roles: ['U'],
         orgSlugs: [],
     };
 }
@@ -60,9 +68,12 @@ export async function getUserFromGoogleId(googleId: string): Promise<User | null
         .from(User_roles)
         .where(eq(User_roles.email, userRow.email));
 
-    const role = roleRows.length > 0 ? roleRows[0].role : 'U';
-
-    const orgSlugs = role === 'O' ? await getOrgSlugs(userRow.email) : [];
+    const roles = [...new Set(roleRows.map((r) => r.role).filter(Boolean))];
+    const effectiveRoles = roles.length > 0 ? roles : ['U'];
+    const role = derivePrimaryRole(effectiveRoles);
+    const orgSlugs = effectiveRoles.includes('O') || effectiveRoles.includes('A')
+        ? await getOrgSlugs(userRow.email)
+        : [];
 
     return {
         id: userRow.id,
@@ -71,6 +82,7 @@ export async function getUserFromGoogleId(googleId: string): Promise<User | null
         name: userRow.name,
         picture: userRow.picture,
         role,
+        roles: effectiveRoles,
         orgSlugs,
     };
 }

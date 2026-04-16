@@ -15,6 +15,7 @@ export async function GET() {
       email: user.email,
       picture: user.picture,
       role: user.role,
+      roles: user.roles,
       orgSlugs: user.orgSlugs,
     });
   } catch (error) {

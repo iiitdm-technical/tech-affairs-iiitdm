@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentSession } from '@/lib/server/session';
 import { db } from '@/db';
 import { Orgs, OrgAdmins, User_roles, Clubs } from '@/db/schema';
-import { eq, and, asc, sql } from 'drizzle-orm';
+import { eq, and, asc } from 'drizzle-orm';
 import { CACHE_TAGS, bust } from '@/lib/cache';
 
 async function requireAdmin() {
@@ -33,9 +33,8 @@ export async function POST(request: NextRequest) {
   if (authorized_email) {
     const orgSlug = link.replace(/^\//, ''); // /clubs/cs -> clubs/cs
     await db.insert(OrgAdmins).values({ email: authorized_email, org_slug: orgSlug }).onConflictDoNothing();
-    // Only grant 'O' role if the user doesn't already have a higher role ('A')
     await db.insert(User_roles).values({ email: authorized_email, role: 'O' })
-      .onConflictDoUpdate({ target: User_roles.email, set: { role: sql`CASE WHEN user_roles.role = 'A' THEN 'A' ELSE 'O' END` } });
+      .onConflictDoNothing({ target: [User_roles.email, User_roles.role] });
   }
 
   bust(CACHE_TAGS.orgs);
@@ -68,14 +67,13 @@ export async function PATCH(request: NextRequest) {
     await db.delete(OrgAdmins).where(and(eq(OrgAdmins.email, oldEmail), eq(OrgAdmins.org_slug, orgSlug)));
     const remaining = await db.select().from(OrgAdmins).where(eq(OrgAdmins.email, oldEmail));
     if (remaining.length === 0) {
-      await db.update(User_roles).set({ role: 'U' }).where(eq(User_roles.email, oldEmail));
+      await db.delete(User_roles).where(and(eq(User_roles.email, oldEmail), eq(User_roles.role, 'O')));
     }
   }
   if (newEmail) {
     await db.insert(OrgAdmins).values({ email: newEmail, org_slug: orgSlug }).onConflictDoNothing();
-    // Only grant 'O' role if the user doesn't already have a higher role ('A')
     await db.insert(User_roles).values({ email: newEmail, role: 'O' })
-      .onConflictDoUpdate({ target: User_roles.email, set: { role: sql`CASE WHEN user_roles.role = 'A' THEN 'A' ELSE 'O' END` } });
+      .onConflictDoNothing({ target: [User_roles.email, User_roles.role] });
   }
 
   // Also sync to clubs table if linked
