@@ -3,6 +3,7 @@ import { getCurrentSession } from '@/lib/server/session';
 import { db } from '@/db';
 import { Achievements } from '@/db/schema';
 import { eq, inArray } from 'drizzle-orm';
+import { CACHE_TAGS, bust } from '@/lib/cache';
 
 function isOrgAdmin(user: { role: string; orgSlugs: string[] }) {
   return user.role === 'A' || (user.role === 'O' && user.orgSlugs.length > 0);
@@ -49,6 +50,7 @@ export async function POST(request: NextRequest) {
     .values({ org_slug, title, description, year, proof_url: proof_url || '', logo: logo || '' })
     .returning();
 
+  bust(CACHE_TAGS.achievements);
   return NextResponse.json({ success: true, achievement: row });
 }
 
@@ -78,6 +80,7 @@ export async function PATCH(request: NextRequest) {
   if (logo !== undefined) updateData.logo = logo;
 
   const [row] = await db.update(Achievements).set(updateData).where(eq(Achievements.id, Number(id))).returning();
+  bust(CACHE_TAGS.achievements);
   return NextResponse.json({ success: true, achievement: row });
 }
 
@@ -99,5 +102,6 @@ export async function DELETE(request: NextRequest) {
   }
 
   await db.delete(Achievements).where(eq(Achievements.id, Number(id)));
+  bust(CACHE_TAGS.achievements);
   return NextResponse.json({ success: true });
 }

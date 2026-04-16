@@ -1,8 +1,12 @@
 import { db } from '@/db';
 import { Events, Clubs } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import { unstable_cache } from 'next/cache';
+import { CACHE_TAGS } from '@/lib/cache';
 import EventsClient from './EventsClient';
 import { Box, Typography } from '@mui/material';
+
+export const revalidate = 120;
 
 // Define the type for our joined data
 export type EventWithClub = {
@@ -19,21 +23,29 @@ export type EventWithClub = {
 };
 
 
+const fetchEvents = unstable_cache(
+    async () => {
+        return db
+            .select({
+                event_name: Events.name,
+                description: Events.description,
+                imageUrl: Events.imageUrl,
+                location: Events.location,
+                start_time: Events.start_time,
+                requirements: Events.requirements,
+                link: Events.link,
+                club_name: Clubs.name,
+                club_iconUrl: Clubs.iconUrl,
+            })
+            .from(Events)
+            .leftJoin(Clubs, eq(Events.club_id, Clubs.club_id));
+    },
+    ['events-page-joined'],
+    { revalidate: 120, tags: [CACHE_TAGS.events] }
+);
+
 async function getEventsData(): Promise<EventWithClub[]> {
-    const data = await db
-        .select({
-            event_name: Events.name,
-            description: Events.description,
-            imageUrl: Events.imageUrl,
-            location: Events.location,
-            start_time: Events.start_time,
-            requirements: Events.requirements,
-            link: Events.link,
-            club_name: Clubs.name,
-            club_iconUrl: Clubs.iconUrl,
-        })
-        .from(Events)
-        .leftJoin(Clubs, eq(Events.club_id, Clubs.club_id));
+    const data = await fetchEvents();
 
     // Format the data to match the structure needed by the client component
     return data.map(item => {

@@ -3,6 +3,7 @@ import { getCurrentSession } from '@/lib/server/session';
 import { db } from '@/db';
 import { Announcements } from '@/db/schema';
 import { eq, and, inArray } from 'drizzle-orm';
+import { CACHE_TAGS, bust } from '@/lib/cache';
 
 function unauth() { return NextResponse.json({ error: 'Unauthorized' }, { status: 401 }); }
 function forbidden() { return NextResponse.json({ error: 'Forbidden' }, { status: 403 }); }
@@ -33,6 +34,7 @@ export async function POST(request: NextRequest) {
   if (user.role === 'O' && !user.orgSlugs.includes(org_slug)) return forbidden();
 
   const [row] = await db.insert(Announcements).values({ org_slug, title, body, link: link ?? '', media_url: media_url ?? '', active: 'Y' }).returning();
+  bust(CACHE_TAGS.announcements);
   return NextResponse.json(row);
 }
 
@@ -56,6 +58,7 @@ export async function PATCH(request: NextRequest) {
   if (active !== undefined) update.active = active;
 
   const [row] = await db.update(Announcements).set(update).where(eq(Announcements.id, id)).returning();
+  bust(CACHE_TAGS.announcements);
   return NextResponse.json(row);
 }
 
@@ -72,5 +75,6 @@ export async function DELETE(request: NextRequest) {
   if (user.role === 'O' && !user.orgSlugs.includes(existing.org_slug)) return forbidden();
 
   await db.delete(Announcements).where(eq(Announcements.id, id));
+  bust(CACHE_TAGS.announcements);
   return NextResponse.json({ success: true });
 }

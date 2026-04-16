@@ -8,6 +8,7 @@ import { getCurrentSession } from '@/lib/server/session';
 import { db } from '@/db';
 import { FrostContributions } from '@/db/schema';
 import { eq, desc } from 'drizzle-orm';
+import { CACHE_TAGS, bust } from '@/lib/cache';
 
 async function requireAdmin() {
   const { session, user } = await getCurrentSession();
@@ -43,6 +44,7 @@ export async function PATCH(request: NextRequest) {
     .returning();
 
   if (!row) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  bust(CACHE_TAGS.frost);
   return NextResponse.json({ success: true, contribution: row });
 }
 
@@ -60,5 +62,6 @@ export async function DELETE(request: NextRequest) {
     .returning();
 
   if (!row) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  bust(CACHE_TAGS.frost);
   return NextResponse.json({ success: true });
 }

@@ -3,6 +3,7 @@ import { getCurrentSession } from '@/lib/server/session';
 import { db } from '@/db';
 import { Achievements } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import { CACHE_TAGS, bust } from '@/lib/cache';
 
 async function requireAdmin() {
   const { user } = await getCurrentSession();
@@ -30,6 +31,7 @@ export async function POST(request: NextRequest) {
     .insert(Achievements)
     .values({ org_slug, title, description, year, proof_url: proof_url || '', logo: logo || '', image: image || '' })
     .returning();
+  bust(CACHE_TAGS.achievements);
   return NextResponse.json({ success: true, achievement: row });
 }
 
@@ -48,6 +50,7 @@ export async function PATCH(request: NextRequest) {
 
   const [row] = await db.update(Achievements).set(updateData).where(eq(Achievements.id, Number(id))).returning();
   if (!row) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  bust(CACHE_TAGS.achievements);
   return NextResponse.json({ success: true, achievement: row });
 }
 
@@ -60,5 +63,6 @@ export async function DELETE(request: NextRequest) {
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 });
 
   await db.delete(Achievements).where(eq(Achievements.id, Number(id)));
+  bust(CACHE_TAGS.achievements);
   return NextResponse.json({ success: true });
 }

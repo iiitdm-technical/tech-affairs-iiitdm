@@ -7,25 +7,40 @@ import { getCurrentSession } from '@/lib/server/session';
 import { db } from '@/db';
 import { FrostContributions } from '@/db/schema';
 import { eq, and, isNull, desc } from 'drizzle-orm';
+import { unstable_cache } from 'next/cache';
+import { CACHE_TAGS, bust } from '@/lib/cache';
+
+export const revalidate = 120;
+
+const getApprovedByPath = unstable_cache(
+  async (page_path: string) => {
+    return db
+      .select()
+      .from(FrostContributions)
+      .where(
+        and(
+          eq(FrostContributions.page_path, page_path),
+          eq(FrostContributions.status, 'approved'),
+          isNull(FrostContributions.deleted_at),
+        )
+      )
+      .orderBy(desc(FrostContributions.created_at));
+  },
+  ['api-frost-by-path'],
+  { revalidate, tags: [CACHE_TAGS.frost] }
+);
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const page_path = searchParams.get('page_path');
   if (!page_path) return NextResponse.json({ error: 'page_path required' }, { status: 400 });
 
-  const rows = await db
-    .select()
-    .from(FrostContributions)
-    .where(
-      and(
-        eq(FrostContributions.page_path, page_path),
-        eq(FrostContributions.status, 'approved'),
-        isNull(FrostContributions.deleted_at),
-      )
-    )
-    .orderBy(desc(FrostContributions.created_at));
-
-  return NextResponse.json(rows);
+  const rows = await getApprovedByPath(page_path);
+  return NextResponse.json(rows, {
+    headers: {
+      'Cache-Control': 'public, s-maxage=120, stale-while-revalidate=600',
+    },
+  });
 }
 
 export async function POST(request: NextRequest) {

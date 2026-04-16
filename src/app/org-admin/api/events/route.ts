@@ -3,6 +3,7 @@ import { getCurrentSession } from '@/lib/server/session';
 import { db } from '@/db';
 import { Events, Clubs, Orgs } from '@/db/schema';
 import { eq, inArray, isNotNull, and } from 'drizzle-orm';
+import { CACHE_TAGS, bust } from '@/lib/cache';
 
 // Helper: resolve club_ids for an org-admin via two methods:
 // 1. clubs.org_slug matches their orgSlugs
@@ -120,6 +121,7 @@ export async function POST(request: NextRequest) {
     })
     .returning();
 
+  bust(CACHE_TAGS.events);
   return NextResponse.json({ success: true, event });
 }
 
@@ -158,6 +160,7 @@ export async function PATCH(request: NextRequest) {
   const [event] = await db.update(Events).set(updateData).where(eq(Events.event_id, Number(event_id))).returning();
   if (!event) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
+  bust(CACHE_TAGS.events);
   return NextResponse.json({ success: true, event });
 }
 
@@ -182,5 +185,6 @@ export async function DELETE(request: NextRequest) {
   }
 
   await db.delete(Events).where(eq(Events.event_id, Number(event_id)));
+  bust(CACHE_TAGS.events);
   return NextResponse.json({ success: true });
 }

@@ -3,6 +3,7 @@ import { getCurrentSession } from '@/lib/server/session';
 import { db } from '@/db';
 import { Clubs, OrgAdmins, User_roles } from '@/db/schema';
 import { eq, and } from 'drizzle-orm';
+import { CACHE_TAGS, bust } from '@/lib/cache';
 
 export async function GET() {
   const { session, user } = await getCurrentSession();
@@ -35,6 +36,7 @@ export async function POST(request: NextRequest) {
       .onConflictDoUpdate({ target: User_roles.email, set: { role: 'O' } });
   }
 
+  bust(CACHE_TAGS.orgs);
   return NextResponse.json({ success: true, club });
 }
 
@@ -91,6 +93,7 @@ export async function PATCH(request: NextRequest) {
       .onConflictDoUpdate({ target: User_roles.email, set: { role: 'O' } });
   }
 
+  bust(CACHE_TAGS.orgs);
   return NextResponse.json({ success: true, club });
 }
 
@@ -117,5 +120,6 @@ export async function DELETE(request: NextRequest) {
   }
 
   await db.delete(Clubs).where(eq(Clubs.club_id, parseInt(club_id)));
+  bust(CACHE_TAGS.orgs);
   return NextResponse.json({ success: true });
 }

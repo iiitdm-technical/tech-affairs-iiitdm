@@ -3,6 +3,7 @@ import { db } from '@/db';
 import { Sponsors } from '@/db/schema';
 import { asc, eq } from 'drizzle-orm';
 import { unstable_cache } from 'next/cache';
+import { CACHE_TAGS } from '@/lib/cache';
 
 export const revalidate = 120;
 
@@ -15,7 +16,7 @@ const getSponsors = unstable_cache(
       .orderBy(asc(Sponsors.sort_order));
   },
   ['api-sponsors-active'],
-  { revalidate }
+  { revalidate, tags: [CACHE_TAGS.sponsors] }
 );
 
 export async function GET() {

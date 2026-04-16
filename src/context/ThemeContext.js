@@ -7,6 +7,7 @@ import React, {
   useContext,
   useMemo,
   useEffect,
+  useCallback,
 } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -38,13 +39,13 @@ export const ThemeProvider = ({ children }) => {
     setThemeLoaded(true);
   }, []);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     setIsDarkMode((prev) => {
       const newMode = !prev;
       localStorage.setItem("theme", JSON.stringify(newMode));
       return newMode;
     });
-  };
+  }, []);
 
   const theme = useMemo(
     () => (isDarkMode ? darkTheme : lightTheme),

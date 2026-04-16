@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Box, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions,
   TextField, Snackbar, Alert, GridLegacy as Grid, CircularProgress,
@@ -34,14 +34,14 @@ export default function ClubsManagement() {
   const toast = (message: string, severity: 'success' | 'error' = 'success') =>
     setSnack({ open: true, message, severity });
 
-  async function fetchClubs() {
+  const fetchClubs = useCallback(async () => {
     const res = await fetch('/admin/api/clubs');
     if (res.ok) setClubs(await res.json());
     else toast('Failed to fetch clubs', 'error');
     setLoading(false);
-  }
+  }, []);
 
-  useEffect(() => { fetchClubs(); }, []);
+  useEffect(() => { fetchClubs(); }, [fetchClubs]);
 
   function openAdd() {
     setFormData(EMPTY_FORM);

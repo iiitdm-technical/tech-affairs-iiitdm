@@ -3,6 +3,7 @@ import { getCurrentSession } from '@/lib/server/session';
 import { db } from '@/db';
 import { TechAffairsTeam } from '@/db/schema';
 import { eq, asc } from 'drizzle-orm';
+import { CACHE_TAGS, bust } from '@/lib/cache';
 
 async function requireAdmin() {
   const { user } = await getCurrentSession();
@@ -34,6 +35,7 @@ export async function POST(request: NextRequest) {
     sort_order: sort_order ?? 0,
     active: 'Y',
   }).returning();
+  bust(CACHE_TAGS.team);
   return NextResponse.json({ success: true, member: row });
 }
 
@@ -49,6 +51,7 @@ export async function PATCH(request: NextRequest) {
   }
   const [row] = await db.update(TechAffairsTeam).set(update).where(eq(TechAffairsTeam.id, Number(id))).returning();
   if (!row) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  bust(CACHE_TAGS.team);
   return NextResponse.json({ success: true, member: row });
 }
 
@@ -58,5 +61,6 @@ export async function DELETE(request: NextRequest) {
   const id = new URL(request.url).searchParams.get('id');
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 });
   await db.delete(TechAffairsTeam).where(eq(TechAffairsTeam.id, Number(id)));
+  bust(CACHE_TAGS.team);
   return NextResponse.json({ success: true });
 }

@@ -3,6 +3,7 @@ import { getCurrentSession } from '@/lib/server/session';
 import { db } from '@/db';
 import { Events, Clubs } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import { CACHE_TAGS, bust } from '@/lib/cache';
 
 // GET - Fetch all events with club information (admin only)
 export async function GET() {
@@ -79,10 +80,11 @@ export async function POST(request: NextRequest) {
       })
       .returning();
 
-    return NextResponse.json({ 
-      success: true, 
+    bust(CACHE_TAGS.events);
+    return NextResponse.json({
+      success: true,
       event,
-      message: 'Event added successfully' 
+      message: 'Event added successfully'
     });
   } catch (error) {
     console.error('Error adding event:', error);
@@ -139,10 +141,11 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: 'Event not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ 
-      success: true, 
+    bust(CACHE_TAGS.events);
+    return NextResponse.json({
+      success: true,
       event,
-      message: 'Event updated successfully' 
+      message: 'Event updated successfully'
     });
   } catch (error) {
     console.error('Error updating event:', error);
@@ -181,9 +184,10 @@ export async function DELETE(request: NextRequest) {
       .delete(Events)
       .where(eq(Events.event_id, parseInt(event_id)));
 
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Event deleted successfully' 
+    bust(CACHE_TAGS.events);
+    return NextResponse.json({
+      success: true,
+      message: 'Event deleted successfully'
     });
   } catch (error) {
     console.error('Error deleting event:', error);

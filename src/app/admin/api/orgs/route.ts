@@ -3,6 +3,7 @@ import { getCurrentSession } from '@/lib/server/session';
 import { db } from '@/db';
 import { Orgs, OrgAdmins, User_roles, Clubs } from '@/db/schema';
 import { eq, and, asc, sql } from 'drizzle-orm';
+import { CACHE_TAGS, bust } from '@/lib/cache';
 
 async function requireAdmin() {
   const { user } = await getCurrentSession();
@@ -37,6 +38,7 @@ export async function POST(request: NextRequest) {
       .onConflictDoUpdate({ target: User_roles.email, set: { role: sql`CASE WHEN user_roles.role = 'A' THEN 'A' ELSE 'O' END` } });
   }
 
+  bust(CACHE_TAGS.orgs);
   return NextResponse.json({ success: true, org: row });
 }
 
@@ -86,6 +88,7 @@ export async function PATCH(request: NextRequest) {
     }
   }
 
+  bust(CACHE_TAGS.orgs);
   return NextResponse.json({ success: true, org: row });
 }
 
@@ -95,5 +98,6 @@ export async function DELETE(request: NextRequest) {
   const id = new URL(request.url).searchParams.get('id');
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 });
   await db.delete(Orgs).where(eq(Orgs.id, Number(id)));
+  bust(CACHE_TAGS.orgs);
   return NextResponse.json({ success: true });
 }

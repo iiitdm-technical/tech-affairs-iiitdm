@@ -3,6 +3,7 @@ import { db } from '@/db';
 import { Achievements } from '@/db/schema';
 import { desc } from 'drizzle-orm';
 import { unstable_cache } from 'next/cache';
+import { CACHE_TAGS } from '@/lib/cache';
 
 export const revalidate = 120;
 
@@ -14,7 +15,7 @@ const getAchievements = unstable_cache(
       .orderBy(desc(Achievements.year), desc(Achievements.created_at));
   },
   ['api-achievements-all'],
-  { revalidate }
+  { revalidate, tags: [CACHE_TAGS.achievements] }
 );
 
 export async function GET() {

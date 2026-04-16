@@ -3,6 +3,7 @@ import { db } from '@/db';
 import { Announcements } from '@/db/schema';
 import { eq, desc } from 'drizzle-orm';
 import { unstable_cache } from 'next/cache';
+import { CACHE_TAGS } from '@/lib/cache';
 
 export const revalidate = 60;
 
@@ -15,7 +16,7 @@ const getActiveAnnouncements = unstable_cache(
       .orderBy(desc(Announcements.created_at));
   },
   ['api-announcements-active'],
-  { revalidate }
+  { revalidate, tags: [CACHE_TAGS.announcements] }
 );
 
 export async function GET() {

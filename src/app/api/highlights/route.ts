@@ -3,6 +3,7 @@ import { db } from '@/db';
 import { Highlights } from '@/db/schema';
 import { asc, eq } from 'drizzle-orm';
 import { unstable_cache } from 'next/cache';
+import { CACHE_TAGS } from '@/lib/cache';
 
 export const revalidate = 120;
 
@@ -15,7 +16,7 @@ const getHighlights = unstable_cache(
       .orderBy(asc(Highlights.sort_order), asc(Highlights.created_at));
   },
   ['api-highlights-active'],
-  { revalidate }
+  { revalidate, tags: [CACHE_TAGS.highlights] }
 );
 
 export async function GET() {
