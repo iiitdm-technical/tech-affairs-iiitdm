@@ -25,6 +25,7 @@ const client =
     idle_timeout: 20,     // release idle connections quickly
     connect_timeout: 10,  // fail fast on timeout
     max_lifetime: 1800,   // recycle connections every 30 min to avoid stale ones
+    ssl: 'require',       // Supabase pooler requires SSL
   });
 
 if (process.env.NODE_ENV !== 'production') {

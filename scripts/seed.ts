@@ -108,8 +108,7 @@ const staticOrgs = [
   { name: 'Optica Student Chapter',   image: '/societies/OpticaStudentChapter/logo.webp', link: '/societies/optica',    category: 'society',   sort_order: 3 },
   { name: 'ASME Student Section',     image: '/societies/ASMEStudentSection/logo.webp',   link: '/societies/asme',      category: 'society',   sort_order: 4 },
   // Communities
-  { name: 'Cybersecurity',     image: '/communities/Cybersecurity/logo.webp',         link: '/clubs/cybersecurity',       category: 'community', sort_order: 1 },
-  { name: 'Game Developers',   image: '/communities/gamedevelopers/logo.png',         link: '/communities/gamedevelopers', category: 'community', sort_order: 2 },
+  { name: 'Game Developers',   image: '/communities/gamedevelopers/logo.png',         link: '/communities/gamedevelopers', category: 'community', sort_order: 1 },
 ];
 
 // ---------------------------------------------------------------------------

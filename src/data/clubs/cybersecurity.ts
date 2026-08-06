@@ -3,26 +3,26 @@ import type { ClubPageData } from "@/types/club";
 const data: ClubPageData = {
   name: "Cybersecurity Club",
   logo: "/clubs/cybersecurity/logo.jpg",
-  introduction: `The Cybersecurity Community is a student-driven club focused on creating awareness and developing skills in the field of cybersecurity and ethical hacking. Our goal is to help students understand how digital systems work, how cyber attacks happen, and how to protect information and networks from security threats.
+  introduction: `The Cybersecurity Club is a student-driven club focused on creating awareness and developing skills in the field of cybersecurity and ethical hacking. Our goal is to help students understand how digital systems work, how cyber attacks happen, and how to protect information and networks from security threats.
 
-Through workshops, hands-on labs, seminars, and competitions, the club provides opportunities for members to learn practical cybersecurity concepts such as network security, ethical hacking, digital forensics, and secure coding. The community also encourages collaboration, knowledge sharing, and innovation among students who are interested in technology and security.
+Through workshops, hands-on labs, seminars, and competitions, the club provides opportunities for members to learn practical cybersecurity concepts such as network security, ethical hacking, digital forensics, and secure coding. The club also encourages collaboration, knowledge sharing, and innovation among students who are interested in technology and security.
 
-Whether you are a beginner curious about cybersecurity or someone with technical experience, the Cybersecurity Community is a place to learn, explore, and grow together in the ever-evolving world of digital security.`,
+Whether you are a beginner curious about cybersecurity or someone with technical experience, the Cybersecurity Club is a place to learn, explore, and grow together in the ever-evolving world of digital security.`,
   timeline: [
     {
       year: 2025,
-      event: "Community formation - May 2025",
-      description: "The Cybersecurity Community was formed to build a student-driven platform focused on cybersecurity awareness and technical skill development.",
+      event: "Club formation - May 2025",
+      description: "The Cybersecurity Club was formed to build a student-driven platform focused on cybersecurity awareness and technical skill development.",
     },
     {
       year: 2025,
       event: "First CTF conducted - July 2025",
-      description: "The community conducted its first Capture The Flag event, which saw online participation from over 100 students.",
+      description: "The club conducted its first Capture The Flag event, which saw online participation from over 100 students.",
     },
     {
       year: 2025,
       event: "Core team established - October 2025",
-      description: "A core team of 13 members was formed to manage events, conduct sessions and competitions, and grow the community.",
+      description: "A core team of 13 members was formed to manage events, conduct sessions and competitions, and grow the club.",
     },
     {
       year: 2025,
@@ -32,7 +32,7 @@ Whether you are a beginner curious about cybersecurity or someone with technical
     {
       year: 2025,
       event: "Official recognition as a club - December 2025",
-      description: "The efforts of the team were recognized, and the community was officially deemed a club by the Director.",
+      description: "The efforts of the team were recognized, and the club was officially recognized by the Director.",
     },
   ],
   projects: [],

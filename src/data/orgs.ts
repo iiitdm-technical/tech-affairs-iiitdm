@@ -32,6 +32,5 @@ export const societies: OrgItem[] = [
 ];
 
 export const communities: OrgItem[] = [
-  { name: "Cybersecurity",    image: "/communities/Cybersecurity/logo.webp",  link: "/clubs/cybersecurity" },
   { name: "Game Developers",  image: "/communities/gamedevelopers/logo.png",  link: "/communities/gamedevelopers" },
 ];
