@@ -37,14 +37,7 @@ const Footer = () => {
       name: "Club On-Campus Event Approval",
       href: "/downloads/Technical_Club–On_Campus_Event_Approval.pdf",
     },
-    {
-      name: "Recruitment Form - Teams",
-      href: "https://forms.gle/uEVo1vPcW6cfdMuXA",
-    },
-    {
-      name: "Recruitment Form - Clubs",
-      href: "https://forms.gle/3Er3vuUr4nBkkQvr8",
-    },
+   
   ];
 
   const socialLinks = [

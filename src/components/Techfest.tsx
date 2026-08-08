@@ -3,7 +3,7 @@ import {
   Box,
   Container,
   Typography,
-  Button,
+  //Button,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
@@ -104,6 +104,7 @@ const Techfest = () => {
               The fest brings together 5,000+ bright minds from top institutions across India, uniting engineers, designers, and creators on one dynamic stage.
             </Typography>
           </motion.div>
+{/*
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -133,6 +134,7 @@ const Techfest = () => {
               Explore Savāra
             </Button>
           </motion.div>
+          */}
         </Box>
       </Container>
     </Box>
