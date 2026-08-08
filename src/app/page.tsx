@@ -9,7 +9,7 @@ import About from '../components/About';
 import Achievements from '../components/Achievements';
 import Highlights from '../components/Highlights';
 import SponsorsSection from '../components/SponsorsSection';
-import Techfest from '../components/Techfest';
+//import Techfest from '../components/Techfest';
 import AnnouncementsPopup from '../components/AnnouncementsPopup';
 
 function Home() {
@@ -21,7 +21,7 @@ function Home() {
       <Achievements />
       <Highlights />
       <SponsorsSection />
-      <Techfest />
+    {/* <Techfest /> */}
     </Box>
   );
 }
