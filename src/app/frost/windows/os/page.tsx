@@ -15,7 +15,7 @@ export default function OsPage() {
         { label: "FROST", href: "/frost" },
         { label: "Windows", href: "/frost/windows" },
       ]}
-      accentColor="#4ade80"
+      accentColor="#93c5fd"
     >
       <Box className="frost-section">
         <Typography className="frost-h2">Prerequisites</Typography>

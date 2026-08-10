@@ -2,18 +2,16 @@ import { createTheme } from '@mui/material/styles';
 
 const fontFamily = "var(--font-bricolage), 'Roboto', system-ui, sans-serif";
 
-// ── Circuit Board / PCB palette ──────────────────────────────────────────────
-// Primary   : Electric lime      #a3e635   (solder mask text / trace highlight)
+// ── Institute blue / PCB palette ─────────────────────────────────────────────
+// Primary   : Sky blue           #7dd3fc   (dark-mode trace highlight)
 // Secondary : Amber / gold       #f59e0b   (component labels / warm accent)
-// Dark bg   : Near-black green   #030a06   (FR4 board substrate)
-// Mid tone  : Deep forest green  #052e16   (ground plane)
-// Light bg  : Crisp off-white    #f7fef5   (bare copper reveal)
-// Glow      : Neon green         #4ade80   (LED / trace glow)
+// Dark bg   : Near-black blue    #070b18   (board substrate)
+// Mid tone  : Deep navy          #10254a   (ground plane)
+// Light bg  : Cool off-white     #f6f8fc   (bare board reveal)
+// Light UI  : Institute blues    #334984 / #1f82b1
 
-const lime   = '#a3e635';
+const blue   = '#7dd3fc';
 const amber  = '#f59e0b';
-const neon   = '#4ade80';
-const darkBg = '#030a06';
 
 const typography = {
   fontFamily,
@@ -49,37 +47,37 @@ const components = (mode: 'light' | 'dark') => ({
         transition: 'all 0.22s cubic-bezier(.22,.61,.36,1)',
       },
       contained: mode === 'dark' ? {
-        background: `linear-gradient(135deg, #16a34a, ${lime})`,
-        color: '#030a06',
-        boxShadow: `0 4px 20px -4px rgba(163,230,53,0.45)`,
+        background: `linear-gradient(135deg, #1f82b1, ${blue})`,
+        color: '#070b18',
+        boxShadow: `0 4px 20px -4px rgba(125,211,252,0.45)`,
         '&:hover': {
-          background: `linear-gradient(135deg, #15803d, #84cc16)`,
-          boxShadow: `0 8px 32px -4px rgba(163,230,53,0.55)`,
+          background: `linear-gradient(135deg, #1f82b1, #38bdf8)`,
+          boxShadow: `0 8px 32px -4px rgba(125,211,252,0.55)`,
           transform: 'translateY(-1px)',
         },
       } : {
-        background: `linear-gradient(135deg, #15803d, #16a34a)`,
-        color: '#f0fdf4',
-        boxShadow: `0 4px 20px -4px rgba(21,128,61,0.45)`,
+        background: `linear-gradient(135deg, #334984, #1f82b1)`,
+        color: '#eff6ff',
+        boxShadow: `0 4px 20px -4px rgba(51,73,132,0.45)`,
         '&:hover': {
-          background: `linear-gradient(135deg, #166534, #15803d)`,
-          boxShadow: `0 8px 32px -4px rgba(21,128,61,0.55)`,
+          background: `linear-gradient(135deg, #283b70, #334984)`,
+          boxShadow: `0 8px 32px -4px rgba(51,73,132,0.55)`,
           transform: 'translateY(-1px)',
         },
       },
       outlined: {
-        borderColor: mode === 'dark' ? 'rgba(163,230,53,0.3)' : 'rgba(21,128,61,0.35)',
-        color: mode === 'dark' ? lime : '#15803d',
+        borderColor: mode === 'dark' ? 'rgba(125,211,252,0.3)' : 'rgba(51,73,132,0.35)',
+        color: mode === 'dark' ? blue : '#334984',
         '&:hover': {
-          borderColor: mode === 'dark' ? lime : '#16a34a',
-          background: mode === 'dark' ? 'rgba(163,230,53,0.07)' : 'rgba(21,128,61,0.07)',
+          borderColor: mode === 'dark' ? blue : '#1f82b1',
+          background: mode === 'dark' ? 'rgba(125,211,252,0.07)' : 'rgba(51,73,132,0.07)',
           transform: 'translateY(-1px)',
         },
       },
       text: {
-        color: mode === 'dark' ? lime : '#15803d',
+        color: mode === 'dark' ? blue : '#334984',
         '&:hover': {
-          background: mode === 'dark' ? 'rgba(163,230,53,0.08)' : 'rgba(21,128,61,0.07)',
+          background: mode === 'dark' ? 'rgba(125,211,252,0.08)' : 'rgba(51,73,132,0.07)',
         },
       },
     },
@@ -96,20 +94,20 @@ const components = (mode: 'light' | 'dark') => ({
       root: {
         borderRadius: 12,
         border: mode === 'dark'
-          ? '1px solid rgba(163,230,53,0.1)'
-          : '1px solid rgba(21,128,61,0.15)',
+          ? '1px solid rgba(125,211,252,0.1)'
+          : '1px solid rgba(51,73,132,0.15)',
         boxShadow: 'none',
         background: mode === 'dark'
-          ? 'rgba(5,46,22,0.55)'
+          ? 'rgba(16,37,74,0.55)'
           : 'rgba(255,255,255,0.88)',
         backdropFilter: 'blur(12px)',
         transition: 'transform 0.3s cubic-bezier(.22,.61,.36,1), box-shadow 0.3s ease, border-color 0.3s ease',
         '&:hover': {
           transform: 'translateY(-5px) scale(1.01)',
-          borderColor: mode === 'dark' ? 'rgba(163,230,53,0.35)' : 'rgba(21,128,61,0.4)',
+          borderColor: mode === 'dark' ? 'rgba(125,211,252,0.35)' : 'rgba(51,73,132,0.4)',
           boxShadow: mode === 'dark'
-            ? '0 20px 48px -12px rgba(163,230,53,0.2), 0 0 0 1px rgba(163,230,53,0.12)'
-            : '0 20px 48px -12px rgba(21,128,61,0.18)',
+            ? '0 20px 48px -12px rgba(125,211,252,0.2), 0 0 0 1px rgba(125,211,252,0.12)'
+            : '0 20px 48px -12px rgba(51,73,132,0.18)',
         },
       },
     },
@@ -119,11 +117,11 @@ const components = (mode: 'light' | 'dark') => ({
     styleOverrides: {
       root: {
         backgroundImage: 'none',
-        background: mode === 'dark' ? 'rgba(3,15,8,0.88)' : 'rgba(255,255,255,0.92)',
+        background: mode === 'dark' ? 'rgba(9,19,38,0.88)' : 'rgba(255,255,255,0.92)',
         backdropFilter: 'blur(12px)',
         border: mode === 'dark'
-          ? '1px solid rgba(163,230,53,0.1)'
-          : '1px solid rgba(21,128,61,0.12)',
+          ? '1px solid rgba(125,211,252,0.1)'
+          : '1px solid rgba(51,73,132,0.12)',
       },
     },
   },
@@ -135,7 +133,7 @@ const components = (mode: 'light' | 'dark') => ({
         fontWeight: 600,
         textTransform: 'none' as const,
         letterSpacing: '-0.01em',
-        '&.Mui-selected': { color: mode === 'dark' ? lime : '#15803d' },
+        '&.Mui-selected': { color: mode === 'dark' ? blue : '#334984' },
       },
     },
   },
@@ -144,9 +142,9 @@ const components = (mode: 'light' | 'dark') => ({
     styleOverrides: {
       root: { fontFamily, fontWeight: 600, borderRadius: 6 },
       colorPrimary: {
-        background: mode === 'dark' ? 'rgba(163,230,53,0.12)' : 'rgba(21,128,61,0.1)',
-        color: mode === 'dark' ? lime : '#15803d',
-        border: mode === 'dark' ? '1px solid rgba(163,230,53,0.25)' : '1px solid rgba(21,128,61,0.25)',
+        background: mode === 'dark' ? 'rgba(125,211,252,0.12)' : 'rgba(51,73,132,0.1)',
+        color: mode === 'dark' ? blue : '#334984',
+        border: mode === 'dark' ? '1px solid rgba(125,211,252,0.25)' : '1px solid rgba(51,73,132,0.25)',
       },
     },
   },
@@ -156,10 +154,10 @@ const components = (mode: 'light' | 'dark') => ({
       root: {
         fontFamily,
         '& fieldset': {
-          borderColor: mode === 'dark' ? 'rgba(163,230,53,0.2)' : 'rgba(21,128,61,0.25)',
+          borderColor: mode === 'dark' ? 'rgba(125,211,252,0.2)' : 'rgba(51,73,132,0.25)',
         },
         '&:hover fieldset': {
-          borderColor: mode === 'dark' ? 'rgba(163,230,53,0.45)' : 'rgba(21,128,61,0.5)',
+          borderColor: mode === 'dark' ? 'rgba(125,211,252,0.45)' : 'rgba(51,73,132,0.5)',
         },
       },
     },
@@ -168,7 +166,7 @@ const components = (mode: 'light' | 'dark') => ({
   MuiDivider: {
     styleOverrides: {
       root: {
-        borderColor: mode === 'dark' ? 'rgba(163,230,53,0.1)' : 'rgba(21,128,61,0.12)',
+        borderColor: mode === 'dark' ? 'rgba(125,211,252,0.1)' : 'rgba(51,73,132,0.12)',
       },
     },
   },
@@ -177,51 +175,51 @@ const components = (mode: 'light' | 'dark') => ({
     styleOverrides: {
       tooltip: {
         fontFamily,
-        background: mode === 'dark' ? '#052e16' : '#14532d',
-        color: '#d1fae5',
+        background: mode === 'dark' ? '#10254a' : '#334984',
+        color: '#dbeafe',
         fontSize: '0.78rem',
         borderRadius: 6,
-        border: '1px solid rgba(163,230,53,0.25)',
+        border: '1px solid rgba(125,211,252,0.25)',
       },
     },
   },
 
   MuiLinearProgress: {
     styleOverrides: {
-      root: { borderRadius: 8, background: 'rgba(163,230,53,0.1)' },
-      bar:  { background: `linear-gradient(90deg, #16a34a, ${lime})` },
+      root: { borderRadius: 8, background: 'rgba(125,211,252,0.1)' },
+      bar:  { background: `linear-gradient(90deg, #1f82b1, ${blue})` },
     },
   },
 });
 
-// ── DARK THEME  (PCB board — night) ──────────────────────────────────────────
+// ── DARK THEME  (institute blue — night) ─────────────────────────────────────
 export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    primary:   { main: lime,   light: '#bef264', dark: '#65a30d'  },
+    primary:   { main: blue,   light: '#bae6fd', dark: '#1f82b1'  },
     secondary: { main: amber,  light: '#fcd34d', dark: '#d97706'  },
     error:     { main: '#f87171' },
     warning:   { main: amber   },
-    success:   { main: neon    },
+    success:   { main: '#4ade80' },
     info:      { main: '#34d399' },
-    background: { default: 'rgba(0,0,0,0)', paper: 'rgba(5,46,22,0.55)' },
+    background: { default: 'rgba(0,0,0,0)', paper: 'rgba(16,37,74,0.55)' },
     text: {
-      primary:   '#ecfdf5',
-      secondary: 'rgba(236,253,245,0.55)',
-      disabled:  'rgba(236,253,245,0.28)',
+      primary:   '#eff6ff',
+      secondary: 'rgba(239,246,255,0.55)',
+      disabled:  'rgba(239,246,255,0.28)',
     },
-    divider: 'rgba(163,230,53,0.1)',
+    divider: 'rgba(125,211,252,0.1)',
   },
   shape:      { borderRadius: 10 },
   typography,
   components: components('dark'),
 });
 
-// ── LIGHT THEME  (PCB board — daylight) ──────────────────────────────────────
+// ── LIGHT THEME  (institute blue — daylight) ─────────────────────────────────
 export const lightTheme = createTheme({
   palette: {
     mode: 'light',
-    primary:   { main: '#16a34a', light: '#4ade80', dark: '#166534' },
+    primary:   { main: '#334984', light: '#1f82b1', dark: '#283b70' },
     secondary: { main: amber,     light: '#fcd34d', dark: '#b45309' },
     error:     { main: '#ef4444' },
     warning:   { main: amber      },
@@ -229,11 +227,11 @@ export const lightTheme = createTheme({
     info:      { main: '#10b981'  },
     background: { default: 'rgba(0,0,0,0)', paper: 'rgba(255,255,255,0.92)' },
     text: {
-      primary:   '#052e16',
-      secondary: 'rgba(5,46,22,0.62)',
-      disabled:  'rgba(5,46,22,0.32)',
+      primary:   '#17213d',
+      secondary: 'rgba(23,33,61,0.62)',
+      disabled:  'rgba(23,33,61,0.32)',
     },
-    divider: 'rgba(21,128,61,0.12)',
+    divider: 'rgba(51,73,132,0.12)',
   },
   shape:      { borderRadius: 10 },
   typography,

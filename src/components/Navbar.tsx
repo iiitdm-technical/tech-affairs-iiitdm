@@ -161,8 +161,8 @@ const Navbar = ({ user }: NavbarProps) => {
                 fontWeight: isActive(item.path) ? 700 : 500,
                 bgcolor: isActive(item.path)
                   ? theme.palette.mode === "dark"
-                    ? "rgba(163,230,53,0.1)"
-                    : "rgba(163,230,53,0.08)"
+                    ? "rgba(125,211,252,0.1)"
+                    : "rgba(51,73,132,0.08)"
                   : "transparent",
                 borderLeft: isActive(item.path)
                   ? "3px solid"
@@ -172,8 +172,8 @@ const Navbar = ({ user }: NavbarProps) => {
                 "&:hover": {
                   bgcolor:
                     theme.palette.mode === "dark"
-                      ? "rgba(163,230,53,0.08)"
-                      : "rgba(163,230,53,0.05)",
+                      ? "rgba(125,211,252,0.08)"
+                      : "rgba(51,73,132,0.05)",
                   color: "primary.main",
                 },
               }}
@@ -228,7 +228,7 @@ const Navbar = ({ user }: NavbarProps) => {
               href="/profile"
               onClick={handleDrawerToggle}
               sx={{ borderRadius: 2, py: 1.2, px: 2, mb: 0.5, color: 'text.primary',
-                '&:hover': { bgcolor: 'rgba(163,230,53,0.08)' } }}>
+                '&:hover': { bgcolor: 'rgba(125,211,252,0.08)' } }}>
               <ListItemText primary="Profile & Settings"
                 primaryTypographyProps={{ fontSize: '0.9rem', fontWeight: 500 }} />
             </ListItemButton>
@@ -519,7 +519,7 @@ const Navbar = ({ user }: NavbarProps) => {
             width: 280,
             bgcolor:
               theme.palette.mode === "dark"
-                ? "rgba(3, 10, 6, 0.97)"
+                ? "rgba(7, 11, 24, 0.97)"
                 : "rgba(255, 255, 255, 0.97)",
             backdropFilter: "blur(20px) saturate(1.4)",
             borderLeft:

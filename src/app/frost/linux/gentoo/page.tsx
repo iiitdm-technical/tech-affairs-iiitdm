@@ -15,7 +15,7 @@ export default function GentooPage() {
         { label: "FROST", href: "/frost" },
         { label: "Linux", href: "/frost/linux" },
       ]}
-      accentColor="#86efac"
+      accentColor="#bfdbfe"
     >
       <Box className="frost-section">
         <Typography className="frost-p">

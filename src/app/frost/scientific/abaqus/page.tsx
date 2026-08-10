@@ -12,7 +12,7 @@ export default function AbaqusPage() {
       backHref="/frost/scientific"
       backLabel="Back to Scientific Software"
       breadcrumbs={[{ label: "FROST", href: "/frost" }, { label: "Scientific", href: "/frost/scientific" }]}
-      accentColor="#86efac"
+      accentColor="#bfdbfe"
     >
       <Box className="frost-section">
         <Typography className="frost-h2">What is Abaqus?</Typography>

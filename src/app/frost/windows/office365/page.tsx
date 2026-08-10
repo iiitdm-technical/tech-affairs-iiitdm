@@ -15,7 +15,7 @@ export default function Office365Page() {
         { label: "FROST", href: "/frost" },
         { label: "Windows", href: "/frost/windows" },
       ]}
-      accentColor="#a3e635"
+      accentColor="#7dd3fc"
     >
       <Box className="frost-section">
         <Typography className="frost-p">

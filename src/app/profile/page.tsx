@@ -129,8 +129,8 @@ export default function ProfilePage() {
         {/* Profile card */}
         <Card sx={{
           mb: 3, overflow: 'visible',
-          bgcolor: isDark ? 'rgba(5,46,22,0.45)' : 'background.paper',
-          border: `1px solid ${isDark ? 'rgba(163,230,53,0.12)' : 'rgba(0,0,0,0.08)'}`,
+          bgcolor: isDark ? 'rgba(16,37,74,0.45)' : 'background.paper',
+          border: `1px solid ${isDark ? 'rgba(125,211,252,0.12)' : 'rgba(0,0,0,0.08)'}`,
         }}>
           <CardContent sx={{ p: { xs: 2.5, sm: 3 } }}>
             {loadingUser ? (
@@ -147,7 +147,7 @@ export default function ProfilePage() {
                 <Avatar src={user.picture} sx={{
                   width: 72, height: 72, border: `3px solid`,
                   borderColor: 'primary.main',
-                  boxShadow: isDark ? '0 0 20px rgba(163,230,53,0.3)' : '0 4px 16px rgba(0,0,0,0.12)',
+                  boxShadow: isDark ? '0 0 20px rgba(125,211,252,0.3)' : '0 4px 16px rgba(0,0,0,0.12)',
                 }}>
                   {user.name[0]}
                 </Avatar>
@@ -179,8 +179,8 @@ export default function ProfilePage() {
         {/* Settings */}
         <Card sx={{
           mb: 3,
-          bgcolor: isDark ? 'rgba(5,46,22,0.45)' : 'background.paper',
-          border: `1px solid ${isDark ? 'rgba(163,230,53,0.12)' : 'rgba(0,0,0,0.08)'}`,
+          bgcolor: isDark ? 'rgba(16,37,74,0.45)' : 'background.paper',
+          border: `1px solid ${isDark ? 'rgba(125,211,252,0.12)' : 'rgba(0,0,0,0.08)'}`,
         }}>
           <CardContent sx={{ p: { xs: 2, sm: 2.5 } }}>
             <Typography variant="subtitle2" fontWeight={700} color="text.secondary"
@@ -242,8 +242,8 @@ export default function ProfilePage() {
 
         {/* Active sessions */}
         <Card sx={{
-          bgcolor: isDark ? 'rgba(5,46,22,0.45)' : 'background.paper',
-          border: `1px solid ${isDark ? 'rgba(163,230,53,0.12)' : 'rgba(0,0,0,0.08)'}`,
+          bgcolor: isDark ? 'rgba(16,37,74,0.45)' : 'background.paper',
+          border: `1px solid ${isDark ? 'rgba(125,211,252,0.12)' : 'rgba(0,0,0,0.08)'}`,
         }}>
           <CardContent sx={{ p: { xs: 2, sm: 2.5 } }}>
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
@@ -282,7 +282,7 @@ export default function ProfilePage() {
                       width: 36, height: 36, borderRadius: '50%', flexShrink: 0,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       bgcolor: s.current
-                        ? isDark ? 'rgba(163,230,53,0.15)' : 'rgba(22,163,74,0.1)'
+                        ? isDark ? 'rgba(125,211,252,0.15)' : 'rgba(51,73,132,0.1)'
                         : isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)',
                     }}>
                       <DevicesOther fontSize="small"

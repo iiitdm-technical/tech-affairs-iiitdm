@@ -118,7 +118,7 @@ export default function Highlights() {
                         size="small"
                         sx={{
                           mb: 1.5, fontSize: '0.68rem', fontWeight: 650,
-                          bgcolor: 'rgba(245,158,11,0.85)', color: '#030a06',
+                          bgcolor: 'rgba(245,158,11,0.85)', color: '#070b18',
                           border: 'none',
                         }}
                       />

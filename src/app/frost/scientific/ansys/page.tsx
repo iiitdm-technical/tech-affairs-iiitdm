@@ -12,7 +12,7 @@ export default function AnsysPage() {
       backHref="/frost/scientific"
       backLabel="Back to Scientific Software"
       breadcrumbs={[{ label: "FROST", href: "/frost" }, { label: "Scientific", href: "/frost/scientific" }]}
-      accentColor="#a3e635"
+      accentColor="#7dd3fc"
     >
       <Box className="frost-section">
         <Typography className="frost-h2">What is ANSYS?</Typography>

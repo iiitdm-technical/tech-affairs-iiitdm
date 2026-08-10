@@ -57,7 +57,7 @@ export default function FrostContentPage({
   backHref,
   backLabel,
   breadcrumbs,
-  accentColor = "#a3e635",
+  accentColor = "#7dd3fc",
   children,
 }: FrostContentPageProps) {
   const theme = useTheme();
@@ -160,7 +160,7 @@ export default function FrostContentPage({
                 fontSize: { xs: "1.9rem", md: "2.6rem" },
                 background: isDark
                   ? `linear-gradient(135deg, ${accentColor}, #fff)`
-                  : `linear-gradient(135deg, #16a34a, ${accentColor})`,
+                  : `linear-gradient(135deg, #334984, ${accentColor})`,
                 WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}>
@@ -190,22 +190,22 @@ export default function FrostContentPage({
               },
               "& .frost-h3": {
                 fontSize: "1rem", fontWeight: 650, mb: 1, mt: 0,
-                color: isDark ? "rgba(163,230,53,0.7)" : "#16a34a",
+                color: isDark ? "rgba(125,211,252,0.7)" : "#334984",
               },
               "& .frost-p": {
                 fontSize: "0.925rem", color: "text.secondary", lineHeight: 1.8, mb: 1.5,
               },
               "& .frost-code": {
                 fontFamily: "monospace", fontSize: "0.85rem", px: 1, py: 0.25, borderRadius: 0.75,
-                bgcolor: isDark ? "rgba(163,230,53,0.08)" : "rgba(22,163,74,0.06)",
+                bgcolor: isDark ? "rgba(125,211,252,0.08)" : "rgba(51,73,132,0.06)",
                 color: accentColor,
-                border: `1px solid ${isDark ? "rgba(163,230,53,0.15)" : "rgba(22,163,74,0.2)"}`,
+                border: `1px solid ${isDark ? "rgba(125,211,252,0.15)" : "rgba(51,73,132,0.2)"}`,
               },
               "& .frost-pre": {
                 fontFamily: "monospace", fontSize: "0.85rem", p: 2.5, borderRadius: 2,
                 overflowX: "auto",
                 bgcolor: isDark ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.04)",
-                border: `1px solid ${isDark ? "rgba(163,230,53,0.12)" : "rgba(0,0,0,0.1)"}`,
+                border: `1px solid ${isDark ? "rgba(125,211,252,0.12)" : "rgba(0,0,0,0.1)"}`,
                 color: accentColor, mb: 2, whiteSpace: "pre",
               },
               "& .frost-link": {
@@ -228,8 +228,8 @@ export default function FrostContentPage({
               },
               "& .frost-note": {
                 p: 2, borderRadius: 2,
-                bgcolor: isDark ? "rgba(163,230,53,0.06)" : "rgba(22,163,74,0.04)",
-                border: `1px solid ${isDark ? "rgba(163,230,53,0.15)" : "rgba(22,163,74,0.15)"}`,
+                bgcolor: isDark ? "rgba(125,211,252,0.06)" : "rgba(51,73,132,0.04)",
+                border: `1px solid ${isDark ? "rgba(125,211,252,0.15)" : "rgba(51,73,132,0.15)"}`,
                 color: "text.secondary", fontSize: "0.875rem", lineHeight: 1.7, mb: 2,
               },
             }}
@@ -314,8 +314,8 @@ export default function FrostContentPage({
                   >
                     <Box sx={{
                       p: 2.5, borderRadius: 3,
-                      border: `1px solid ${isDark ? 'rgba(163,230,53,0.1)' : 'rgba(22,163,74,0.15)'}`,
-                      bgcolor: isDark ? 'rgba(163,230,53,0.03)' : 'rgba(22,163,74,0.02)',
+                      border: `1px solid ${isDark ? 'rgba(125,211,252,0.1)' : 'rgba(51,73,132,0.15)'}`,
+                      bgcolor: isDark ? 'rgba(125,211,252,0.03)' : 'rgba(51,73,132,0.02)',
                     }}>
                       {/* Contribution header */}
                       <Box display="flex" alignItems="center" gap={1} mb={1.5} flexWrap="wrap">
@@ -331,7 +331,7 @@ export default function FrostContentPage({
                           size="small"
                           sx={{
                             height: 18, fontSize: '0.62rem', ml: 'auto',
-                            bgcolor: isDark ? 'rgba(163,230,53,0.1)' : 'rgba(22,163,74,0.1)',
+                            bgcolor: isDark ? 'rgba(125,211,252,0.1)' : 'rgba(51,73,132,0.1)',
                             color: accentColor,
                             '& .MuiChip-icon': { color: accentColor },
                           }}

@@ -86,7 +86,7 @@ export default function OrgAdminPage() {
   const drawerWidth = collapsed ? DRAWER_COLLAPSED : DRAWER_WIDTH;
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: theme.palette.mode === 'dark' ? '#030a06' : '#f4f6fb' }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: theme.palette.mode === 'dark' ? '#070b18' : '#f4f6fb' }}>
 
       {/* Sidebar */}
       <Drawer
@@ -97,9 +97,9 @@ export default function OrgAdminPage() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            bgcolor: theme.palette.mode === 'dark' ? '#05150a' : '#ffffff',
+            bgcolor: theme.palette.mode === 'dark' ? '#0a1428' : '#ffffff',
             borderRight: '1px solid',
-            borderColor: theme.palette.mode === 'dark' ? 'rgba(163,230,53,0.1)' : 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'rgba(125,211,252,0.1)' : 'divider',
             transition: 'width 0.2s ease',
             overflowX: 'hidden',
           },
@@ -232,7 +232,7 @@ export default function OrgAdminPage() {
         {/* Top bar */}
         <Box sx={{
           px: 4, py: 2.5,
-          bgcolor: theme.palette.mode === 'dark' ? '#05150a' : '#ffffff',
+          bgcolor: theme.palette.mode === 'dark' ? '#0a1428' : '#ffffff',
           borderBottom: '1px solid', borderColor: 'divider',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           position: 'sticky', top: 0, zIndex: 10,

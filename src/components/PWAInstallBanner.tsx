@@ -62,12 +62,12 @@ export default function PWAInstallBanner() {
         maxWidth: 360,
         borderRadius: 3,
         background: isDark
-          ? 'linear-gradient(135deg, rgba(3,10,6,0.96), rgba(10,20,12,0.96))'
+          ? 'linear-gradient(135deg, rgba(7,11,24,0.96), rgba(13,24,45,0.96))'
           : 'linear-gradient(135deg, rgba(255,255,255,0.97), rgba(240,253,244,0.97))',
-        border: `1px solid ${isDark ? 'rgba(163,230,53,0.2)' : 'rgba(21,128,61,0.2)'}`,
+        border: `1px solid ${isDark ? 'rgba(125,211,252,0.2)' : 'rgba(51,73,132,0.2)'}`,
         backdropFilter: 'blur(20px)',
         boxShadow: isDark
-          ? '0 8px 32px -4px rgba(0,0,0,0.6), 0 0 0 1px rgba(163,230,53,0.1)'
+          ? '0 8px 32px -4px rgba(0,0,0,0.6), 0 0 0 1px rgba(125,211,252,0.1)'
           : '0 8px 32px -4px rgba(15,23,42,0.15)',
         p: 2.5,
         display: 'flex',
@@ -107,13 +107,13 @@ export default function PWAInstallBanner() {
             px: 2,
             py: 0.7,
             background: isDark
-              ? 'linear-gradient(135deg, #16a34a, #a3e635)'
-              : 'linear-gradient(135deg, #166534, #16a34a)',
-            color: isDark ? '#030a06' : '#f0fdf4',
+              ? 'linear-gradient(135deg, #1f82b1, #7dd3fc)'
+              : 'linear-gradient(135deg, #334984, #1f82b1)',
+            color: isDark ? '#070b18' : '#eff6ff',
             '&:hover': {
               background: isDark
-                ? 'linear-gradient(135deg, #15803d, #84cc16)'
-                : 'linear-gradient(135deg, #14532d, #15803d)',
+                ? 'linear-gradient(135deg, #1f82b1, #38bdf8)'
+                : 'linear-gradient(135deg, #283b70, #334984)',
             },
           }}
         >

@@ -28,11 +28,11 @@ export default async function I2RLayout({
           {/* PCB-style icon */}
           <Box sx={{
             width: 80, height: 80, borderRadius: '50%', mx: 'auto', mb: 3,
-            background: 'linear-gradient(135deg, #16a34a, #a3e635)',
+            background: 'linear-gradient(135deg, #1f82b1, #7dd3fc)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 0 40px rgba(163,230,53,0.35)',
+            boxShadow: '0 0 40px rgba(125,211,252,0.35)',
           }}>
-            <Typography sx={{ fontSize: '2rem', fontWeight: 900, color: '#030a06', lineHeight: 1 }}>
+            <Typography sx={{ fontSize: '2rem', fontWeight: 900, color: '#070b18', lineHeight: 1 }}>
               I²R
             </Typography>
           </Box>
@@ -54,12 +54,12 @@ export default async function I2RLayout({
             size="large"
             sx={{
               px: 5, py: 1.4, borderRadius: 3, fontWeight: 700,
-              background: 'linear-gradient(135deg, #16a34a, #a3e635)',
-              color: '#030a06',
-              boxShadow: '0 4px 20px -4px rgba(163,230,53,0.5)',
+              background: 'linear-gradient(135deg, #1f82b1, #7dd3fc)',
+              color: '#070b18',
+              boxShadow: '0 4px 20px -4px rgba(125,211,252,0.5)',
               '&:hover': {
-                background: 'linear-gradient(135deg, #15803d, #84cc16)',
-                boxShadow: '0 8px 30px -4px rgba(163,230,53,0.6)',
+                background: 'linear-gradient(135deg, #1f82b1, #38bdf8)',
+                boxShadow: '0 8px 30px -4px rgba(125,211,252,0.6)',
                 transform: 'translateY(-1px)',
               },
             }}

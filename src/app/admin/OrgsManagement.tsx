@@ -22,7 +22,7 @@ const CATEGORIES = ['club', 'team', 'society', 'community'];
 const EMPTY: Omit<Org, 'id'> = { name: '', image: '', link: '', category: 'club', sort_order: 0, authorized_email: '' };
 
 const CAT_COLORS: Record<string, string> = {
-  club: '#a3e635', team: '#4ade80', society: '#f59e0b', community: '#86efac',
+  club: '#7dd3fc', team: '#93c5fd', society: '#f59e0b', community: '#bfdbfe',
 };
 
 export default function OrgsManagement() {
@@ -166,7 +166,7 @@ export default function OrgsManagement() {
             sx={{
               textTransform: 'capitalize',
               ...(activeCategory === cat && {
-                bgcolor: CAT_COLORS[cat], color: '#030a06', borderColor: CAT_COLORS[cat],
+                bgcolor: CAT_COLORS[cat], color: '#070b18', borderColor: CAT_COLORS[cat],
               }),
             }}
           />

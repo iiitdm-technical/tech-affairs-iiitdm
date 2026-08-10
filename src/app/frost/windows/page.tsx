@@ -9,10 +9,10 @@ import { ArrowBack, ArrowForward, Window, Groups, Apps } from "@mui/icons-materi
 import { SiAdobecreativecloud } from "react-icons/si";
 
 const ITEMS = [
-  { title: "Office 365",  slug: "office365", icon: <Apps sx={{ fontSize: 36 }} />,        color: "#a3e635", desc: "Word, Excel, PowerPoint and more — free with your IIITDM account." },
-  { title: "Windows OS",  slug: "os",        icon: <Window sx={{ fontSize: 36 }} />,       color: "#4ade80", desc: "Licensed Windows OS available for students and faculty." },
+  { title: "Office 365",  slug: "office365", icon: <Apps sx={{ fontSize: 36 }} />,        color: "#7dd3fc", desc: "Word, Excel, PowerPoint and more — free with your IIITDM account." },
+  { title: "Windows OS",  slug: "os",        icon: <Window sx={{ fontSize: 36 }} />,       color: "#93c5fd", desc: "Licensed Windows OS available for students and faculty." },
   { title: "MS Teams",    slug: "teams",     icon: <Groups sx={{ fontSize: 36 }} />,       color: "#f59e0b", desc: "Online meetings, classes and collaboration through Teams." },
-  { title: "Adobe Suite", slug: "adobe",     icon: <SiAdobecreativecloud size={36} />,     color: "#86efac", desc: "Adobe Creative Cloud — Photoshop, Illustrator, Premiere Pro and more." },
+  { title: "Adobe Suite", slug: "adobe",     icon: <SiAdobecreativecloud size={36} />,     color: "#bfdbfe", desc: "Adobe Creative Cloud — Photoshop, Illustrator, Premiere Pro and more." },
 ];
 
 export default function WindowsPage() {
@@ -45,8 +45,8 @@ export default function WindowsPage() {
                   sx={{
                     height: "100%", display: "flex", flexDirection: "column",
                     textDecoration: "none",
-                    bgcolor: isDark ? "rgba(5,46,22,0.45)" : "background.paper",
-                    border: `1px solid ${isDark ? "rgba(163,230,53,0.1)" : "rgba(0,0,0,0.08)"}`,
+                    bgcolor: isDark ? "rgba(16,37,74,0.45)" : "background.paper",
+                    border: `1px solid ${isDark ? "rgba(125,211,252,0.1)" : "rgba(0,0,0,0.08)"}`,
                     borderRadius: 3, transition: "all 0.22s",
                     "&:hover": {
                       borderColor: item.color, transform: "translateY(-3px)",

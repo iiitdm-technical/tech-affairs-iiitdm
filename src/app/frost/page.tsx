@@ -16,7 +16,7 @@ const SECTIONS = [
     title: "Linux",
     slug: "linux",
     icon: <Terminal sx={{ fontSize: 40 }} />,
-    color: "#a3e635",
+    color: "#7dd3fc",
     description: "Ubuntu, Debian, Linux Mint, Gentoo and more open-source distributions.",
     items: ["Ubuntu", "Debian", "Linux Mint", "Gentoo"],
   },
@@ -24,7 +24,7 @@ const SECTIONS = [
     title: "Windows",
     slug: "windows",
     icon: <Window sx={{ fontSize: 40 }} />,
-    color: "#4ade80",
+    color: "#93c5fd",
     description: "Microsoft Office 365, Windows OS, Teams, Adobe and other licensed software.",
     items: ["Office 365", "Windows OS", "MS Teams", "Adobe"],
   },
@@ -125,15 +125,15 @@ export default function FrostPage() {
             <Chip label="Software Distribution" size="small"
               sx={{
                 mb: 2, fontWeight: 650, letterSpacing: "0.1em", fontSize: "0.7rem",
-                bgcolor: isDark ? "rgba(163,230,53,0.1)" : "rgba(22,163,74,0.1)",
+                bgcolor: isDark ? "rgba(125,211,252,0.1)" : "rgba(51,73,132,0.1)",
                 color: "primary.main", border: "1px solid", borderColor: "primary.main",
               }} />
             <Typography variant="h2" fontWeight={900} letterSpacing="-0.04em"
               sx={{
                 fontSize: { xs: "2.5rem", md: "3.5rem" },
                 background: isDark
-                  ? "linear-gradient(135deg, #a3e635, #4ade80)"
-                  : "linear-gradient(135deg, #16a34a, #a3e635)",
+                  ? "linear-gradient(135deg, #7dd3fc, #93c5fd)"
+                  : "linear-gradient(135deg, #334984, #1f82b1)",
                 WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
                 backgroundClip: "text", mb: 2,
               }}>
@@ -154,8 +154,8 @@ export default function FrostPage() {
                   sx={{
                     height: "100%", display: "flex", flexDirection: "column",
                     textDecoration: "none", cursor: "pointer",
-                    bgcolor: isDark ? "rgba(5,46,22,0.45)" : "background.paper",
-                    border: `1px solid ${isDark ? "rgba(163,230,53,0.1)" : "rgba(0,0,0,0.08)"}`,
+                    bgcolor: isDark ? "rgba(16,37,74,0.45)" : "background.paper",
+                    border: `1px solid ${isDark ? "rgba(125,211,252,0.1)" : "rgba(0,0,0,0.08)"}`,
                     borderRadius: 3, transition: "all 0.25s",
                     "&:hover": {
                       borderColor: section.color,
@@ -223,14 +223,14 @@ export default function FrostPage() {
                         sx={{
                           borderRadius: 3, px: 4, fontWeight: 700,
                           background: isDark
-                            ? "linear-gradient(135deg, #16a34a, #a3e635)"
-                            : "linear-gradient(135deg, #166534, #16a34a)",
-                          color: isDark ? "#030a06" : "#f0fdf4",
-                          boxShadow: "0 4px 18px -3px rgba(22,163,74,0.4)",
+                            ? "linear-gradient(135deg, #1f82b1, #7dd3fc)"
+                            : "linear-gradient(135deg, #334984, #1f82b1)",
+                          color: isDark ? "#070b18" : "#eff6ff",
+                          boxShadow: "0 4px 18px -3px rgba(51,73,132,0.4)",
                           "&:hover": {
                             background: isDark
-                              ? "linear-gradient(135deg, #15803d, #84cc16)"
-                              : "linear-gradient(135deg, #14532d, #15803d)",
+                              ? "linear-gradient(135deg, #1f82b1, #38bdf8)"
+                              : "linear-gradient(135deg, #283b70, #334984)",
                           },
                         }}
                       >
@@ -245,11 +245,11 @@ export default function FrostPage() {
                         startIcon={<Person />}
                         sx={{
                           borderRadius: 3, px: 4, fontWeight: 700,
-                          borderColor: isDark ? "rgba(163,230,53,0.4)" : "rgba(22,163,74,0.4)",
-                          color: isDark ? "#a3e635" : "#16a34a",
+                          borderColor: isDark ? "rgba(125,211,252,0.4)" : "rgba(51,73,132,0.4)",
+                          color: isDark ? "#7dd3fc" : "#334984",
                           "&:hover": {
-                            borderColor: isDark ? "#a3e635" : "#16a34a",
-                            bgcolor: isDark ? "rgba(163,230,53,0.06)" : "rgba(22,163,74,0.06)",
+                            borderColor: isDark ? "#7dd3fc" : "#1f82b1",
+                            bgcolor: isDark ? "rgba(125,211,252,0.06)" : "rgba(51,73,132,0.06)",
                           },
                         }}
                       >
@@ -274,17 +274,17 @@ export default function FrostPage() {
                       <motion.div key={c.id} initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                         <Box sx={{
                           p: 2.5, borderRadius: 3,
-                          border: `1px solid ${isDark ? "rgba(163,230,53,0.1)" : "rgba(22,163,74,0.12)"}`,
-                          bgcolor: isDark ? "rgba(163,230,53,0.02)" : "rgba(22,163,74,0.015)",
+                          border: `1px solid ${isDark ? "rgba(125,211,252,0.1)" : "rgba(51,73,132,0.12)"}`,
+                          bgcolor: isDark ? "rgba(125,211,252,0.02)" : "rgba(51,73,132,0.015)",
                         }}>
                           <Box display="flex" alignItems="center" gap={1} mb={1.5} flexWrap="wrap">
-                            <Avatar sx={{ width: 26, height: 26, fontSize: "0.7rem", bgcolor: isDark ? "rgba(163,230,53,0.2)" : "rgba(22,163,74,0.15)", color: isDark ? "#a3e635" : "#16a34a" }}>
+                            <Avatar sx={{ width: 26, height: 26, fontSize: "0.7rem", bgcolor: isDark ? "rgba(125,211,252,0.2)" : "rgba(51,73,132,0.15)", color: isDark ? "#7dd3fc" : "#334984" }}>
                               {c.author_name?.[0]?.toUpperCase()}
                             </Avatar>
                             <Typography fontSize="0.82rem" fontWeight={600}>{c.author_name}</Typography>
                             <Typography fontSize="0.75rem" color="text.disabled">·</Typography>
                             <Chip label={c.page_title} size="small" variant="outlined"
-                              sx={{ height: 18, fontSize: "0.65rem", borderColor: isDark ? "rgba(163,230,53,0.25)" : "rgba(22,163,74,0.3)", color: isDark ? "#a3e635" : "#16a34a" }} />
+                              sx={{ height: 18, fontSize: "0.65rem", borderColor: isDark ? "rgba(125,211,252,0.25)" : "rgba(51,73,132,0.3)", color: isDark ? "#7dd3fc" : "#334984" }} />
                             <Typography fontSize="0.72rem" color="text.disabled" sx={{ ml: "auto" }}>
                               {new Date(c.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
                             </Typography>
@@ -292,7 +292,7 @@ export default function FrostPage() {
                               icon={<CheckCircle sx={{ fontSize: "0.7rem !important" }} />}
                               label="Verified"
                               size="small"
-                              sx={{ height: 18, fontSize: "0.62rem", bgcolor: isDark ? "rgba(163,230,53,0.08)" : "rgba(22,163,74,0.08)", color: isDark ? "#a3e635" : "#16a34a", "& .MuiChip-icon": { color: "inherit" } }}
+                              sx={{ height: 18, fontSize: "0.62rem", bgcolor: isDark ? "rgba(125,211,252,0.08)" : "rgba(51,73,132,0.08)", color: isDark ? "#7dd3fc" : "#334984", "& .MuiChip-icon": { color: "inherit" } }}
                             />
                           </Box>
                           <Typography fontWeight={700} fontSize="0.9rem" mb={0.75}>{c.title}</Typography>

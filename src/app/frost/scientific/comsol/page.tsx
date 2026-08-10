@@ -12,7 +12,7 @@ export default function ComsolPage() {
       backHref="/frost/scientific"
       backLabel="Back to Scientific Software"
       breadcrumbs={[{ label: "FROST", href: "/frost" }, { label: "Scientific", href: "/frost/scientific" }]}
-      accentColor="#4ade80"
+      accentColor="#93c5fd"
     >
       <Box className="frost-section">
         <Typography className="frost-h2">What is COMSOL?</Typography>

@@ -32,7 +32,7 @@ interface OrgRow {
   category: string;
 }
 
-const ACCENT_COLORS = ['#a3e635', '#4ade80', '#f59e0b', '#86efac', '#fcd34d', '#d9f99d'];
+const ACCENT_COLORS = ['#7dd3fc', '#93c5fd', '#f59e0b', '#bfdbfe', '#fcd34d', '#dbeafe'];
 
 function slugToOrg(slug: string, orgs: OrgRow[]): OrgRow | undefined {
   return orgs.find((o) => o.link.endsWith('/' + slug.split('/').pop()));
@@ -99,7 +99,7 @@ const Achievements = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <Typography sx={{ fontSize: '0.72rem', fontWeight: 650, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#34d399', mb: 1.5, textAlign: 'center' }}>
+          <Typography sx={{ fontSize: '0.72rem', fontWeight: 650, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#7dd3fc', mb: 1.5, textAlign: 'center' }}>
             Achievements
           </Typography>
           <Typography variant="h2" component="h2" sx={{ fontSize: { xs: '1.9rem', sm: '2.5rem', md: '2.8rem' }, fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1.12, mb: 5, textAlign: 'center', color: 'text.primary' }}>

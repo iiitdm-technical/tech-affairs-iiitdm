@@ -51,8 +51,8 @@ function LoginContent() {
           height: 500,
           borderRadius: "50%",
           background: isDark
-            ? "radial-gradient(circle, rgba(74,222,128,0.1) 0%, transparent 70%)"
-            : "radial-gradient(circle, rgba(21,128,61,0.12) 0%, transparent 70%)",
+            ? "radial-gradient(circle, rgba(147,197,253,0.1) 0%, transparent 70%)"
+            : "radial-gradient(circle, rgba(51,73,132,0.12) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />

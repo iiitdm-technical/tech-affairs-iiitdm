@@ -15,7 +15,7 @@ export default function AdobePage() {
         { label: "FROST", href: "/frost" },
         { label: "Windows", href: "/frost/windows" },
       ]}
-      accentColor="#86efac"
+      accentColor="#bfdbfe"
     >
       <Box className="frost-section">
         <Typography className="frost-p">

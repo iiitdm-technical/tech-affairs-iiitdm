@@ -28,7 +28,7 @@ const Hero = () => {
       <Box sx={{
         position: 'absolute', top: '12%', left: '8%',
         width: 480, height: 480, borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(74,222,128,0.14) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(147,197,253,0.14) 0%, transparent 70%)',
         filter: 'blur(48px)', pointerEvents: 'none', zIndex: 0,
       }} />
       <Box sx={{
@@ -40,7 +40,7 @@ const Hero = () => {
       <Box sx={{
         position: 'absolute', top: '40%', right: '20%',
         width: 260, height: 260, borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(163,230,53,0.08) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(125,211,252,0.08) 0%, transparent 70%)',
         filter: 'blur(36px)', pointerEvents: 'none', zIndex: 0,
       }} />
 
@@ -54,16 +54,16 @@ const Hero = () => {
           <Box sx={{
             display: 'inline-flex', alignItems: 'center', gap: 1,
             background: isDark
-              ? 'linear-gradient(135deg, rgba(163,230,53,0.12), rgba(74,222,128,0.06))'
-              : 'linear-gradient(135deg, rgba(21,128,61,0.1), rgba(74,222,128,0.06))',
-            border: isDark ? '1px solid rgba(163,230,53,0.22)' : '1px solid rgba(21,128,61,0.22)',
+              ? 'linear-gradient(135deg, rgba(125,211,252,0.12), rgba(147,197,253,0.06))'
+              : 'linear-gradient(135deg, rgba(51,73,132,0.1), rgba(31,130,177,0.06))',
+            border: isDark ? '1px solid rgba(125,211,252,0.22)' : '1px solid rgba(51,73,132,0.22)',
             borderRadius: 100, px: 2.5, py: 0.8, mb: 4,
           }}>
             {/* Blinking LED dot */}
             <Box sx={{
               width: 7, height: 7, borderRadius: '50%',
-              background: isDark ? '#a3e635' : '#16a34a',
-              boxShadow: isDark ? '0 0 8px rgba(163,230,53,0.9)' : '0 0 6px rgba(21,128,61,0.6)',
+              background: isDark ? '#7dd3fc' : '#1f82b1',
+              boxShadow: isDark ? '0 0 8px rgba(125,211,252,0.9)' : '0 0 6px rgba(51,73,132,0.6)',
               animation: 'led-blink 2.4s ease-in-out infinite',
               '@keyframes led-blink': {
                 '0%, 100%': { opacity: 1 },
@@ -72,7 +72,7 @@ const Hero = () => {
             }} />
             <Typography sx={{
               fontSize: '0.8rem', fontWeight: 600,
-              color: isDark ? '#a3e635' : '#15803d',
+              color: isDark ? '#7dd3fc' : '#334984',
               letterSpacing: '0.03em',
             }}>
               IIITDM Kancheepuram
@@ -88,7 +88,7 @@ const Hero = () => {
               sx={{
                 width: { xs: 100, md: 140 }, height: { xs: 100, md: 140 },
                 filter: isDark
-                  ? 'drop-shadow(0 0 28px rgba(163,230,53,0.45)) brightness(1.1)'
+                  ? 'drop-shadow(0 0 28px rgba(125,211,252,0.45)) brightness(1.1)'
                   : 'none',
               }}
             />
@@ -106,8 +106,8 @@ const Hero = () => {
             fontSize: { xs: 'clamp(2.4rem, 9vw, 3.5rem)', md: 'clamp(3rem, 6vw, 5rem)' },
             fontWeight: 800, letterSpacing: '-0.045em', lineHeight: 1.05, mb: 3.5,
             background: isDark
-              ? 'linear-gradient(135deg, #4ade80, #a3e635, #f59e0b)'
-              : 'linear-gradient(135deg, #166534, #15803d, #16a34a)',
+              ? 'linear-gradient(135deg, #93c5fd, #7dd3fc, #f59e0b)'
+              : 'linear-gradient(135deg, #334984, #1f82b1)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
@@ -135,19 +135,19 @@ const Hero = () => {
               fontSize: { xs: '0.95rem', sm: '1rem' },
               borderRadius: 3, minWidth: { xs: 220, sm: 'auto' },
               background: isDark
-                ? 'linear-gradient(135deg, #16a34a, #a3e635)'
-                : 'linear-gradient(135deg, #166534, #16a34a)',
-              color: isDark ? '#030a06' : '#f0fdf4',
+                ? 'linear-gradient(135deg, #1f82b1, #7dd3fc)'
+                : 'linear-gradient(135deg, #334984, #1f82b1)',
+              color: isDark ? '#070b18' : '#eff6ff',
               boxShadow: isDark
-                ? '0 4px 20px -4px rgba(163,230,53,0.5)'
-                : '0 4px 20px -4px rgba(21,128,61,0.45)',
+                ? '0 4px 20px -4px rgba(125,211,252,0.5)'
+                : '0 4px 20px -4px rgba(51,73,132,0.45)',
               '&:hover': {
                 background: isDark
-                  ? 'linear-gradient(135deg, #15803d, #84cc16)'
-                  : 'linear-gradient(135deg, #14532d, #166534)',
+                  ? 'linear-gradient(135deg, #1f82b1, #38bdf8)'
+                  : 'linear-gradient(135deg, #283b70, #334984)',
                 boxShadow: isDark
-                  ? '0 8px 30px -4px rgba(163,230,53,0.6)'
-                  : '0 8px 30px -4px rgba(21,128,61,0.55)',
+                  ? '0 8px 30px -4px rgba(125,211,252,0.6)'
+                  : '0 8px 30px -4px rgba(51,73,132,0.55)',
                 transform: 'translateY(-2px)',
               },
             }}>
@@ -157,11 +157,11 @@ const Hero = () => {
               px: { xs: 3, sm: 4 }, py: { xs: 1.2, sm: 1.5 },
               fontSize: { xs: '0.95rem', sm: '1rem' },
               borderRadius: 3, minWidth: { xs: 220, sm: 'auto' },
-              borderColor: isDark ? 'rgba(163,230,53,0.3)' : 'rgba(21,128,61,0.3)',
-              color: isDark ? '#a3e635' : '#15803d',
+              borderColor: isDark ? 'rgba(125,211,252,0.3)' : 'rgba(51,73,132,0.3)',
+              color: isDark ? '#7dd3fc' : '#334984',
               '&:hover': {
-                borderColor: isDark ? '#a3e635' : '#16a34a',
-                background: isDark ? 'rgba(163,230,53,0.07)' : 'rgba(21,128,61,0.07)',
+                borderColor: isDark ? '#7dd3fc' : '#1f82b1',
+                background: isDark ? 'rgba(125,211,252,0.07)' : 'rgba(51,73,132,0.07)',
                 transform: 'translateY(-1px)',
               },
             }}>

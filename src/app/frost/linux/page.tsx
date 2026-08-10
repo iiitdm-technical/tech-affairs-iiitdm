@@ -10,9 +10,9 @@ import { SiUbuntu, SiDebian, SiLinuxmint, SiGentoo } from "react-icons/si";
 
 const DISTROS = [
   { title: "Ubuntu",      slug: "ubuntu",      icon: <SiUbuntu size={36} />,     color: "#f97316", desc: "The most popular Linux distro — beginner-friendly with LTS support and a huge community." },
-  { title: "Debian",      slug: "debian",      icon: <SiDebian size={36} />,     color: "#a3e635", desc: "Rock-solid stability. The base of Ubuntu and many other distributions." },
-  { title: "Linux Mint",  slug: "linux-mint",  icon: <SiLinuxmint size={36} />,  color: "#4ade80", desc: "Elegant and easy to use — great for newcomers switching from Windows." },
-  { title: "Gentoo",      slug: "gentoo",      icon: <SiGentoo size={36} />,     color: "#86efac", desc: "Source-based distro for maximum control and performance tuning." },
+  { title: "Debian",      slug: "debian",      icon: <SiDebian size={36} />,     color: "#7dd3fc", desc: "Rock-solid stability. The base of Ubuntu and many other distributions." },
+  { title: "Linux Mint",  slug: "linux-mint",  icon: <SiLinuxmint size={36} />,  color: "#93c5fd", desc: "Elegant and easy to use — great for newcomers switching from Windows." },
+  { title: "Gentoo",      slug: "gentoo",      icon: <SiGentoo size={36} />,     color: "#bfdbfe", desc: "Source-based distro for maximum control and performance tuning." },
 ];
 
 export default function LinuxPage() {
@@ -45,8 +45,8 @@ export default function LinuxPage() {
                   sx={{
                     height: "100%", display: "flex", flexDirection: "column",
                     textDecoration: "none",
-                    bgcolor: isDark ? "rgba(5,46,22,0.45)" : "background.paper",
-                    border: `1px solid ${isDark ? "rgba(163,230,53,0.1)" : "rgba(0,0,0,0.08)"}`,
+                    bgcolor: isDark ? "rgba(16,37,74,0.45)" : "background.paper",
+                    border: `1px solid ${isDark ? "rgba(125,211,252,0.1)" : "rgba(0,0,0,0.08)"}`,
                     borderRadius: 3, transition: "all 0.22s",
                     "&:hover": {
                       borderColor: item.color, transform: "translateY(-3px)",

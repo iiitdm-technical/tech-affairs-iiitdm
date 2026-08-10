@@ -41,13 +41,13 @@ function MemberCard({
       sx={{
         display: 'flex', flexDirection: 'column', alignItems: 'center',
         p: { xs: 1.5, sm: 2 }, textAlign: 'center', cursor: member.image ? 'pointer' : 'default',
-        bgcolor: isDark ? 'rgba(5,46,22,0.45)' : 'background.paper',
-        border: `1px solid ${isDark ? 'rgba(163,230,53,0.1)' : 'rgba(0,0,0,0.08)'}`,
+        bgcolor: isDark ? 'rgba(16,37,74,0.45)' : 'background.paper',
+        border: `1px solid ${isDark ? 'rgba(125,211,252,0.1)' : 'rgba(0,0,0,0.08)'}`,
         transition: 'all 0.2s',
         '&:hover': member.image ? {
           borderColor: theme.palette.primary.main,
           transform: 'translateY(-2px)',
-          boxShadow: isDark ? '0 8px 24px -4px rgba(163,230,53,0.15)' : '0 8px 24px -4px rgba(0,0,0,0.12)',
+          boxShadow: isDark ? '0 8px 24px -4px rgba(125,211,252,0.15)' : '0 8px 24px -4px rgba(0,0,0,0.12)',
         } : {},
       }}
     >
@@ -197,13 +197,13 @@ export default function TeamSubPage({ slug, title, description }: TeamSubPagePro
       {/* Image modal */}
       <Modal open={modalOpen} onClose={handleClose} closeAfterTransition
         slots={{ backdrop: Backdrop }}
-        slotProps={{ backdrop: { timeout: 400, style: { backgroundColor: isDark ? 'rgba(3,10,6,0.85)' : 'rgba(0,0,0,0.6)' } } }}>
+        slotProps={{ backdrop: { timeout: 400, style: { backgroundColor: isDark ? 'rgba(7,11,24,0.85)' : 'rgba(0,0,0,0.6)' } } }}>
         <Fade in={modalOpen}>
           <Box sx={{
             position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
             width: { xs: '80vw', sm: '50vw', md: '35vw' }, maxWidth: 360,
             bgcolor: 'background.paper', boxShadow: 24, p: 2, borderRadius: 3, outline: 'none',
-            border: `1px solid ${isDark ? 'rgba(163,230,53,0.2)' : 'rgba(0,0,0,0.12)'}`,
+            border: `1px solid ${isDark ? 'rgba(125,211,252,0.2)' : 'rgba(0,0,0,0.12)'}`,
           }}>
             <IconButton onClick={handleClose}
               sx={{ position: 'absolute', top: 8, right: 8, color: 'text.secondary' }}>

@@ -88,8 +88,8 @@ export default function AdminPage() {
   if (!user) return null;
 
   const isDark = theme.palette.mode === 'dark';
-  const sidebarBg = isDark ? '#05150a' : '#ffffff';
-  const sidebarBorder = isDark ? 'rgba(163,230,53,0.1)' : theme.palette.divider;
+  const sidebarBg = isDark ? '#0a1428' : '#ffffff';
+  const sidebarBorder = isDark ? 'rgba(125,211,252,0.1)' : theme.palette.divider;
   const drawerWidth = collapsed ? DRAWER_COLLAPSED : DRAWER_WIDTH;
 
   // Desktop sidebar content
@@ -193,7 +193,7 @@ export default function AdminPage() {
   );
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: isDark ? '#030a06' : '#f4f6fb' }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: isDark ? '#070b18' : '#f4f6fb' }}>
 
       {/* Desktop: permanent sidebar */}
       {!isMobile && (

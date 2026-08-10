@@ -212,7 +212,7 @@ function BecomeSponsorCTA({ isDark }: { isDark: boolean }) {
           sx={{
             px: 4, py: 1.5, borderRadius: 3.5, fontWeight: 700,
             background: 'linear-gradient(135deg, #d97706, #f59e0b)',
-            color: '#030a06',
+            color: '#070b18',
             boxShadow: '0 4px 18px -3px rgba(245,158,11,0.45)',
             '&:hover': {
               background: 'linear-gradient(135deg, #b45309, #d97706)',
