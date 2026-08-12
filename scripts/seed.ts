@@ -80,7 +80,7 @@ const staticAchievements = [
   { title: 'ISRO IRoC-U 2025',                                    description: 'Top finalist nationwide out of 510+ teams and advanced to field round at ISRO Bengaluru',                                    year: '2025', club: 'Team Astra',          logo: '/teams/astra/logo.webp'      },
   { title: 'National Space Day Award Ceremony',                   description: 'Invited to National Space Day awards at Bharat Mandapam, New Delhi',                                                          year: '2025', club: 'Team Astra',          logo: '/teams/astra/logo.webp'      },
   { title: 'SAE AeroTHON 2025',                                   description: 'AIR 8 in design phase, Top 25 nationally',                                                                                   year: '2025', club: 'Team Astra',          logo: '/teams/astra/logo.webp'      },
-  { title: 'Caterpillar Autonomy Challenge Shaastra 2026',        description: 'Won Judges Innovation Award with ₹30,000 prize',                                                                             year: '2026', club: 'Team Astra',          logo: '/teams/astra/logo.webp'      },
+  { title: 'Caterpillar Autonomy Challenge Shaastra 2026',        description: 'Won Judges Innovation Award with ₹30,000 prize',                                                                             year: '2026', club: 'Mars Club',           logo: '/teams/mars/logo.webp'       },
   { title: 'SAE e-BAJA 2025–26',                                  description: 'Team Revolt Racers competed in SAE e-BAJA 2025–26 (Indore). Achieved AIR 36/95 | CFTI Rank 2 | Tamil Nadu Rank 6. Completed 7 endurance laps, improving from 5 last year.', year: '2026', club: 'SAE Collegiate Club', logo: '/teams/revolt/logo.webp' },
   { title: 'NEC Finals at IIT Bombay',                            description: 'E-Cell IIITDM secured Top 25 out of 4,000 teams across India.',                                                              year: '2026', club: 'E-Cell',              logo: '/societies/Ecell/logo.webp'  },
 ];
@@ -120,9 +120,9 @@ const staticTeam = [
   { type: 'sac', name: 'P Kaarthick Natesh', position: 'Technical Affairs Secretary',      image: '/technical-affairs-team/sac/PKaarthickNatesh.webp', email: 'ec22b1004@iiitdm.ac.in', linkedin: '', url: '', path: '', sort_order: 1 },
   { type: 'sac', name: 'Ranveer Gautam',      position: 'Technical Affairs Joint Secretary', image: '/technical-affairs-team/sac/RanveerGautam.webp',    email: 'me23b2031@iiitdm.ac.in', linkedin: '', url: '', path: '', sort_order: 2 },
   // Faculty
-  { type: 'faculty', name: 'Prof. M D Selvaraj',        position: 'Dean DII',                   image: '/facultyheads/selvaraj.webp',    email: '', linkedin: '', url: '', path: '', sort_order: 1 },
-  { type: 'faculty', name: 'Dr. Vikash Kumar',           position: 'PIC - Technical Affairs',   image: '/facultyheads/vikash.webp',      email: '', linkedin: '', url: '', path: '', sort_order: 2 },
-  { type: 'faculty', name: 'Dr. Bhukya Krishna Priya',  position: 'PIC - Technical Affairs',   image: '/facultyheads/krishnapriya.webp', email: '', linkedin: '', url: '', path: '', sort_order: 3 },
+  { type: 'faculty', name: 'Prof. Jayabal K',      position: 'Dean - Design, Innovation, Incubation & Continuing Education', image: '/facultyheads/jayabal.webp',          email: '', linkedin: '', url: '', path: '', sort_order: 1 },
+  { type: 'faculty', name: 'Dr. Pandiyarasan V',   position: 'PIC - Co-curricular & club activities (Tech)',                 image: '/facultyheads/pandiyarasan.webp',     email: '', linkedin: '', url: '', path: '', sort_order: 2 },
+  { type: 'faculty', name: 'Dr. AVS Siva Prasad', position: 'PIC - IIC',                                                    image: '/facultyheads/avs-siva-prasad.webp', email: '', linkedin: '', url: '', path: '', sort_order: 3 },
   // Social Media (name = platform label, url = link)
   { type: 'social', name: 'Instagram', position: '', image: '', email: '', linkedin: '', url: 'https://www.instagram.com/iiitdm.technical/', path: '', sort_order: 1 },
   { type: 'social', name: 'LinkedIn',  position: '', image: '', email: '', linkedin: '', url: 'https://www.linkedin.com/company/technical-affairs-iiitdm/', path: '', sort_order: 2 },

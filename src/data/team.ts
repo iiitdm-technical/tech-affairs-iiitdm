@@ -26,19 +26,19 @@ export const socialMediaLinks = {
 
 export const facultyHeads = [
   {
-    name: "Prof. M D Selvaraj",
-    role: "Dean DII",
-    image: "/facultyheads/selvaraj.webp",
+    name: "Prof. Jayabal K",
+    role: "Dean - Design, Innovation, Incubation & Continuing Education",
+    image: "/facultyheads/jayabal.webp",
   },
   {
-    name: "Dr. Vikash Kumar",
-    role: "PIC - Technical Affairs",
-    image: "/facultyheads/vikash.webp",
+    name: "Dr. Pandiyarasan V",
+    role: "PIC - Co-curricular & club activities (Tech)",
+    image: "/facultyheads/pandiyarasan.webp",
   },
   {
-    name: "Dr. Bhukya Krishna Priya",
-    role: "PIC - Technical Affairs",
-    image: "/facultyheads/krishnapriya.webp",
+    name: "Dr. AVS Siva Prasad",
+    role: "PIC - IIC",
+    image: "/facultyheads/avs-siva-prasad.webp",
   },
 ];
 

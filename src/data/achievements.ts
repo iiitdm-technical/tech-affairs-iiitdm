@@ -350,8 +350,8 @@ export const achievements = [
       title: 'Caterpillar Autonomy Challenge Shaastra 2026',
       description: 'Won Judges Innovation Award with ₹30,000 prize',
       year: '2026',
-      club: 'Team Astra',
-      logo: '/teams/astra/logo.webp',
+      club: 'Mars Club',
+      logo: '/teams/mars/logo.webp',
     },
     {
       id: 45,
