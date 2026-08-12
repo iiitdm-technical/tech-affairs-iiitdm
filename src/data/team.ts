@@ -3,17 +3,17 @@
 
 export const teamData = {
   secretary: {
-    name: "P Kaarthick Natesh",
+    name: "Sujith Gopi R",
     position: "Technical Affairs Secretary",
-    image: "/technical-affairs-team/sac/PKaarthickNatesh.webp",
-    email: "ec22b1004@iiitdm.ac.in",
+    image: "/technical-affairs-team/sac/sujith.webp",
+    email: "",
     linkedin: "",
   },
   jointSecretary: {
-    name: "Ranveer Gautam",
+    name: "P Sai Shreyansh",
     position: "Technical Affairs Joint Secretary",
-    image: "/technical-affairs-team/sac/RanveerGautam.webp",
-    email: "me23b2031@iiitdm.ac.in",
+    image: "/technical-affairs-team/sac/shreyansh.webp",
+    email: "",
     linkedin: "",
   },
 };

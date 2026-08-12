@@ -117,8 +117,8 @@ const staticOrgs = [
 
 const staticTeam = [
   // SAC
-  { type: 'sac', name: 'P Kaarthick Natesh', position: 'Technical Affairs Secretary',      image: '/technical-affairs-team/sac/PKaarthickNatesh.webp', email: 'ec22b1004@iiitdm.ac.in', linkedin: '', url: '', path: '', sort_order: 1 },
-  { type: 'sac', name: 'Ranveer Gautam',      position: 'Technical Affairs Joint Secretary', image: '/technical-affairs-team/sac/RanveerGautam.webp',    email: 'me23b2031@iiitdm.ac.in', linkedin: '', url: '', path: '', sort_order: 2 },
+  { type: 'sac', name: 'Sujith Gopi R',      position: 'Technical Affairs Secretary',       image: '/technical-affairs-team/sac/sujith.webp',    email: '', linkedin: '', url: '', path: '', sort_order: 1 },
+  { type: 'sac', name: 'P Sai Shreyansh',    position: 'Technical Affairs Joint Secretary', image: '/technical-affairs-team/sac/shreyansh.webp', email: '', linkedin: '', url: '', path: '', sort_order: 2 },
   // Faculty
   { type: 'faculty', name: 'Prof. Jayabal K',      position: 'Dean - Design, Innovation, Incubation & Continuing Education', image: '/facultyheads/jayabal.webp',          email: '', linkedin: '', url: '', path: '', sort_order: 1 },
   { type: 'faculty', name: 'Dr. Pandiyarasan V',   position: 'PIC - Co-curricular & club activities (Tech)',                 image: '/facultyheads/pandiyarasan.webp',     email: '', linkedin: '', url: '', path: '', sort_order: 2 },
