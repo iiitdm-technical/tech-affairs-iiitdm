@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Container, Typography, Box, Modal, Backdrop, Fade, IconButton,
-  Avatar, GridLegacy as Grid, Card, Chip, CircularProgress, Skeleton,
+  Avatar, Grid, Card, Chip, CircularProgress, Skeleton,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Download as DownloadIcon, Close as CloseIcon, LinkedIn, Email } from '@mui/icons-material';
@@ -165,7 +165,7 @@ export default function TeamSubPage({ slug, title, description }: TeamSubPagePro
               <Skeleton variant="text" width={160} height={32} sx={{ mx: 'auto', mb: 3 }} />
               <Grid container spacing={2} justifyContent="center">
                 {[1,2,3,4].map((i) => (
-                  <Grid item xs={6} sm={4} md={3} key={i}><MemberSkeleton /></Grid>
+                  <Grid size={{ xs: 6, sm: 4, md: 3 }} key={i}><MemberSkeleton /></Grid>
                 ))}
               </Grid>
             </Box>
@@ -193,7 +193,7 @@ export default function TeamSubPage({ slug, title, description }: TeamSubPagePro
                 </Typography>
                 <Grid container spacing={{ xs: 1.5, sm: 2 }} justifyContent="center">
                   {group.map((m) => (
-                    <Grid item xs={6} sm={4} md={3} lg={2} key={m.id}>
+                    <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }} key={m.id}>
                       <MemberCard member={m} onImageClick={(img) => { setSelectedImage(img); setModalOpen(true); }} />
                     </Grid>
                   ))}
