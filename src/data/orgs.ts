@@ -13,6 +13,7 @@ export const clubs: OrgItem[] = [
   { name: "Developers Club",    image: "/clubs/devclub/logo.png",    link: "/clubs/dev" },
   { name: "Robotics Club",      image: "/clubs/robotics/logo.webp",  link: "/clubs/robotics" },
   { name: "System Coding Club", image: "/clubs/Scc/logo1.webp",      link: "/clubs/scc" },
+  { name: "E-Cell",             image: "/societies/Ecell/logo.webp", link: "/clubs/ecell" },
   { name: "Cybersecurity Club", image: "/clubs/cybersecurity/logo.jpg", link: "/clubs/cybersecurity" },
 ];
 
@@ -25,7 +26,6 @@ export const teams: OrgItem[] = [
 ];
 
 export const societies: OrgItem[] = [
-  { name: "E-Cell",                image: "/societies/Ecell/logo.webp",                    link: "/societies/ecell" },
   { name: "IEEE",                  image: "/societies/IEEE/logo.png",                      link: "/societies/ieee" },
   { name: "Optica Student Chapter",image: "/societies/OpticaStudentChapter/logo.webp",     link: "/societies/optica" },
   { name: "ASME Student Section",  image: "/societies/ASMEStudentSection/logo.webp",       link: "/societies/asme" },

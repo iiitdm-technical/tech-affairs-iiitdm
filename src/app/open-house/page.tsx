@@ -107,7 +107,7 @@ const bodies = [
     { name: 'Team Nira', desc: 'Autonomous Underwater Vehicle', logo: '/teams/nira/logo.webp', route: '/teams/nira', cat: 'Teams' },
     { name: 'Team Shunya', desc: 'Mars Rover Systems', logo: '/teams/mars/logo.webp', route: '/teams/shunya', cat: 'Teams' },
     { name: 'CS Club', desc: 'Algorithms, CP & Dev Culture', logo: '/clubs/csclub/logo.webp', route: '/clubs/cs', cat: 'Clubs' },
-    { name: 'E-Cell', desc: 'Startups & Entrepreneurship', logo: '/societies/Ecell/logo.webp', route: '/societies/ecell', cat: 'Societies' },
+    { name: 'E-Cell', desc: 'Startups & Entrepreneurship', logo: '/societies/Ecell/logo.webp', route: '/clubs/ecell', cat: 'Clubs' },
     { name: 'Cybersecurity Club', desc: 'CTFs, Security & Red Teaming', logo: '/clubs/cybersecurity/logo.jpg', route: '/clubs/cybersecurity', cat: 'Clubs' },
     { name: 'Developers Club', desc: 'Full-stack, Open Source & Hackathons', logo: '/clubs/devclub/logo.png', route: '/clubs/dev', cat: 'Clubs' },
     { name: 'Robotics Club', desc: 'Bots, Arms & Automation', logo: '/clubs/robotics/logo.webp', route: '/clubs/robotics', cat: 'Clubs' },

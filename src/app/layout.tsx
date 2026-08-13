@@ -1,12 +1,7 @@
 // app/layout.tsx
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-import '@fontsource/roboto/800.css';
 import './globals.css'
 
-import { Bricolage_Grotesque } from 'next/font/google';
+import { Bricolage_Grotesque, Roboto } from 'next/font/google';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { ReactLenis } from 'lenis/react';
 import ConditionalShell from '@/components/ConditionalShell';
@@ -22,11 +17,18 @@ const bricolage = Bricolage_Grotesque({
   variable: '--font-bricolage',
 });
 
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '700'],
+  display: 'swap',
+  variable: '--font-roboto',
+});
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { user } = await getCurrentSession();
 
   return (
-    <html lang="en" suppressHydrationWarning className={bricolage.variable}>
+    <html lang="en" suppressHydrationWarning className={`${bricolage.variable} ${roboto.variable}`}>
       <head />
       <body>
         <ReactLenis root />
