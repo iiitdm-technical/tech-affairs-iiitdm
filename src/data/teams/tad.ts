@@ -62,15 +62,14 @@ const data: ClubPageData = {
     { src: "/teams/tad/gallery/team2.jpeg",  caption: "" },
   ],
   core: [
-    { name: "Vamsi J S",               role: "Team Lead",             image: "/teams/tad/lead.webp",                          roll: "me22b1031" },
-    { name: "S Deerajprasanth",         role: "Manager",               image: "/teams/tad/manager1.webp",                      roll: "ec23b1066" },
-    { name: "Sannala Mithil Reddy",     role: "Manager",               image: "/teams/tad/manager2.webp",                      roll: "ec23b1105" },
-    { name: "Madhamshetty Sathvika",    role: "PR&O Lead",             image: "/teams/tad/pr&o-lead.webp",                     roll: "ec23b1105" },
-    { name: "Sanjay D G",              role: "DSA Lead",              image: "/teams/tad/SANJAY_D_G_DSA_LEAD.webp",           roll: "me23b1012" },
-    { name: "Goriparthi Thanmaya",      role: "DSA Lead",              image: "/teams/tad/GORIPARTHI_THANMAYA_DSA_LEAD.webp",  roll: "ec23b1125" },
-    { name: "Jagadeesh B",              role: "Control Systems Lead",  image: "/teams/tad/JAGADEESH_B_CONTROLS_LEAD.webp",     roll: "ec23b1062" },
-    { name: "Dinesh Kumaran K",         role: "Software Lead",         image: "/teams/tad/software-lead.webp",                 roll: "cs23b2057" },
-    { name: "Tirumala Sai Raghava Sreekar", role: "Software Lead",    image: "/teams/tad/software-lead2.webp",                roll: "cs23i1034" },
+    {
+      name: "Hanush P V",
+      role: "Club Lead",
+      image: "/teams/tad/hanush.webp",
+      email: "ME23B1017@iiitdm.ac.in",
+      linkedin: "https://www.linkedin.com/in/hanush-p-v/",
+      roll: "ME23B1017",
+    },
   ],
   links: {
     website: "https://tad.iiitdm.ac.in",

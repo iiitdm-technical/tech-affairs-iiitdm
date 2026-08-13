@@ -3,14 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import {
   Container, Typography, Box, Modal, Backdrop, Fade, IconButton,
-  Avatar, GridLegacy as Grid, Card, Chip, CircularProgress, Skeleton,
+  Avatar, Grid, Card, Chip, CircularProgress, Skeleton,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Download as DownloadIcon, Close as CloseIcon, LinkedIn, Email } from '@mui/icons-material';
 import Image from 'next/image';
+import { teamMembersData } from '@/data/team-members';
 
 export interface TeamMemberRow {
-  id: number;
+  id?: number;
   team_slug: string;
   sub_role: string;
   name: string;
@@ -19,7 +20,7 @@ export interface TeamMemberRow {
   linkedin: string;
   image: string;
   sort_order: number;
-  active: string;
+  active?: string;
 }
 
 const SUB_ROLE_LABELS: Record<string, string> = {
@@ -29,6 +30,16 @@ const SUB_ROLE_LABELS: Record<string, string> = {
 };
 
 const SUB_ROLE_ORDER = ['core', 'jt-core', 'coordinator'];
+
+function MemberSkeleton() {
+  return (
+    <Card sx={{ p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Skeleton variant="circular" width={80} height={80} sx={{ mb: 1.5 }} />
+      <Skeleton variant="text" width={100} height={24} />
+      <Skeleton variant="text" width={70} height={18} />
+    </Card>
+  );
+}
 
 function MemberCard({
   member, onImageClick,
@@ -58,27 +69,26 @@ function MemberCard({
         <Avatar
           src={member.image}
           alt={member.name}
-          sx={{ width: { xs: 72, sm: 96, md: 110 }, height: { xs: 72, sm: 96, md: 110 } }}
+          sx={{ width: { xs: 80, sm: 100 }, height: { xs: 80, sm: 100 } }}
         />
       </Box>
-      <Typography fontWeight={700} fontSize={{ xs: '0.8rem', sm: '0.95rem' }} lineHeight={1.3} mb={0.5}>
+      <Typography variant="subtitle1" fontWeight={700} sx={{ fontSize: { xs: '0.85rem', sm: '1rem' } }}>
         {member.name}
       </Typography>
       {member.roll && (
-        <Chip label={member.roll} size="small" variant="outlined"
-          sx={{ fontSize: '0.65rem', height: 20, mb: 0.75 }} />
+        <Typography variant="caption" color="text.secondary" sx={{ mb: 0.5 }}>
+          {member.roll}
+        </Typography>
       )}
-      <Box sx={{ display: 'flex', gap: 0.5, justifyContent: 'center', mt: 'auto' }}>
-        {member.linkedin && (
-          <IconButton size="small" href={member.linkedin} target="_blank" rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()} sx={{ color: '#0077b5', p: 0.5 }}>
-            <LinkedIn fontSize="small" />
+      <Box sx={{ display: 'flex', gap: 0.5, mt: 'auto', pt: 1 }}>
+        {member.email && (
+          <IconButton size="small" href={`mailto:${member.email}`} sx={{ color: 'text.secondary' }}>
+            <Email fontSize="small" />
           </IconButton>
         )}
-        {member.email && (
-          <IconButton size="small" href={`mailto:${member.email}`}
-            onClick={(e) => e.stopPropagation()} sx={{ color: 'text.secondary', p: 0.5 }}>
-            <Email fontSize="small" />
+        {member.linkedin && (
+          <IconButton size="small" href={member.linkedin} target="_blank" rel="noopener noreferrer" sx={{ color: 'text.secondary' }}>
+            <LinkedIn fontSize="small" />
           </IconButton>
         )}
       </Box>
@@ -86,7 +96,7 @@ function MemberCard({
   );
 }
 
-function MemberSkeleton() {
+function SkeletonCard() {
   return (
     <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 2 }}>
       <Skeleton variant="circular" width={110} height={110} sx={{ mb: 1.5 }} />
@@ -105,16 +115,21 @@ interface TeamSubPageProps {
 export default function TeamSubPage({ slug, title, description }: TeamSubPageProps) {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
-  const [members, setMembers] = useState<TeamMemberRow[]>([]);
-  const [loading, setLoading] = useState(true);
+  const staticFallback = teamMembersData.filter((m) => m.team_slug === slug);
+  const [members, setMembers] = useState<TeamMemberRow[]>(staticFallback);
+  const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     fetch(`/api/team-members?slug=${slug}`)
       .then((r) => (r.ok ? r.json() : []))
-      .then(setMembers)
-      .finally(() => setLoading(false));
+      .then((rows) => {
+        if (Array.isArray(rows) && rows.length > 0) {
+          setMembers(rows);
+        }
+      })
+      .catch(() => {});
   }, [slug]);
 
   const handleClose = () => { setModalOpen(false); setSelectedImage(''); };
@@ -150,7 +165,7 @@ export default function TeamSubPage({ slug, title, description }: TeamSubPagePro
               <Skeleton variant="text" width={160} height={32} sx={{ mx: 'auto', mb: 3 }} />
               <Grid container spacing={2} justifyContent="center">
                 {[1,2,3,4].map((i) => (
-                  <Grid item xs={6} sm={4} md={3} key={i}><MemberSkeleton /></Grid>
+                  <Grid size={{ xs: 6, sm: 4, md: 3 }} key={i}><MemberSkeleton /></Grid>
                 ))}
               </Grid>
             </Box>
@@ -178,7 +193,7 @@ export default function TeamSubPage({ slug, title, description }: TeamSubPagePro
                 </Typography>
                 <Grid container spacing={{ xs: 1.5, sm: 2 }} justifyContent="center">
                   {group.map((m) => (
-                    <Grid item xs={6} sm={4} md={3} lg={2} key={m.id}>
+                    <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }} key={m.id}>
                       <MemberCard member={m} onImageClick={(img) => { setSelectedImage(img); setModalOpen(true); }} />
                     </Grid>
                   ))}

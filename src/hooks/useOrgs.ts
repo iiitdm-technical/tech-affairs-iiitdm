@@ -17,6 +17,13 @@ export interface OrgItem {
   sort_order: number;
 }
 
+const staticOrgs: OrgItem[] = [
+  ...staticClubs.map((o, i) => ({ id: i + 1, ...o, category: 'club', sort_order: i + 1 })),
+  ...staticTeams.map((o, i) => ({ id: i + 10, ...o, category: 'team', sort_order: i + 1 })),
+  ...staticSocieties.map((o, i) => ({ id: i + 20, ...o, category: 'society', sort_order: i + 1 })),
+  ...staticCommunities.map((o, i) => ({ id: i + 30, ...o, category: 'community', sort_order: i + 1 })),
+];
+
 let _cache: OrgItem[] | null = null;
 let _promise: Promise<OrgItem[]> | null = null;
 
@@ -77,7 +84,7 @@ export function slugToLogo(slug: string, orgs: OrgItem[]): string {
 }
 
 export function useOrgs() {
-  const [orgs, setOrgs] = useState<OrgItem[]>(_cache ?? []);
+  const [orgs, setOrgs] = useState<OrgItem[]>(_cache ?? staticOrgs);
 
   useEffect(() => {
     fetchOrgs().then(setOrgs);

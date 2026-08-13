@@ -53,31 +53,34 @@ const teamInfo = {
   ],
   members: [
     {
-      name: 'Avichal Anurag',
+      name: 'Sandheep Rahul V',
       role: 'Team Lead',
-      image: '/teams/mars/lead.JPG',
-      // email: 'team.lead@iiitdm.ac.in',
-      linkedin: 'https://www.linkedin.com/in/avichal-anurag-0757392b2/',
-      year: 'B.Tech 3rd Year',
-      department: 'Electrical Engineering',
-      roll: 'ec23i1015'
+      image: '/teams/mars/sandheep.webp',
+      email: 'me24b2028@iiitdm.ac.in',
+      linkedin: 'https://www.linkedin.com/in/sandheep-rahul-171159348',
+      year: 'B.Tech 2nd Year',
+      department: 'Mechanical Engineering',
+      roll: 'ME24B2028'
     },
     {
-      name: 'R Sarang',
-      role: 'Co-Lead',
-      image: '/teams/mars/co-lead.webp',
-      // email: 'tech.lead@iiitdm.ac.in',
-      linkedin: 'https://www.linkedin.com/in/sarang-raghavan-a04a2b308/',
-      year: 'B.Tech 3rd Year',
-      department: 'Electrical Engineering',
-      roll: 'ec23i2015'
+      name: 'Avinash Acharya',
+      role: 'Co-Lead / Technical Lead',
+      image: '/teams/mars/avinash.webp',
+      email: 'me24b1060@iiitdm.ac.in',
+      linkedin: 'https://www.linkedin.com/in/avinash-acharya-8557ab2ba',
+      year: 'B.Tech 2nd Year',
+      department: 'Mechanical Engineering',
+      roll: 'ME24B1060'
     },
   ],
-  website: '#', // Add the actual website if available
+  website: '#',
 };
 
 function MarsShunya() {
   return <TeamPageTemplate {...teamInfo} />;
 }
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default MarsShunya; 

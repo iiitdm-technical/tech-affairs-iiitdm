@@ -28,31 +28,24 @@ const teamInfo = {
   ],
   members: [
     {
-      name: 'Abhishek Sen',
+      name: 'Vigesh V S',
       role: 'Captain',
-      image: '/teams/astra/members/lead.webp',
-      // email: 'team.lead@iiitdm.ac.in',
-      linkedin: 'https://www.linkedin.com/in/abhishek-sen-aab105259/',
-      year: 'B.Tech 3rd Year',
-      department: 'Aerospace Engineering',
-      roll: 'ec22b1098'
-    },
-    {
-      name: 'Neshanth R',
-      role: 'Vice-Captain',
-      image: '/teams/astra/members/tech-lead.webp',
-      // email: 'tech.lead@iiitdm.ac.in',
-      linkedin: 'https://linkedin.com/in/tech-lead',
+      image: '/teams/astra/vigesh.webp',
+      email: 'me23b2035@iiitdm.ac.in',
+      linkedin: 'https://www.linkedin.com/in/vigesh',
       year: 'B.Tech 3rd Year',
       department: 'Mechanical Engineering',
-      roll: 'me22b2030'
+      roll: 'ME23B2035'
     },
   ],
-  website: '#', // Add the actual website if available
+  website: '#',
 };
 
 function SAEAerothon() {
   return <TeamPageTemplate {...teamInfo} />;
 }
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default SAEAerothon; 

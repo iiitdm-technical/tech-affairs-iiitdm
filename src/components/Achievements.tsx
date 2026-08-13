@@ -1,3 +1,4 @@
+"use client";
 
 import React, { useState, useEffect } from 'react';
 import {
@@ -12,6 +13,7 @@ import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { achievements as fallbackRawAchievements } from '@/data/achievements';
 
 interface AchievementRow {
   id: number;
@@ -20,7 +22,7 @@ interface AchievementRow {
   description: string;
   year: string;
   logo: string;
-  image: string;
+  image?: string;
   org_name?: string;
 }
 
@@ -33,6 +35,27 @@ interface OrgRow {
 }
 
 const ACCENT_COLORS = ['#7dd3fc', '#93c5fd', '#f59e0b', '#bfdbfe', '#fcd34d', '#dbeafe'];
+
+const CLUB_TO_ORG_SLUG: Record<string, string> = {
+  'AUV Society': 'teams/nira',
+  'Mars Club': 'teams/shunya',
+  'TAD': 'teams/tad',
+  'SAE Collegiate Club': 'teams/revolt',
+  'IEEE Student Branch': 'societies/ieee',
+  'Team Astra': 'teams/astra',
+  'E-Cell': 'clubs/ecell',
+};
+
+const defaultFallbackAchievements: AchievementRow[] = fallbackRawAchievements.map((a, index) => ({
+  id: a.id || index + 1,
+  org_slug: CLUB_TO_ORG_SLUG[a.club] ?? a.club.toLowerCase().replace(/\s+/g, '-'),
+  title: a.title,
+  description: a.description,
+  year: a.year,
+  logo: a.logo,
+  image: '',
+  org_name: a.club,
+}));
 
 function slugToOrg(slug: string, orgs: OrgRow[]): OrgRow | undefined {
   return orgs.find((o) => o.link.endsWith('/' + slug.split('/').pop()));
@@ -51,10 +74,11 @@ const Achievements = () => {
       fetch('/api/achievements').then((r) => (r.ok ? r.json() : [])),
       fetch('/api/orgs').then((r) => (r.ok ? r.json() : [])),
     ]).then(([achRows, orgRows]: [AchievementRow[], OrgRow[]]) => {
-      const enriched = achRows
+      const sourceRows = Array.isArray(achRows) && achRows.length > 0 ? achRows : defaultFallbackAchievements;
+      const enriched = sourceRows
         .map((a) => {
           const org = slugToOrg(a.org_slug, orgRows);
-          return { ...a, org_name: org?.name ?? a.org_slug, logo: a.logo || org?.image || '' };
+          return { ...a, org_name: a.org_name || org?.name || a.org_slug, logo: a.logo || org?.image || '' };
         })
         .sort((a, b) => {
           if (b.year !== a.year) return parseInt(b.year) - parseInt(a.year);
@@ -67,11 +91,24 @@ const Achievements = () => {
           image: a.image || '',
           logo: a.logo,
           date: a.year,
-          category: a.org_name,
+          category: a.org_name || a.org_slug,
           color: ACCENT_COLORS[i % ACCENT_COLORS.length],
         }));
       setItems(enriched);
-    }).catch(() => {}).finally(() => setLoading(false));
+    }).catch(() => {
+      const fallbackEnriched = defaultFallbackAchievements
+        .slice(0, 6)
+        .map((a, i) => ({
+          title: a.title,
+          description: a.description,
+          image: a.image || '',
+          logo: a.logo,
+          date: a.year,
+          category: a.org_name || a.org_slug,
+          color: ACCENT_COLORS[i % ACCENT_COLORS.length],
+        }));
+      setItems(fallbackEnriched);
+    }).finally(() => setLoading(false));
   }, []);
 
   const maxIndex = items.length - 1;

@@ -43,9 +43,8 @@ export const facultyHeads = [
 ];
 
 export const coreTeams = [
-  { label: "Management",          path: "/team/management" },
-  { label: "Tech Development",    path: "/team/tech-development" },
-  { label: "Innovation",          path: "/team/innovation" },
-  { label: "Social Outreach",     path: "/team/social-outreach" },
-  { label: "Media and Marketing", path: "/team/media-and-marketing" },
+  { label: "Management",              path: "/team/management" },
+  { label: "Tech Development",        path: "/team/tech-development" },
+  { label: "Innovation",              path: "/team/innovation" },
+  { label: "Media and outreach team", path: "/team/social-outreach" },
 ];

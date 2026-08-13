@@ -4,6 +4,7 @@ import { TeamMembers } from '@/db/schema';
 import { eq, and, asc } from 'drizzle-orm';
 import { unstable_cache } from 'next/cache';
 import { CACHE_TAGS } from '@/lib/cache';
+import { teamMembersData } from '@/data/team-members';
 
 export const revalidate = 300;
 
@@ -33,10 +34,24 @@ const getMembersBySlug = unstable_cache(
 
 export async function GET(request: NextRequest) {
   const slug = new URL(request.url).searchParams.get('slug');
-  const rows = slug ? await getMembersBySlug(slug) : await getAllActiveMembers();
-  return NextResponse.json(rows, {
-    headers: {
-      'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=1200',
-    },
-  });
+  const staticFallback = slug
+    ? teamMembersData.filter((m) => m.team_slug === slug)
+    : teamMembersData;
+
+  try {
+    if (!process.env.DATABASE_URL) {
+      return NextResponse.json(staticFallback);
+    }
+    const rows = slug ? await getMembersBySlug(slug) : await getAllActiveMembers();
+    if (!rows || rows.length === 0) {
+      return NextResponse.json(staticFallback);
+    }
+    return NextResponse.json(rows, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=1200',
+      },
+    });
+  } catch {
+    return NextResponse.json(staticFallback);
+  }
 }

@@ -56,16 +56,12 @@ const data: ClubPageData = {
   ],
   core: [
     {
-      name: "Abhishek Sen",
+      name: "Vigesh V S",
       role: "Captain",
-      image: "/teams/astra/tech_lead.png",
-      roll: "ec22b1098",
-    },
-    {
-      name: "Neshanth R",
-      role: "Vice-Captain",
-      image: "/teams/astra/lead.png",
-      roll: "me22b2030",
+      image: "/teams/astra/vigesh.webp",
+      email: "me23b2035@iiitdm.ac.in",
+      linkedin: "https://www.linkedin.com/in/vigesh",
+      roll: "ME23B2035",
     },
   ],
   links: {

@@ -29,6 +29,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Tabs, Tab, useMediaQuery } from "@mui/material";
 import { useOrgsByCategory } from "@/hooks/useOrgs";
+import { facultyHeads, teamData, socialMediaLinks, coreTeams } from "@/data/team";
 
 interface TeamRow {
   id: number;
@@ -178,10 +179,29 @@ export default function Committee() {
       .finally(() => setLoadingTeam(false));
   }, []);
 
-  const sacMembers: Member[]      = teamRows.filter((r) => r.type === 'sac').map((r) => ({ name: r.name, position: r.position, image: r.image, email: r.email, linkedin: r.linkedin }));
-  const facultyMembers: Member[]  = teamRows.filter((r) => r.type === 'faculty').map((r) => ({ name: r.name, role: r.position, image: r.image }));
-  const socialLinks               = teamRows.filter((r) => r.type === 'social');
-  const coreTeamLinks             = teamRows.filter((r) => r.type === 'core_team');
+  const dbSac: Member[]          = teamRows.filter((r) => r.type === 'sac').map((r) => ({ name: r.name, position: r.position, image: r.image, email: r.email, linkedin: r.linkedin }));
+  const dbFaculty: Member[]      = teamRows.filter((r) => r.type === 'faculty').map((r) => ({ name: r.name, role: r.position, image: r.image }));
+  const dbSocial                 = teamRows.filter((r) => r.type === 'social');
+  const dbCoreTeams              = teamRows.filter((r) => r.type === 'core_team');
+
+  const defaultSac: Member[] = [
+    { name: teamData.secretary.name, position: teamData.secretary.position, image: teamData.secretary.image, email: teamData.secretary.email, linkedin: teamData.secretary.linkedin },
+    { name: teamData.jointSecretary.name, position: teamData.jointSecretary.position, image: teamData.jointSecretary.image, email: teamData.jointSecretary.email, linkedin: teamData.jointSecretary.linkedin },
+  ];
+  const defaultFaculty: Member[] = facultyHeads.map((f) => ({ name: f.name, role: f.role, image: f.image }));
+  const defaultSocial = [
+    { id: 1, type: 'social', name: 'Instagram', position: '', image: '', email: '', linkedin: '', url: socialMediaLinks.instagram, path: '', sort_order: 1 },
+    { id: 2, type: 'social', name: 'LinkedIn', position: '', image: '', email: '', linkedin: '', url: socialMediaLinks.linkedin, path: '', sort_order: 2 },
+    { id: 3, type: 'social', name: 'YouTube', position: '', image: '', email: '', linkedin: '', url: socialMediaLinks.youtube, path: '', sort_order: 3 },
+  ];
+  const defaultCoreTeams = coreTeams.map((c, i) => ({
+    id: i + 1, type: 'core_team', name: c.label, position: '', image: '', email: '', linkedin: '', url: '', path: c.path, sort_order: i + 1,
+  }));
+
+  const sacMembers: Member[]      = dbSac.length > 0 ? dbSac : defaultSac;
+  const facultyMembers: Member[]  = dbFaculty.length > 0 ? dbFaculty : defaultFaculty;
+  const socialLinks               = dbSocial.length > 0 ? dbSocial : defaultSocial;
+  const coreTeamLinks             = dbCoreTeams.length > 0 ? dbCoreTeams : defaultCoreTeams;
 
   const handleOpen = (image: string) => { setSelectedImage(image); setOpen(true); };
   const handleClose = () => { setOpen(false); setSelectedImage(""); };

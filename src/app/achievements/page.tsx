@@ -3,11 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box, Typography, Select, MenuItem, FormControl, Button,
-  GridLegacy as Grid, Card, CardContent, Divider, CircularProgress,
+  Grid, Card, CardContent, Divider, CircularProgress,
   Chip, InputAdornment, OutlinedInput,
 } from '@mui/material';
 import { EmojiEvents, FilterList, RestartAlt } from '@mui/icons-material';
 import { styled } from '@mui/system';
+import { achievements as fallbackRawAchievements } from '@/data/achievements';
 
 interface Achievement {
   id: number;
@@ -26,6 +27,26 @@ interface OrgRow {
   link: string;
   category: string;
 }
+
+const CLUB_TO_ORG_SLUG: Record<string, string> = {
+  'AUV Society': 'teams/nira',
+  'Mars Club': 'teams/shunya',
+  'TAD': 'teams/tad',
+  'SAE Collegiate Club': 'teams/revolt',
+  'IEEE Student Branch': 'societies/ieee',
+  'Team Astra': 'teams/astra',
+  'E-Cell': 'clubs/ecell',
+};
+
+const defaultFallbackAchievements: Achievement[] = fallbackRawAchievements.map((a, index) => ({
+  id: a.id || index + 1,
+  org_slug: CLUB_TO_ORG_SLUG[a.club] ?? a.club.toLowerCase().replace(/\s+/g, '-'),
+  title: a.title,
+  description: a.description,
+  year: a.year,
+  logo: a.logo,
+  org_name: a.club,
+}));
 
 const YearHeading = styled(Typography)(({ theme }) => ({
   color: theme.palette.primary.main,
@@ -67,13 +88,16 @@ export default function AchievementsPage() {
       fetch('/api/achievements').then((r) => (r.ok ? r.json() : [])),
       fetch('/api/orgs').then((r) => (r.ok ? r.json() : [])),
     ]).then(([achRows, orgRows]) => {
-      const enriched: Achievement[] = achRows.map((a: Achievement) => {
+      const sourceRows = Array.isArray(achRows) && achRows.length > 0 ? achRows : defaultFallbackAchievements;
+      const enriched: Achievement[] = sourceRows.map((a: Achievement) => {
         const org = slugToOrg(a.org_slug, orgRows);
-        return { ...a, org_name: org?.name ?? a.org_slug, logo: a.logo || org?.image || '' };
+        return { ...a, org_name: a.org_name || org?.name || a.org_slug, logo: a.logo || org?.image || '' };
       });
       setAchievements(enriched);
       setOrgs(orgRows);
-    }).catch(() => setError(true)).finally(() => setLoading(false));
+    }).catch(() => {
+      setAchievements(defaultFallbackAchievements);
+    }).finally(() => setLoading(false));
   };
 
   useEffect(() => { load(); }, []);
@@ -98,54 +122,55 @@ export default function AchievementsPage() {
   const resetFilters = () => { setSelectedOrg('all'); setSelectedYear('all'); };
 
   return (
-    <Box sx={{ padding: { xs: '100px 16px 48px', sm: '90px 24px 48px' } }}>
+    <Box sx={{ maxWidth: '1200px', margin: '0 auto', px: { xs: 2, sm: 3, md: 4 }, py: 6 }}>
       {/* Header */}
-      <Box sx={{ textAlign: 'center', mb: 5 }}>
-        <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 1.5, mb: 2, px: 2.5, py: 0.8, borderRadius: 100, background: 'linear-gradient(135deg, rgba(125,211,252,0.1), rgba(147,197,253,0.06))', border: '1px solid rgba(125,211,252,0.22)' }}>
-          <EmojiEvents sx={{ fontSize: 16, color: '#7dd3fc' }} />
-          <Typography sx={{ fontSize: '0.8rem', fontWeight: 600, color: '#7dd3fc', letterSpacing: '0.01em' }}>
-            Our Pride
-          </Typography>
-        </Box>
-        <Typography variant="h2" sx={{ fontSize: { xs: '2rem', sm: '2.8rem', md: '3.5rem' }, fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.1, color: 'text.primary' }}>
-          Achievements
+      <Box sx={{ textAlign: 'center', mb: 6 }}>
+        <Typography
+          variant="h3"
+          component="h1"
+          fontWeight={800}
+          letterSpacing="-0.02em"
+          gutterBottom
+          sx={{
+            fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+            background: (theme) => `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          Our Achievements
         </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ mt: 1.5, maxWidth: 500, mx: 'auto' }}>
-          Milestones won by our clubs, teams, societies and communities.
+        <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 600, mx: 'auto' }}>
+          Celebrating our student achievements, competitions won, and milestones reached by IIITDM clubs, teams, and societies.
         </Typography>
       </Box>
 
-      {loading ? (
-        <Box display="flex" justifyContent="center" alignItems="center" minHeight="300px" flexDirection="column" gap={2}>
+      {loading && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
           <CircularProgress />
-          <Typography variant="body2" color="text.secondary">Loading achievements…</Typography>
         </Box>
-      ) : error ? (
-        <Box textAlign="center" py={8}>
-          <Typography variant="h6" color="error" gutterBottom>Failed to load achievements</Typography>
-          <Button variant="outlined" onClick={load}>Try Again</Button>
-        </Box>
-      ) : (
+      )}
+
+      {!loading && (
         <>
-          {/* Filters */}
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 4, flexWrap: 'wrap', alignItems: 'center' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: 'text.secondary' }}>
-              <FilterList fontSize="small" />
-              <Typography variant="body2" fontWeight={600}>Filter:</Typography>
-            </Box>
-            <FormControl sx={{ minWidth: 180 }} size="small">
+          {/* Filter Bar */}
+          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap', mb: 4 }}>
+            <FormControl size="small" sx={{ minWidth: 200 }}>
               <Select
                 value={selectedOrg}
                 onChange={(e) => setSelectedOrg(e.target.value)}
                 input={<OutlinedInput />}
                 displayEmpty
+                startAdornment={<InputAdornment position="start"><FilterList sx={{ fontSize: 18 }} /></InputAdornment>}
               >
-                {orgNames.map((c) => (
-                  <MenuItem key={c} value={c}>{c === 'all' ? 'All Clubs & Teams' : c}</MenuItem>
+                <MenuItem value="all">All Organizations</MenuItem>
+                {orgNames.filter((o) => o !== 'all').map((org) => (
+                  <MenuItem key={org} value={org}>{org}</MenuItem>
                 ))}
               </Select>
             </FormControl>
-            <FormControl sx={{ minWidth: 130 }} size="small">
+
+            <FormControl size="small" sx={{ minWidth: 140 }}>
               <Select
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(e.target.value)}
@@ -189,7 +214,7 @@ export default function AchievementsPage() {
                   <Divider sx={{ mb: 3 }} />
                   <Grid container spacing={{ xs: 2, md: 3 }}>
                     {items.map((a) => (
-                      <Grid item xs={12} md={6} key={a.id} sx={{ display: 'flex', width: '100%' }}>
+                      <Grid size={{ xs: 12, md: 6 }} key={a.id} sx={{ display: 'flex', width: '100%' }}>
                         <StyledCard variant="outlined">
                           {a.logo && (
                             <Box sx={{ width: { xs: '100%', sm: 100 }, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', p: 1.5, mb: { xs: 1, sm: 0 } }}>

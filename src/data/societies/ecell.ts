@@ -17,20 +17,12 @@ const data: ClubPageData = {
   gallery: [],
   core: [
     {
-      name: "Asmit",
-      role: "Head Core",
-      image: "/societies/Ecell/headcores/asmit.webp",
-      email: "",
+      name: "Deethiya Priyadharshini",
+      role: "Core",
+      image: "/societies/Ecell/headcores/deethiya.webp",
+      email: "me24b2027@iiitdm.ac.in",
       linkedin: "",
-      roll: "",
-    },
-    {
-      name: "Vishal Singh",
-      role: "Vice Head Core",
-      image: "/societies/Ecell/headcores/vishal.webp",
-      email: "",
-      linkedin: "",
-      roll: "",
+      roll: "ME24B2027",
     },
   ],
   links: {
