@@ -231,7 +231,10 @@ async function seed() {
     await db
       .insert(User_roles)
       .values({ email: o.email, role: 'O' })
-      .onConflictDoUpdate({ target: User_roles.email, set: { role: 'O' } });
+      .onConflictDoUpdate({
+        target: [User_roles.email, User_roles.role],
+        set: { role: 'O' },
+      });
     emailInserted++;
   }
   console.log(`   processed ${emailInserted} org emails`);
