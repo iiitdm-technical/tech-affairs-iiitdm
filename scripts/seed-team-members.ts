@@ -18,12 +18,9 @@
  */
 
 import 'dotenv/config';
-import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
-import { TeamMembers } from '../src/db/schema';
 
 const client = postgres(process.env.DATABASE_URL!);
-const db = drizzle(client);
 
 const seed = [
   // ── management ──────────────────────────────────────────────────────────────
@@ -81,21 +78,17 @@ async function main() {
   `;
   console.log('Table ensured.');
 
-  for (const m of seed) {
-    await db.insert(TeamMembers).values({
-      team_slug: m.team_slug,
-      sub_role: m.sub_role,
-      name: m.name,
-      roll: m.roll,
-      email: m.email,
-      linkedin: m.linkedin,
-      image: m.image,
-      sort_order: m.sort_order,
-      active: 'Y',
-    }).onConflictDoNothing();
-  }
+  await client.begin(async (sql) => {
+    const slugs = [...new Set(seed.map((member) => member.team_slug))];
+    await sql`DELETE FROM team_members WHERE team_slug IN ${sql(slugs)}`;
+
+    await sql`INSERT INTO team_members ${sql(
+      seed.map((member) => ({ ...member, active: 'Y' })),
+      'team_slug', 'sub_role', 'name', 'roll', 'email', 'linkedin', 'image', 'sort_order', 'active'
+    )}`;
+  });
   console.log('Done!');
-  process.exit(0);
+  await client.end();
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

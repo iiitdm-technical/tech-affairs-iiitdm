@@ -146,7 +146,7 @@ const orgEmails: { name: string; email: string; org_slug: string; image: string 
   { name: 'System Coding Club', email: 'scc@iiitdm.ac.in',           org_slug: 'clubs/scc',                  image: '/clubs/Scc/logo1.webp' },
   { name: 'Team Nira (AUV)',    email: 'auv.society@iiitdm.ac.in',   org_slug: 'teams/nira',                 image: '/teams/nira/logo.webp' },
   { name: 'Team Shunya (MaRS)', email: 'mars@iiitdm.ac.in',          org_slug: 'teams/shunya',               image: '/teams/mars/logo.webp' },
-  { name: 'E-Cell',             email: 'ecell@iiitdm.ac.in',         org_slug: 'societies/ecell',            image: '/societies/ecell/logo.webp' },
+  { name: 'E-Cell',             email: 'ecell@iiitdm.ac.in',         org_slug: 'clubs/ecell',                 image: '/societies/Ecell/logo.webp' },
   { name: 'Team TAD',           email: 'tad@iiitdm.ac.in',           org_slug: 'teams/tad',                  image: '/teams/tad/logo.webp' },
   { name: 'Team Astra',         email: 'astra@iiitdm.ac.in',         org_slug: 'teams/astra',                image: '/teams/astra/logo.webp' },
   { name: 'Revolt Racers',      email: 'revoltracers@iiitdm.ac.in',  org_slug: 'teams/revolt',               image: '/teams/revolt/logo.webp' },
@@ -161,6 +161,13 @@ const orgEmails: { name: string; email: string; org_slug: string; image: string 
 // ---------------------------------------------------------------------------
 
 async function seed() {
+  await db.transaction(async (tx) => {
+    await tx.execute(sql`UPDATE clubs SET org_slug = 'clubs/ecell', "iconUrl" = '/societies/Ecell/logo.webp' WHERE org_slug = 'societies/ecell'`);
+    await tx.execute(sql`UPDATE org_admins SET org_slug = 'clubs/ecell' WHERE org_slug = 'societies/ecell'`);
+    await tx.execute(sql`UPDATE announcements SET org_slug = 'clubs/ecell' WHERE org_slug = 'societies/ecell'`);
+    await tx.execute(sql`UPDATE achievements SET org_slug = 'clubs/ecell' WHERE org_slug = 'societies/ecell'`);
+  });
+
   console.log('▶ Seeding achievements…');
   let achInserted = 0;
   for (const a of staticAchievements) {
@@ -193,15 +200,11 @@ async function seed() {
   console.log(`   inserted ${orgInserted} / ${staticOrgs.length} orgs`);
 
   console.log('▶ Seeding tech_affairs_team…');
-  let teamInserted = 0;
-  for (const t of staticTeam) {
-    const existing = await db
-      .execute(sql`SELECT id FROM tech_affairs_team WHERE type = ${t.type} AND name = ${t.name} LIMIT 1`);
-    if ((existing as unknown[]).length > 0) continue;
-    await db.insert(TechAffairsTeam).values(t);
-    teamInserted++;
-  }
-  console.log(`   inserted ${teamInserted} / ${staticTeam.length} team rows`);
+  await db.transaction(async (tx) => {
+    await tx.delete(TechAffairsTeam);
+    await tx.insert(TechAffairsTeam).values(staticTeam);
+  });
+  console.log(`   synchronized ${staticTeam.length} team rows`);
 
   console.log('▶ Seeding org emails (Clubs / OrgAdmins / User_roles)…');
   let emailInserted = 0;

@@ -45,19 +45,7 @@ export async function GET() {
       return link.includes('/clubs/ecell');
     });
 
-    const fallback = [
-      ...clubs.map((item) => ({ ...item, category: 'club', id: 0, sort_order: 0 })),
-      ...teams.map((item) => ({ ...item, category: 'team', id: 0, sort_order: 0 })),
-      ...societies.map((item) => ({ ...item, category: 'society', id: 0, sort_order: 0 })),
-      ...communities.map((item) => ({ ...item, category: 'community', id: 0, sort_order: 0 })),
-    ];
-
-    const merged = [...fallback, ...filteredRows].filter((row, index, array) => {
-      const key = `${row.category}:${row.link}`;
-      return array.findIndex((item) => `${item.category}:${item.link}` === key) === index;
-    });
-
-    return NextResponse.json(merged, {
+    return NextResponse.json(filteredRows, {
       headers: {
         'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=1200',
       },

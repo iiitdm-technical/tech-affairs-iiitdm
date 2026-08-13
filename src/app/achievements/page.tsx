@@ -88,7 +88,7 @@ export default function AchievementsPage() {
       fetch('/api/achievements').then((r) => (r.ok ? r.json() : [])),
       fetch('/api/orgs').then((r) => (r.ok ? r.json() : [])),
     ]).then(([achRows, orgRows]) => {
-      const sourceRows = Array.isArray(achRows) && achRows.length > 0 ? achRows : defaultFallbackAchievements;
+      const sourceRows = Array.isArray(achRows) ? achRows : defaultFallbackAchievements;
       const enriched: Achievement[] = sourceRows.map((a: Achievement) => {
         const org = slugToOrg(a.org_slug, orgRows);
         return { ...a, org_name: a.org_name || org?.name || a.org_slug, logo: a.logo || org?.image || '' };
@@ -122,7 +122,7 @@ export default function AchievementsPage() {
   const resetFilters = () => { setSelectedOrg('all'); setSelectedYear('all'); };
 
   return (
-    <Box sx={{ maxWidth: '1200px', margin: '0 auto', px: { xs: 2, sm: 3, md: 4 }, py: 6 }}>
+    <Box sx={{ maxWidth: '1200px', margin: '0 auto', px: { xs: 2, sm: 3, md: 4 }, pt: { xs: 12, sm: 14 }, pb: 6 }}>
       {/* Header */}
       <Box sx={{ textAlign: 'center', mb: 6 }}>
         <Typography

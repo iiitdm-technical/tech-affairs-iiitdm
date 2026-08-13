@@ -43,9 +43,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(staticFallback);
     }
     const rows = slug ? await getMembersBySlug(slug) : await getAllActiveMembers();
-    if (!rows || rows.length === 0) {
-      return NextResponse.json(staticFallback);
-    }
     return NextResponse.json(rows, {
       headers: {
         'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=1200',

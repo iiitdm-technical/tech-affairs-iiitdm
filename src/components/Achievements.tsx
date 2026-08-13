@@ -74,7 +74,7 @@ const Achievements = () => {
       fetch('/api/achievements').then((r) => (r.ok ? r.json() : [])),
       fetch('/api/orgs').then((r) => (r.ok ? r.json() : [])),
     ]).then(([achRows, orgRows]: [AchievementRow[], OrgRow[]]) => {
-      const sourceRows = Array.isArray(achRows) && achRows.length > 0 ? achRows : defaultFallbackAchievements;
+      const sourceRows = Array.isArray(achRows) ? achRows : defaultFallbackAchievements;
       const enriched = sourceRows
         .map((a) => {
           const org = slugToOrg(a.org_slug, orgRows);

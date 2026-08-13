@@ -37,9 +37,6 @@ export async function GET() {
       return NextResponse.json(staticTeamRows);
     }
     const rows = await getActiveTeam();
-    if (!rows || rows.length === 0) {
-      return NextResponse.json(staticTeamRows);
-    }
     return NextResponse.json(rows, {
       headers: {
         'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=1200',

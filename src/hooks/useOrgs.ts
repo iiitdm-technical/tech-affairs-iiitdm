@@ -27,44 +27,22 @@ const staticOrgs: OrgItem[] = [
 let _cache: OrgItem[] | null = null;
 let _promise: Promise<OrgItem[]> | null = null;
 
-function staticFallbackOrgs(): OrgItem[] {
-  let id = 1;
-  const toRows = (category: string, items: Array<{ name: string; image: string; link: string }>) =>
-    items.map((item, index) => ({
-      id: id++,
-      name: item.name,
-      image: item.image,
-      link: item.link,
-      category,
-      sort_order: index,
-    }));
-
-  return [
-    ...toRows('club', staticClubs),
-    ...toRows('team', staticTeams),
-    ...toRows('society', staticSocieties),
-    ...toRows('community', staticCommunities),
-  ];
-}
-
 async function fetchOrgs(): Promise<OrgItem[]> {
-  if (_cache && _cache.length > 0) return _cache;
+  if (_cache) return _cache;
   if (!_promise) {
-    const fallback = staticFallbackOrgs();
     _promise = fetch('/api/orgs')
-      .then((r) => (r.ok ? r.json() : []))
+      .then((r) => {
+        if (!r.ok) throw new Error(`Failed to fetch organizations: ${r.status}`);
+        return r.json();
+      })
       .then((rows) => {
-        const safeRows = Array.isArray(rows) ? rows : [];
-        const merged = [...fallback, ...safeRows].filter((row, index, array) => {
-          const key = `${row.category}:${row.link}`;
-          return array.findIndex((item) => `${item.category}:${item.link}` === key) === index;
-        });
-        _cache = merged.length ? merged : fallback;
+        if (!Array.isArray(rows)) throw new Error('Invalid organizations response');
+        _cache = rows;
         return _cache;
       })
       .catch(() => {
-        _cache = fallback;
-        return fallback;
+        _cache = staticOrgs;
+        return staticOrgs;
       });
   }
   return _promise;

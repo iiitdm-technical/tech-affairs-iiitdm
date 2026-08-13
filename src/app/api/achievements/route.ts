@@ -49,9 +49,6 @@ export async function GET() {
       return NextResponse.json(staticAchievements);
     }
     const rows = await getAchievements();
-    if (!rows || rows.length === 0) {
-      return NextResponse.json(staticAchievements);
-    }
     return NextResponse.json(rows, {
       headers: {
         'Cache-Control': 'public, s-maxage=120, stale-while-revalidate=600',

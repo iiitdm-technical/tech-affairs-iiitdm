@@ -34,6 +34,13 @@ const orgEmails = [
 async function run() {
   console.log(`Seeding ${orgEmails.length} org emails…\n`);
 
+  await db.transaction(async (tx) => {
+    await tx.execute(sql`UPDATE clubs SET org_slug = 'clubs/ecell', "iconUrl" = '/societies/Ecell/logo.webp' WHERE org_slug = 'societies/ecell'`);
+    await tx.execute(sql`UPDATE org_admins SET org_slug = 'clubs/ecell' WHERE org_slug = 'societies/ecell'`);
+    await tx.execute(sql`UPDATE announcements SET org_slug = 'clubs/ecell' WHERE org_slug = 'societies/ecell'`);
+    await tx.execute(sql`UPDATE achievements SET org_slug = 'clubs/ecell' WHERE org_slug = 'societies/ecell'`);
+  });
+
   for (const o of orgEmails) {
     // 1. Clubs row (for legacy event system that joins on club_id)
     const existingClub = await db.execute(

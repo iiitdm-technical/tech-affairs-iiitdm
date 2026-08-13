@@ -49,6 +49,15 @@ function MemberCard({
   return (
     <Card
       onClick={() => member.image && onImageClick(member.image)}
+      onKeyDown={(event) => {
+        if (member.image && (event.key === 'Enter' || event.key === ' ')) {
+          event.preventDefault();
+          onImageClick(member.image);
+        }
+      }}
+      role={member.image ? 'button' : undefined}
+      tabIndex={member.image ? 0 : undefined}
+      aria-label={member.image ? `View photo of ${member.name}` : undefined}
       sx={{
         display: 'flex', flexDirection: 'column', alignItems: 'center',
         p: { xs: 1.5, sm: 2 }, textAlign: 'center', cursor: member.image ? 'pointer' : 'default',
@@ -82,12 +91,15 @@ function MemberCard({
       )}
       <Box sx={{ display: 'flex', gap: 0.5, mt: 'auto', pt: 1 }}>
         {member.email && (
-          <IconButton size="small" href={`mailto:${member.email}`} sx={{ color: 'text.secondary' }}>
+          <IconButton size="small" href={`mailto:${member.email}`} aria-label={`Email ${member.name}`}
+            onClick={(event) => event.stopPropagation()} sx={{ color: 'text.secondary' }}>
             <Email fontSize="small" />
           </IconButton>
         )}
         {member.linkedin && (
-          <IconButton size="small" href={member.linkedin} target="_blank" rel="noopener noreferrer" sx={{ color: 'text.secondary' }}>
+          <IconButton size="small" href={member.linkedin} target="_blank" rel="noopener noreferrer"
+            aria-label={`Open ${member.name} on LinkedIn`} onClick={(event) => event.stopPropagation()}
+            sx={{ color: 'text.secondary' }}>
             <LinkedIn fontSize="small" />
           </IconButton>
         )}
@@ -125,7 +137,7 @@ export default function TeamSubPage({ slug, title, description }: TeamSubPagePro
     fetch(`/api/team-members?slug=${slug}`)
       .then((r) => (r.ok ? r.json() : []))
       .then((rows) => {
-        if (Array.isArray(rows) && rows.length > 0) {
+        if (Array.isArray(rows)) {
           setMembers(rows);
         }
       })
@@ -193,7 +205,7 @@ export default function TeamSubPage({ slug, title, description }: TeamSubPagePro
                 </Typography>
                 <Grid container spacing={{ xs: 1.5, sm: 2 }} justifyContent="center">
                   {group.map((m) => (
-                    <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }} key={m.id}>
+                    <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }} key={`${m.team_slug}:${m.roll || m.name}`}>
                       <MemberCard member={m} onImageClick={(img) => { setSelectedImage(img); setModalOpen(true); }} />
                     </Grid>
                   ))}
@@ -221,6 +233,7 @@ export default function TeamSubPage({ slug, title, description }: TeamSubPagePro
             border: `1px solid ${isDark ? 'rgba(125,211,252,0.2)' : 'rgba(0,0,0,0.12)'}`,
           }}>
             <IconButton onClick={handleClose}
+              aria-label="Close member photo"
               sx={{ position: 'absolute', top: 8, right: 8, color: 'text.secondary' }}>
               <CloseIcon />
             </IconButton>
@@ -231,6 +244,7 @@ export default function TeamSubPage({ slug, title, description }: TeamSubPagePro
             <IconButton
               href={selectedImage}
               download
+              aria-label="Download member photo"
               sx={{ display: 'flex', mx: 'auto', mt: 1, color: 'primary.main' }}
             >
               <DownloadIcon />

@@ -1,4 +1,4 @@
-// Minimal service worker — enables PWA installability with network-first fresh content
+// Minimal service worker - enables PWA installability with network-first fresh content
 const CACHE = 'ta-v2';
 const STATIC = ['/'];
 
@@ -32,6 +32,10 @@ self.addEventListener('fetch', (e) => {
         }
         return res;
       })
-      .catch(() => caches.match(e.request).then((cached) => cached || caches.match('/')))
+      .catch(() => caches.match(e.request).then((cached) => {
+        if (cached) return cached;
+        if (e.request.mode === 'navigate') return caches.match('/');
+        return Response.error();
+      }))
   );
 });
