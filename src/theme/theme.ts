@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
-const fontFamily = "var(--font-bricolage), 'Roboto', system-ui, sans-serif";
+const fontFamily = "var(--font-bricolage), var(--font-roboto), 'Roboto', system-ui, sans-serif";
 
 // ── Institute blue / PCB palette ─────────────────────────────────────────────
 // Primary   : Sky blue           #7dd3fc   (dark-mode trace highlight)
