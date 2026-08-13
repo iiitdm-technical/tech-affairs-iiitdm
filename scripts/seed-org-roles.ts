@@ -21,7 +21,7 @@ const orgEmails = [
   { name: 'System Coding Club', email: 'scc@iiitdm.ac.in',          org_slug: 'clubs/scc',        image: '/clubs/Scc/logo1.webp' },
   { name: 'Team Nira (AUV)',    email: 'auv.society@iiitdm.ac.in',  org_slug: 'teams/nira',       image: '/teams/nira/logo.webp' },
   { name: 'Team Shunya (MaRS)', email: 'mars@iiitdm.ac.in',         org_slug: 'teams/shunya',     image: '/teams/mars/logo.webp' },
-  { name: 'E-Cell',             email: 'ecell@iiitdm.ac.in',        org_slug: 'societies/ecell',  image: '/societies/ecell/logo.webp' },
+  { name: 'E-Cell',             email: 'ecell@iiitdm.ac.in',        org_slug: 'clubs/ecell',      image: '/societies/Ecell/logo.webp' },
   { name: 'Team TAD',           email: 'tad@iiitdm.ac.in',          org_slug: 'teams/tad',        image: '/teams/tad/logo.webp' },
   { name: 'Team Astra',         email: 'astra@iiitdm.ac.in',        org_slug: 'teams/astra',      image: '/teams/astra/logo.webp' },
   { name: 'Revolt Racers',      email: 'revoltracers@iiitdm.ac.in', org_slug: 'teams/revolt',     image: '/teams/revolt/logo.webp' },
