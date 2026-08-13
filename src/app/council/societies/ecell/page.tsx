@@ -7,12 +7,12 @@ const clubData = {
   description: `The E-Cell at IIITDM Kancheepuram is dedicated to fostering entrepreneurial spirit and innovation among students. The club provides a platform for aspiring entrepreneurs to learn, collaborate, and transform ideas into viable business ventures. Through workshops, mentorship, and networking events, E-Cell empowers students to develop essential skills in business planning, leadership, and creative problem-solving. E-Cell IIITDM reached the NEC finals at IIT Bombay and secured a Top 25 position out of 4,000 teams across India.`,
   core: [
     {
-      name: 'Vishal Singh',
+      name: 'Deethiya Priyadharshini',
       role: 'Core',
-      image: '/societies/Ecell/headcores/vishal.webp',
-      email: '',
+      image: '/societies/Ecell/headcores/deethiya.webp',
+      email: 'me24b2027@iiitdm.ac.in',
       linkedin: '',
-      roll: ''
+      roll: 'ME24B2027'
     }
   ],
   team: [
@@ -54,5 +54,8 @@ const clubData = {
 function ECell() {
   return <ClubPageTemplate {...clubData} />;
 }
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default ECell; 

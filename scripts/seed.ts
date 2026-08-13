@@ -121,7 +121,7 @@ const staticTeam = [
   { type: 'sac', name: 'Sujith Gopi R',      position: 'Technical Affairs Secretary',       image: '/technical-affairs-team/sac/sujith.webp',    email: '', linkedin: '', url: '', path: '', sort_order: 1 },
   { type: 'sac', name: 'P Sai Shreyansh',    position: 'Technical Affairs Joint Secretary', image: '/technical-affairs-team/sac/shreyansh.webp', email: '', linkedin: '', url: '', path: '', sort_order: 2 },
   // Faculty
-  { type: 'faculty', name: 'Prof. Jayabal K',      position: 'Dean - Design, Innovation, Incubation & Continuing Education', image: '/facultyheads/jayabal.webp',          email: '', linkedin: '', url: '', path: '', sort_order: 1 },
+  { type: 'faculty', name: 'Prof. Jayabal K',      position: 'Dean - Design, Innovation, Incubation & Continuing Education', image: '/facultyheads/jayabal.webp',          email: 'dean-dii@iiitdm.ac.in', linkedin: '', url: '', path: '', sort_order: 1 },
   { type: 'faculty', name: 'Dr. Pandiyarasan V',   position: 'PIC - Co-curricular & club activities (Tech)',                 image: '/facultyheads/pandiyarasan.webp',     email: '', linkedin: '', url: '', path: '', sort_order: 2 },
   { type: 'faculty', name: 'Dr. AVS Siva Prasad', position: 'PIC - IIC',                                                    image: '/facultyheads/avs-siva-prasad.webp', email: '', linkedin: '', url: '', path: '', sort_order: 3 },
   // Social Media (name = platform label, url = link)

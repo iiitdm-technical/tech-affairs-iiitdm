@@ -82,18 +82,20 @@ const data: ClubPageData = {
   ],
   core: [
     {
-      name: "Dhanvanth Saravanan",
+      name: "Santhana Sreenivasa S",
       role: "Club Lead",
-      image: "/clubs/robotics/headcores/dhanvanth.webp",
-      email: "ec23b1097@iiitdm.ac.in",
-      roll: "ec23b1097",
+      image: "/clubs/robotics/headcores/santhana.webp",
+      email: "me24b1017@iiitdm.ac.in",
+      linkedin: "https://www.linkedin.com/in/santhana-sreenivasa-s-5674bb37a",
+      roll: "ME24B1017",
     },
     {
-      name: "Hemachandra K S",
+      name: "Sanathkumar S Choudhari",
       role: "Club Lead",
-      image: "/clubs/robotics/headcores/hemachandra.webp",
-      email: "me23b2020@iiitdm.ac.in",
-      roll: "me23b2020",
+      image: "/clubs/robotics/headcores/sanathkumar.webp",
+      email: "ec24i2026@iiitdm.ac.in",
+      linkedin: "https://www.linkedin.com/in/sanath-s-choudhari-260812313",
+      roll: "EC24I2026",
     },
   ],
   links: {
