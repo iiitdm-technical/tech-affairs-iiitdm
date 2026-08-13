@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Container,
-  GridLegacy as Grid,
+  Grid,
   Card,
   CardContent,
   CardMedia,
@@ -14,10 +14,10 @@ import {
   Modal,
   Backdrop,
   Fade,
-  CircularProgress,
+  Tabs,
+  Tab,
 } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import { styled } from "@mui/material/styles";
+import { useTheme, styled } from "@mui/material/styles";
 import {
   Instagram,
   LinkedIn,
@@ -27,22 +27,8 @@ import {
 } from "@mui/icons-material";
 import Link from "next/link";
 import Image from "next/image";
-import { Tabs, Tab, useMediaQuery } from "@mui/material";
 import { useOrgsByCategory } from "@/hooks/useOrgs";
 import { facultyHeads, teamData, socialMediaLinks, coreTeams } from "@/data/team";
-
-interface TeamRow {
-  id: number;
-  type: string; // sac | faculty | social | core_team
-  name: string;
-  position: string;
-  image: string;
-  email: string;
-  linkedin: string;
-  url: string;
-  path: string;
-  sort_order: number;
-}
 
 interface Member {
   name: string;
@@ -94,10 +80,7 @@ function MemberGrid({
     >
       {members.map((member) => (
         <Grid
-          item
-          xs={6}
-          sm={6}
-          md={3}
+          size={{ xs: 6, sm: 6, md: 3 }}
           key={member.name}
           sx={{ display: "flex", justifyContent: "center", minWidth: 0 }}
         >
@@ -155,8 +138,6 @@ function MemberGrid({
 
 export default function Committee() {
   const theme = useTheme();
-  const [teamRows, setTeamRows] = useState<TeamRow[]>([]);
-  const [loadingTeam, setLoadingTeam] = useState(true);
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [orgTab, setOrgTab] = useState(0);
@@ -172,36 +153,40 @@ export default function Committee() {
     { label: "Communities", data: communities },
   ];
 
-  useEffect(() => {
-    fetch('/api/team')
-      .then((r) => (r.ok ? r.json() : []))
-      .then(setTeamRows)
-      .finally(() => setLoadingTeam(false));
-  }, []);
-
-  const dbSac: Member[]          = teamRows.filter((r) => r.type === 'sac').map((r) => ({ name: r.name, position: r.position, image: r.image, email: r.email, linkedin: r.linkedin }));
-  const dbFaculty: Member[]      = teamRows.filter((r) => r.type === 'faculty').map((r) => ({ name: r.name, role: r.position, image: r.image }));
-  const dbSocial                 = teamRows.filter((r) => r.type === 'social');
-  const dbCoreTeams              = teamRows.filter((r) => r.type === 'core_team');
-
-  const defaultSac: Member[] = [
-    { name: teamData.secretary.name, position: teamData.secretary.position, image: teamData.secretary.image, email: teamData.secretary.email, linkedin: teamData.secretary.linkedin },
-    { name: teamData.jointSecretary.name, position: teamData.jointSecretary.position, image: teamData.jointSecretary.image, email: teamData.jointSecretary.email, linkedin: teamData.jointSecretary.linkedin },
+  // Hardcoded direct single source of truth
+  const sacMembers: Member[] = [
+    {
+      name: teamData.secretary.name,
+      position: teamData.secretary.position,
+      image: teamData.secretary.image,
+      email: teamData.secretary.email,
+      linkedin: teamData.secretary.linkedin,
+    },
+    {
+      name: teamData.jointSecretary.name,
+      position: teamData.jointSecretary.position,
+      image: teamData.jointSecretary.image,
+      email: teamData.jointSecretary.email,
+      linkedin: teamData.jointSecretary.linkedin,
+    },
   ];
-  const defaultFaculty: Member[] = facultyHeads.map((f) => ({ name: f.name, role: f.role, image: f.image }));
-  const defaultSocial = [
-    { id: 1, type: 'social', name: 'Instagram', position: '', image: '', email: '', linkedin: '', url: socialMediaLinks.instagram, path: '', sort_order: 1 },
-    { id: 2, type: 'social', name: 'LinkedIn', position: '', image: '', email: '', linkedin: '', url: socialMediaLinks.linkedin, path: '', sort_order: 2 },
-    { id: 3, type: 'social', name: 'YouTube', position: '', image: '', email: '', linkedin: '', url: socialMediaLinks.youtube, path: '', sort_order: 3 },
-  ];
-  const defaultCoreTeams = coreTeams.map((c, i) => ({
-    id: i + 1, type: 'core_team', name: c.label, position: '', image: '', email: '', linkedin: '', url: '', path: c.path, sort_order: i + 1,
+
+  const facultyMembers: Member[] = facultyHeads.map((f) => ({
+    name: f.name,
+    role: f.role,
+    image: f.image,
   }));
 
-  const sacMembers: Member[]      = dbSac.length > 0 ? dbSac : defaultSac;
-  const facultyMembers: Member[]  = dbFaculty.length > 0 ? dbFaculty : defaultFaculty;
-  const socialLinks               = dbSocial.length > 0 ? dbSocial : defaultSocial;
-  const coreTeamLinks             = dbCoreTeams.length > 0 ? dbCoreTeams : defaultCoreTeams;
+  const socialLinks = [
+    { name: 'Instagram', url: socialMediaLinks.instagram },
+    { name: 'LinkedIn',  url: socialMediaLinks.linkedin },
+    { name: 'YouTube',   url: socialMediaLinks.youtube },
+  ];
+
+  const coreTeamLinks = coreTeams.map((c) => ({
+    name: c.label,
+    path: c.path,
+  }));
 
   const handleOpen = (image: string) => { setSelectedImage(image); setOpen(true); };
   const handleClose = () => { setOpen(false); setSelectedImage(""); };
@@ -221,14 +206,6 @@ export default function Committee() {
     transition: "transform 0.2s", "&:hover": { transform: "scale(1.05)" },
   };
 
-  if (loadingTeam) {
-    return (
-      <Box sx={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
-
   return (
     <Container maxWidth="lg" sx={{ py: 12 }}>
       {/* Our Family Section */}
@@ -244,7 +221,7 @@ export default function Committee() {
         <Box sx={{ p: { xs: 1.5, sm: 3 } }}>
           <Grid container spacing={{ xs: 1.5, sm: 2.5, md: 3 }} justifyContent="center">
             {tabOptions[orgTab].data.map((item) => (
-              <Grid item key={item.name} xs={6} sm={4} md={3} lg={2}
+              <Grid key={item.name} size={{ xs: 6, sm: 4, md: 3, lg: 2 }}
                 sx={{ display: "flex", justifyContent: "center" }}>
                 <Link href={item.link} passHref
                   style={{ textDecoration: "none", width: "100%", display: "flex", justifyContent: "center" }}>
@@ -298,19 +275,19 @@ export default function Committee() {
         </Typography>
         <Grid container spacing={{ xs: 1, sm: 2 }} justifyContent="center">
           {coreTeamLinks.map((team) => (
-            <Grid item xs={6} sm={6} md={2} key={team.name}
+            <Grid size={{ xs: 6, sm: 6, md: 3 }} key={team.name}
               sx={{ display: "flex", justifyContent: "center" }}>
               <Card sx={{
-                width: { xs: 180, sm: 160 }, height: { xs: 170, sm: 130 },
+                width: { xs: 180, sm: 200 }, height: { xs: 170, sm: 140 },
                 minWidth: { xs: 180, sm: 160 }, minHeight: { xs: 170, sm: 130 },
-                maxWidth: { xs: 180, sm: 160 }, maxHeight: { xs: 170, sm: 130 },
+                maxWidth: { xs: 220, sm: 220 }, maxHeight: { xs: 170, sm: 140 },
                 display: "flex", flexDirection: "column", alignItems: "center",
                 justifyContent: "flex-start", p: 1.5, boxShadow: 3,
                 transition: "transform 0.2s", "&:hover": { transform: "scale(1.05)" },
               }}>
                 <Box sx={{ flexGrow: 1, width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <Typography variant="h6" align="center"
-                    sx={{ fontSize: { xs: "1.1rem", sm: "1rem" }, fontWeight: 700, letterSpacing: 1, color: "primary.main", textShadow: "0 1px 4px rgba(25,118,210,0.15)" }}>
+                    sx={{ fontSize: { xs: "1rem", sm: "1rem" }, fontWeight: 700, letterSpacing: 0.5, color: "primary.main", textShadow: "0 1px 4px rgba(25,118,210,0.15)" }}>
                     {team.name}
                   </Typography>
                 </Box>
