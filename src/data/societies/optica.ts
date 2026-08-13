@@ -26,11 +26,16 @@ The chapter promotes innovation, collaboration, and professional growth by organ
     { src: "/societies/OpticaStudentChapter/gallery/3.png", caption: "" },
   ],
   core: [
-    { name: "Battu Siddhartha Reddy",                   role: "Chapter President", image: "/societies/OpticaStudentChapter/cores/Battu_Siddhartha_Reddy_Optica_Student_Chapter_President.webp",        email: "", linkedin: "", year: "", department: "", roll: "" },
-    { name: "Oohitha",                                  role: "Vice President",    image: "/societies/OpticaStudentChapter/cores/OOHITHA_OPTICA_STUDENT_CHAPTER_VICE_PRESIDENT.webp",                   email: "", linkedin: "", year: "", department: "", roll: "" },
-    { name: "Duggireddy Lingari Raghu Nandan Reddy",    role: "Secretary",         image: "/societies/OpticaStudentChapter/cores/Duggireddy_Lingari_Raghu_Nandan_Reddy_Optica_Student_Chapter_Secretary.webp", email: "", linkedin: "", year: "", department: "", roll: "" },
-    { name: "Sanisetty Nithin",                         role: "Treasurer",         image: "/societies/OpticaStudentChapter/cores/Sanisetty_Nithin_Optica_Student_Chapter_Treasurer.webp",               email: "", linkedin: "", year: "", department: "", roll: "" },
-    { name: "Thanmaya",                                 role: "PRO",               image: "/societies/OpticaStudentChapter/cores/THANMAYA_OPTICA_STUDENT_CHAPTER_PRO.webp",                             email: "", linkedin: "", year: "", department: "", roll: "" },
+    {
+      name: "Nithin",
+      role: "Chapter President",
+      image: "/societies/OpticaStudentChapter/cores/nithin.webp",
+      email: "ec24i2002@iiitdm.ac.in",
+      linkedin: "https://www.linkedin.com/in/nithin-kanna-71020a373",
+      year: "",
+      department: "",
+      roll: "EC24I2002",
+    },
   ],
   links: {
     website: "https://optica.iiitdm.ac.in",

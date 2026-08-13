@@ -5,7 +5,16 @@ import { asc } from 'drizzle-orm';
 import { unstable_cache } from 'next/cache';
 import { CACHE_TAGS } from '@/lib/cache';
 
+import { clubs, teams, societies, communities } from '@/data/orgs';
+
 export const revalidate = 300;
+
+const staticOrgs = [
+  ...clubs.map((o, i) => ({ id: i + 1, ...o, category: 'club', sort_order: i + 1 })),
+  ...teams.map((o, i) => ({ id: i + 10, ...o, category: 'team', sort_order: i + 1 })),
+  ...societies.map((o, i) => ({ id: i + 20, ...o, category: 'society', sort_order: i + 1 })),
+  ...communities.map((o, i) => ({ id: i + 30, ...o, category: 'community', sort_order: i + 1 })),
+];
 
 const getOrgs = unstable_cache(
   async () => {
@@ -19,10 +28,20 @@ const getOrgs = unstable_cache(
 );
 
 export async function GET() {
-  const rows = await getOrgs();
-  return NextResponse.json(rows, {
-    headers: {
-      'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=1200',
-    },
-  });
+  try {
+    if (!process.env.DATABASE_URL) {
+      return NextResponse.json(staticOrgs);
+    }
+    const rows = await getOrgs();
+    if (!rows || rows.length === 0) {
+      return NextResponse.json(staticOrgs);
+    }
+    return NextResponse.json(rows, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=1200',
+      },
+    });
+  } catch {
+    return NextResponse.json(staticOrgs);
+  }
 }

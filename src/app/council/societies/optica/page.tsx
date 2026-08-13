@@ -7,24 +7,14 @@ const clubData = {
   description: `The OPTICA Student Chapter at IIITDM Kancheepuram is a student-led community affiliated with OPTICA (formerly OSA - Optical Society of America), dedicated to promoting interest and research in the fields of optics, photonics, and optical communication technologies.\nThe chapter aims to cultivate technical knowledge and practical skills in areas such as laser systems, optical sensing, fiber optics, imaging, and photonic devices. By encouraging students to explore both fundamental and applied aspects of light-based technologies, the chapter provides a platform for collaborative learning and research discussions.\nThe chapter aspires to contribute to the growing global optics community by engaging students in cutting-edge research topics and encouraging innovation in light-driven technologies.`,
   core: [
     {
-      name: 'Riya Gupta',
+      name: 'Nithin',
       role: 'Chapter President',
-      image: '/images/team/riya-gupta.webp',
-      email: 'riya.gupta@iiitdm.ac.in',
-      linkedin: 'https://linkedin.com/in/riyagupta',
-      year: 'B.Tech 3rd Year',
-      department: 'Electronics Engineering',
-      roll: 'ec23b4001'
-    },
-    {
-      name: 'Aditya Verma',
-      role: 'Vice President',
-      image: '/images/team/aditya-verma.webp',
-      email: 'aditya.verma@iiitdm.ac.in',
-      linkedin: 'https://linkedin.com/in/adityaverma',
-      year: 'B.Tech 3rd Year',
-      department: 'Electronics Engineering',
-      roll: 'ec23b4002'
+      image: '/societies/OpticaStudentChapter/cores/nithin.webp',
+      email: 'ec24i2002@iiitdm.ac.in',
+      linkedin: 'https://www.linkedin.com/in/nithin-kanna-71020a373',
+      year: '',
+      department: '',
+      roll: 'EC24I2002'
     }
   ],
   team: [
@@ -59,5 +49,8 @@ const clubData = {
 function OpticaStudentChapter() {
   return <SocietyPageTemplate {...clubData} />;
 }
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default OpticaStudentChapter; 

@@ -88,18 +88,12 @@ robotics competitions such as SAUVC (Singapore Autonomous Underwater Vehicle Cha
   ],
   core: [
     {
-      name: "Abinav Rajagopal",
+      name: "Piyush Mishra",
       role: "Team Lead",
-      image: "/teams/nira/lead1.webp",
-      email: "team.lead@iiitdm.ac.in",
-      roll: "me23b1001",
-    },
-    {
-      name: "Shree Mithun N",
-      role: "Team Lead",
-      image: "/teams/nira/lead2.webp",
-      email: "tech.lead@iiitdm.ac.in",
-      roll: "me23b2024",
+      image: "/teams/nira/piyush.webp",
+      email: "cs24b1048@iiitdm.ac.in",
+      linkedin: "https://www.linkedin.com/in/piyush-mishra-056b6a326",
+      roll: "CS24B1048",
     },
   ],
   links: {

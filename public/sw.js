@@ -1,7 +1,5 @@
-// Minimal service worker — enables PWA installability
-// Cache-first for static assets, network-first for API/pages
-
-const CACHE = 'ta-v1';
+// Minimal service worker — enables PWA installability with network-first fresh content
+const CACHE = 'ta-v2';
 const STATIC = ['/'];
 
 self.addEventListener('install', (e) => {
@@ -20,27 +18,20 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
-  // Skip non-GET, API routes, and Next.js internals
+  // Skip non-GET and API routes
   if (e.request.method !== 'GET') return;
-  if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/_next/')) return;
+  if (url.pathname.startsWith('/api/')) return;
 
-  // Network-first for navigation
-  if (e.request.mode === 'navigate') {
-    e.respondWith(fetch(e.request).catch(() => caches.match('/')));
-    return;
-  }
-
-  // Cache-first for everything else
+  // Network-first for all requests to guarantee latest data, fallback to cache when offline
   e.respondWith(
-    caches.match(e.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(e.request).then((res) => {
-        if (res.ok) {
+    fetch(e.request)
+      .then((res) => {
+        if (res.ok && res.status === 200) {
           const clone = res.clone();
           caches.open(CACHE).then((c) => c.put(e.request, clone));
         }
         return res;
-      });
-    })
+      })
+      .catch(() => caches.match(e.request).then((cached) => cached || caches.match('/')))
   );
 });

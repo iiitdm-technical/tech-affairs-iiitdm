@@ -40,31 +40,24 @@ const teamInfo = {
   ],
   members: [
     {
-      name: 'Abinav Rajagopal',
+      name: 'Piyush Mishra',
       role: 'Team Lead',
-      image: '/teams/nira/lead1.webp',
-      // email: 'team.lead@iiitdm.ac.in',
-      linkedin: 'https://www.linkedin.com/in/abinav-rajagopal-2ba65a286/',
-      year: 'B.Tech 3rd Year',
-      department: 'Mechanical Engineering',
-      roll: 'me23b1001'
-    },
-    {
-      name: 'Shree Mithun N',
-      role: 'Team Lead',
-      image: '/teams/nira/lead2.webp',
-      // email: 'tech.lead@iiitdm.ac.in',
-      linkedin: 'https://www.linkedin.com/in/shree-mithun-n-43ba49241/',
-      year: 'B.Tech 3rd Year',
-      department: 'Mechanical Engineering',
-      roll: 'me23b2024'
+      image: '/teams/nira/piyush.webp',
+      email: 'cs24b1048@iiitdm.ac.in',
+      linkedin: 'https://www.linkedin.com/in/piyush-mishra-056b6a326',
+      year: 'B.Tech 2nd Year',
+      department: 'Computer Science and Engineering',
+      roll: 'CS24B1048'
     },
   ],
-  website: '#', // Add the actual website if available
+  website: '#',
 };
 
 function AUV() {
   return <TeamPageTemplate {...teamInfo} />;
 }
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default AUV; 

@@ -47,45 +47,35 @@ const teamInfo = {
   ],
   members: [
     {
-      name: 'Harish N',
-      role: 'Captain',
-      image: '/teams/revolt/captain.webp',
-      // email: 'team.lead@iiitdm.ac.in',
-      linkedin: 'https://linkedin.com/in/team-lead',
+      name: 'Mohamed Asif',
+      role: 'Manager',
+      image: '/teams/revolt/asif.webp',
+      email: 'ME23B2012@iiitdm.ac.in',
+      linkedin: 'https://www.linkedin.com/in/mohamedasif-iiitdm/',
       year: 'B.Tech 3rd Year',
       department: 'Mechanical Engineering',
-      roll: 'me22b1083'
+      roll: 'ME23B2012'
     },
     {
-      name: 'Gurubaran V',
+      name: 'V Gurubaran',
+      role: 'Captain',
+      image: '/teams/revolt/gurubaran.webp',
+      email: 'me23b1042@iiitdm.ac.in',
+      linkedin: 'https://www.linkedin.com/in/gurubaran-v-9a31522bb/',
+      year: 'B.Tech 3rd Year',
+      department: 'Mechanical Engineering',
+      roll: 'ME23B1042'
+    },
+    {
+      name: 'Abishek.S',
       role: 'Vice-Captain',
-      image: '/teams/revolt/vice-captain.webp',
-      // email: 'tech.lead@iiitdm.ac.in',
-      linkedin: 'https://linkedin.com/in/tech-lead',
-      year: 'B.Tech 3rd Year',
-      department: 'Electronics Engineering',
-      roll: 'me23b1042'
-    },
-      {
-      name: 'Keshavprasad K',
-      role: 'Manager',
-      image: '/teams/revolt/manager.webp',
-      // email: 'team.lead@iiitdm.ac.in',
-      linkedin: 'https://linkedin.com/in/team-lead',
-      year: 'B.Tech 3rd Year',
+      image: '/teams/revolt/abishek.webp',
+      email: 'me24b1053@iiitdm.ac.in',
+      linkedin: 'https://www.linkedin.com/in/abishek-s-8a372a324',
+      year: 'B.Tech 2nd Year',
       department: 'Mechanical Engineering',
-      roll: 'me22b2014'
-    },
-      {
-      name: 'Shricharan R G',
-      role: 'Joint Manager',
-      image: '/teams/revolt/joint-manager.webp',
-      // email: 'team.lead@iiitdm.ac.in',
-      linkedin: 'https://linkedin.com/in/team-lead',
-      year: 'B.Tech 3rd Year',
-      department: 'Mechanical Engineering',
-      roll: 'me23b1046'
-    },
+      roll: 'ME24B1053'
+    }
   ],
   website: 'https://revolt.iiitdm.ac.in'
 };
@@ -93,5 +83,8 @@ const teamInfo = {
 function SAEEBaja() {
   return <TeamPageTemplate {...teamInfo} />;
 }
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default SAEEBaja; 

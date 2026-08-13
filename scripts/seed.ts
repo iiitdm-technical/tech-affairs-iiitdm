@@ -120,7 +120,7 @@ const staticTeam = [
   { type: 'sac', name: 'P Kaarthick Natesh', position: 'Technical Affairs Secretary',      image: '/technical-affairs-team/sac/PKaarthickNatesh.webp', email: 'ec22b1004@iiitdm.ac.in', linkedin: '', url: '', path: '', sort_order: 1 },
   { type: 'sac', name: 'Ranveer Gautam',      position: 'Technical Affairs Joint Secretary', image: '/technical-affairs-team/sac/RanveerGautam.webp',    email: 'me23b2031@iiitdm.ac.in', linkedin: '', url: '', path: '', sort_order: 2 },
   // Faculty
-  { type: 'faculty', name: 'Prof. M D Selvaraj',        position: 'Dean DII',                   image: '/facultyheads/selvaraj.webp',    email: '', linkedin: '', url: '', path: '', sort_order: 1 },
+  { type: 'faculty', name: 'Prof. Jayabal K',            position: 'Dean DII&CC',                image: '/facultyheads/jayabal.webp',      email: 'dean-dii@iiitdm.ac.in', linkedin: '', url: '', path: '', sort_order: 1 },
   { type: 'faculty', name: 'Dr. Vikash Kumar',           position: 'PIC - Technical Affairs',   image: '/facultyheads/vikash.webp',      email: '', linkedin: '', url: '', path: '', sort_order: 2 },
   { type: 'faculty', name: 'Dr. Bhukya Krishna Priya',  position: 'PIC - Technical Affairs',   image: '/facultyheads/krishnapriya.webp', email: '', linkedin: '', url: '', path: '', sort_order: 3 },
   // Social Media (name = platform label, url = link)

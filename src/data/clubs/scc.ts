@@ -43,18 +43,12 @@ const data: ClubPageData = {
   ],
   core: [
     {
-      name: "A.Nikhileswar",
-      role: "Core",
-      image: "/clubs/Scc/headcores/nikhileswar.webp",
-      email: "ec23b1021@iiitdm.ac.in",
-      roll: "ec23b1021",
-    },
-    {
-      name: "Tarun Vignesh",
-      role: "Project Lead",
-      image: "/clubs/Scc/headcores/vignesh.webp",
-      email: "ec23b1047@iiitdm.ac.in",
-      roll: "ec23b1047",
+      name: "Lohith Chandra Gogineni",
+      role: "Club Lead",
+      image: "/clubs/Scc/headcores/lohith.webp",
+      email: "ec24i1006@iiitdm.ac.in",
+      linkedin: "",
+      roll: "EC24I1006",
     },
   ],
   links: {

@@ -26,9 +26,9 @@ export const socialMediaLinks = {
 
 export const facultyHeads = [
   {
-    name: "Prof. M D Selvaraj",
-    role: "Dean DII",
-    image: "/facultyheads/selvaraj.webp",
+    name: "Prof. Jayabal K",
+    role: "Dean DII&CC",
+    image: "/facultyheads/jayabal.webp",
   },
   {
     name: "Dr. Vikash Kumar",
