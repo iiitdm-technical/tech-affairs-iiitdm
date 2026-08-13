@@ -95,7 +95,8 @@ const staticOrgs = [
   { name: 'Developers Club',    image: '/clubs/devclub/logo.png',                    link: '/clubs/dev',                 category: 'club',      sort_order: 2 },
   { name: 'Robotics Club',      image: '/clubs/robotics/logo.webp',                  link: '/clubs/robotics',            category: 'club',      sort_order: 3 },
   { name: 'System Coding Club', image: '/clubs/Scc/logo1.webp',                      link: '/clubs/scc',                 category: 'club',      sort_order: 4 },
-  { name: 'Cybersecurity Club', image: '/clubs/cybersecurity/logo.jpg',              link: '/clubs/cybersecurity',       category: 'club',      sort_order: 5 },
+  { name: 'E-Cell',             image: '/societies/Ecell/logo.webp',                 link: '/clubs/ecell',              category: 'club',      sort_order: 5 },
+  { name: 'Cybersecurity Club', image: '/clubs/cybersecurity/logo.jpg',              link: '/clubs/cybersecurity',       category: 'club',      sort_order: 6 },
   // Teams
   { name: 'Team Nira (AUV)',    image: '/teams/nira/logo.webp',                      link: '/teams/nira',                category: 'team',      sort_order: 1 },
   { name: 'Team Astra',         image: '/teams/astra/logo.webp',                     link: '/teams/astra',               category: 'team',      sort_order: 2 },
@@ -103,10 +104,9 @@ const staticOrgs = [
   { name: 'Team TAD',           image: '/teams/tad/logo.webp',                       link: '/teams/tad',                 category: 'team',      sort_order: 4 },
   { name: 'Team Shunya (MaRS)', image: '/teams/mars/logo.webp',                      link: '/teams/shunya',              category: 'team',      sort_order: 5 },
   // Societies
-  { name: 'E-Cell',                   image: '/societies/Ecell/logo.webp',                link: '/societies/ecell',     category: 'society',   sort_order: 1 },
-  { name: 'IEEE',                     image: '/societies/IEEE/logo.png',                  link: '/societies/ieee',      category: 'society',   sort_order: 2 },
-  { name: 'Optica Student Chapter',   image: '/societies/OpticaStudentChapter/logo.webp', link: '/societies/optica',    category: 'society',   sort_order: 3 },
-  { name: 'ASME Student Section',     image: '/societies/ASMEStudentSection/logo.webp',   link: '/societies/asme',      category: 'society',   sort_order: 4 },
+  { name: 'IEEE',                     image: '/societies/IEEE/logo.png',                  link: '/societies/ieee',      category: 'society',   sort_order: 1 },
+  { name: 'Optica Student Chapter',   image: '/societies/OpticaStudentChapter/logo.webp', link: '/societies/optica',    category: 'society',   sort_order: 2 },
+  { name: 'ASME Student Section',     image: '/societies/ASMEStudentSection/logo.webp',   link: '/societies/asme',      category: 'society',   sort_order: 3 },
   // Communities
   { name: 'Game Developers',   image: '/communities/gamedevelopers/logo.png',         link: '/communities/gamedevelopers', category: 'community', sort_order: 1 },
 ];
