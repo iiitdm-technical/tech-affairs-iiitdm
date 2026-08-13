@@ -197,11 +197,18 @@ async function seed() {
   for (const t of staticTeam) {
     const existing = await db
       .execute(sql`SELECT id FROM tech_affairs_team WHERE type = ${t.type} AND name = ${t.name} LIMIT 1`);
-    if ((existing as unknown[]).length > 0) continue;
+    if ((existing as unknown[]).length > 0) {
+      await db.execute(sql`
+        UPDATE tech_affairs_team
+        SET image = ${t.image}, position = ${t.position}, email = ${t.email}, linkedin = ${t.linkedin}, url = ${t.url}, path = ${t.path}, sort_order = ${t.sort_order}, active = 'Y'
+        WHERE type = ${t.type} AND name = ${t.name}
+      `);
+      continue;
+    }
     await db.insert(TechAffairsTeam).values(t);
     teamInserted++;
   }
-  console.log(`   inserted ${teamInserted} / ${staticTeam.length} team rows`);
+  console.log(`   processed ${staticTeam.length} team rows (${teamInserted} inserted)`);
 
   console.log('▶ Seeding org emails (Clubs / OrgAdmins / User_roles)…');
   let emailInserted = 0;
