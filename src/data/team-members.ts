@@ -27,14 +27,7 @@ export const teamMembersData: TeamMemberData[] = [
   { team_slug: 'innovation', sub_role: 'coordinator', name: 'D G DIWAKAR', roll: 'CS25B1093', email: 'cs25b1093@iiitdm.ac.in', linkedin: 'https://www.linkedin.com/in/d-g-diwakar-7a82b5399', image: '/technical-affairs-team/innovation/coordinators/CS25B1093.webp', sort_order: 2 },
   { team_slug: 'innovation', sub_role: 'coordinator', name: 'Sai Chinmayi Bethanapalli', roll: 'CS25I1013', email: 'cs25i1013@iiitdm.ac.in', linkedin: 'https://www.linkedin.com/in/sai-chinmayi-bethanapalli-82736340b', image: '/technical-affairs-team/innovation/coordinators/CS25I1013.webp', sort_order: 3 },
 
-  // ── media-and-marketing ──────────────────────────────────────────────────────
-  { team_slug: 'media-and-marketing', sub_role: 'core', name: 'Vinay kumar', roll: 'CS24I1028', email: 'cs24i1028@iiitdm.ac.in', linkedin: 'https://www.linkedin.com/in/p-vinay-kumar-959891366', image: '/technical-affairs-team/media-and-marketing/cores/CS24I1028.webp', sort_order: 1 },
-  { team_slug: 'media-and-marketing', sub_role: 'core', name: 'Vishwanth', roll: 'ME24B2012', email: 'me24b2012@iiitdm.ac.in', linkedin: '', image: '/technical-affairs-team/media-and-marketing/cores/ME24B2012.webp', sort_order: 2 },
-  { team_slug: 'media-and-marketing', sub_role: 'coordinator', name: 'Nikhil', roll: 'EC25I2004', email: 'ec25i2004@iiitdm.ac.in', linkedin: 'https://www.linkedin.com/in/nikhil-pradyun-bodapati-426491389', image: '/technical-affairs-team/media-and-marketing/coordinators/EC25I2004.webp', sort_order: 1 },
-  { team_slug: 'media-and-marketing', sub_role: 'coordinator', name: 'A.Rudrani', roll: 'ME25B1060', email: 'me25b1060@iiitdm.ac.in', linkedin: '', image: '/technical-affairs-team/media-and-marketing/coordinators/ME25B1060.webp', sort_order: 2 },
-  { team_slug: 'media-and-marketing', sub_role: 'coordinator', name: 'Om Chouhan', roll: 'CS25I1056', email: 'cs25i1056@iiitdm.ac.in', linkedin: '', image: '/technical-affairs-team/media-and-marketing/coordinators/CS25I1056.webp', sort_order: 3 },
-
-  // ── social-outreach ──────────────────────────────────────────────────────────
+  // ── social-outreach (Media and outreach team) ──────────────────────────────────
   { team_slug: 'social-outreach', sub_role: 'core', name: 'Vinay kumar', roll: 'CS24I1028', email: 'cs24i1028@iiitdm.ac.in', linkedin: 'https://www.linkedin.com/in/p-vinay-kumar-959891366', image: '/technical-affairs-team/social-outreach/cores/CS24I1028.webp', sort_order: 1 },
   { team_slug: 'social-outreach', sub_role: 'core', name: 'Vishwanth', roll: 'ME24B2012', email: 'me24b2012@iiitdm.ac.in', linkedin: '', image: '/technical-affairs-team/social-outreach/cores/ME24B2012.webp', sort_order: 2 },
   { team_slug: 'social-outreach', sub_role: 'coordinator', name: 'Nikhil', roll: 'EC25I2004', email: 'ec25i2004@iiitdm.ac.in', linkedin: 'https://www.linkedin.com/in/nikhil-pradyun-bodapati-426491389', image: '/technical-affairs-team/social-outreach/coordinators/EC25I2004.webp', sort_order: 1 },

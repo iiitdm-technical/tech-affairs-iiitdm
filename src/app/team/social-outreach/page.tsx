@@ -1,11 +1,11 @@
 import TeamSubPage from '@/components/TeamSubPage';
 
-export default function SocialOutreachPage() {
+export default function MediaAndOutreachPage() {
   return (
     <TeamSubPage
       slug="social-outreach"
-      title="Social Outreach"
-      description="The Social Outreach team connects our technical community with society. We organize events, workshops, and initiatives to share knowledge, inspire young minds, and make a positive impact."
+      title="Media and Outreach Team"
+      description="The Media and Outreach team is the voice of the technical council and connects our technical community with society. We manage our online presence, create engaging content, promote events, organize workshops, and make a positive impact."
     />
   );
 }

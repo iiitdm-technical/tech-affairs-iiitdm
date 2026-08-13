@@ -129,11 +129,10 @@ const staticTeam = [
   { type: 'social', name: 'LinkedIn',  position: '', image: '', email: '', linkedin: '', url: 'https://www.linkedin.com/company/technical-affairs-iiitdm/', path: '', sort_order: 2 },
   { type: 'social', name: 'YouTube',   position: '', image: '', email: '', linkedin: '', url: 'https://www.youtube.com/@iiitdm.technical', path: '', sort_order: 3 },
   // Core Teams (name = label, path = link)
-  { type: 'core_team', name: 'Management',          position: '', image: '', email: '', linkedin: '', url: '', path: '/team/management',          sort_order: 1 },
-  { type: 'core_team', name: 'Tech Development',    position: '', image: '', email: '', linkedin: '', url: '', path: '/team/tech-development',    sort_order: 2 },
-  { type: 'core_team', name: 'Innovation',          position: '', image: '', email: '', linkedin: '', url: '', path: '/team/innovation',          sort_order: 3 },
-  { type: 'core_team', name: 'Social Outreach',     position: '', image: '', email: '', linkedin: '', url: '', path: '/team/social-outreach',     sort_order: 4 },
-  { type: 'core_team', name: 'Media and Marketing', position: '', image: '', email: '', linkedin: '', url: '', path: '/team/media-and-marketing', sort_order: 5 },
+  { type: 'core_team', name: 'Management',              position: '', image: '', email: '', linkedin: '', url: '', path: '/team/management',          sort_order: 1 },
+  { type: 'core_team', name: 'Tech Development',        position: '', image: '', email: '', linkedin: '', url: '', path: '/team/tech-development',    sort_order: 2 },
+  { type: 'core_team', name: 'Innovation',              position: '', image: '', email: '', linkedin: '', url: '', path: '/team/innovation',          sort_order: 3 },
+  { type: 'core_team', name: 'Media and outreach team', position: '', image: '', email: '', linkedin: '', url: '', path: '/team/social-outreach',     sort_order: 4 },
 ];
 
 // ---------------------------------------------------------------------------
