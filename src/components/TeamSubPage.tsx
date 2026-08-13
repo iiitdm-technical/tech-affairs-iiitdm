@@ -31,6 +31,16 @@ const SUB_ROLE_LABELS: Record<string, string> = {
 
 const SUB_ROLE_ORDER = ['core', 'jt-core', 'coordinator'];
 
+function MemberSkeleton() {
+  return (
+    <Card sx={{ p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Skeleton variant="circular" width={80} height={80} sx={{ mb: 1.5 }} />
+      <Skeleton variant="text" width={100} height={24} />
+      <Skeleton variant="text" width={70} height={18} />
+    </Card>
+  );
+}
+
 function MemberCard({
   member, onImageClick,
 }: { member: TeamMemberRow; onImageClick: (img: string) => void }) {
