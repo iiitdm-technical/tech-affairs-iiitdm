@@ -1,0 +1,12 @@
+<svg width="800" height="480" viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="480" fill="#0F172A"/>
+  <rect x="150" y="130" width="500" height="180" rx="28" fill="#1D4ED8" opacity="0.8"/>
+  <rect x="200" y="170" width="120" height="100" rx="18" fill="#E0F2FE"/>
+  <rect x="350" y="170" width="120" height="100" rx="18" fill="#BAE6FD"/>
+  <rect x="500" y="170" width="120" height="100" rx="18" fill="#93C5FD"/>
+  <path d="M230 242H260M380 242H410M530 242H560" stroke="#0F172A" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="240" cy="190" r="14" fill="#0F172A"/>
+  <circle cx="390" cy="190" r="14" fill="#0F172A"/>
+  <circle cx="540" cy="190" r="14" fill="#0F172A"/>
+  <text x="400" y="404" text-anchor="middle" font-size="34" font-family="Verdana, Arial, sans-serif" fill="#F8FAFC">IoT Automation Lab</text>
+</svg>

@@ -97,6 +97,7 @@ const staticOrgs = [
   { name: 'System Coding Club', image: '/clubs/Scc/logo1.webp',                      link: '/clubs/scc',                 category: 'club',      sort_order: 4 },
   { name: 'E-Cell',             image: '/societies/Ecell/logo.webp',                 link: '/clubs/ecell',              category: 'club',      sort_order: 5 },
   { name: 'Cybersecurity Club', image: '/clubs/cybersecurity/logo.jpg',              link: '/clubs/cybersecurity',       category: 'club',      sort_order: 6 },
+  { name: 'Smart Sense',        image: '/clubs/smartsense/logo.svg',                 link: '/clubs/smart-sense',        category: 'club',      sort_order: 7 },
   // Teams
   { name: 'Team Nira (AUV)',    image: '/teams/nira/logo.webp',                      link: '/teams/nira',                category: 'team',      sort_order: 1 },
   { name: 'Team Astra',         image: '/teams/astra/logo.webp',                     link: '/teams/astra',               category: 'team',      sort_order: 2 },

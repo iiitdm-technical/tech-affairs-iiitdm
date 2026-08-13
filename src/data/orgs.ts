@@ -15,6 +15,7 @@ export const clubs: OrgItem[] = [
   { name: "System Coding Club", image: "/clubs/Scc/logo1.webp",      link: "/clubs/scc" },
   { name: "E-Cell",             image: "/societies/Ecell/logo.webp", link: "/clubs/ecell" },
   { name: "Cybersecurity Club", image: "/clubs/cybersecurity/logo.jpg", link: "/clubs/cybersecurity" },
+  { name: "Smart Sense",        image: "/clubs/smartsense/logo.svg", link: "/clubs/smart-sense" },
 ];
 
 export const teams: OrgItem[] = [

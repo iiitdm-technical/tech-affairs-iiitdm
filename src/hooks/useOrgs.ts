@@ -48,7 +48,11 @@ async function fetchOrgs(): Promise<OrgItem[]> {
       .then((r) => (r.ok ? r.json() : []))
       .then((rows) => {
         const safeRows = Array.isArray(rows) ? rows : [];
-        _cache = safeRows.length ? safeRows : fallback;
+        const merged = [...fallback, ...safeRows].filter((row, index, array) => {
+          const key = `${row.category}:${row.link}`;
+          return array.findIndex((item) => `${item.category}:${item.link}` === key) === index;
+        });
+        _cache = merged.length ? merged : fallback;
         return _cache;
       })
       .catch(() => {

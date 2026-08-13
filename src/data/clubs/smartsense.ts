@@ -1,0 +1,73 @@
+import type { ClubPageData } from "@/types/club";
+
+const data: ClubPageData = {
+  name: "Smart Sense",
+  logo: "/clubs/smartsense/logo.svg",
+  introduction: `Smart Sense is a student-driven club focused on building technology that helps people interact intelligently with the physical world. We explore sensors, embedded systems, IoT, computer vision, signal processing, and data-driven automation to solve real-world problems through practical engineering.
+
+Our mission is to create a collaborative environment where students learn by prototyping, testing, and iterating. From smart environment monitoring to assistive systems and automation projects, Smart Sense encourages members to combine theory with hands-on innovation, teamwork, and problem solving.
+
+Whether you are curious about electronics, AI, robotics, or sustainable tech, Smart Sense is a place to experiment, build, and grow with a strong maker mindset.`,
+  timeline: [
+    {
+      year: 2025,
+      event: "Club formation",
+      description: "Smart Sense was founded to bring together students interested in sensing, automation, and intelligent systems through collaborative learning and project building.",
+    },
+    {
+      year: 2025,
+      event: "Sensor systems workshops",
+      description: "The club conducted hands-on sessions introducing students to environmental sensors, embedded interfaces, and basic data acquisition pipelines.",
+    },
+    {
+      year: 2026,
+      event: "Prototype sprint",
+      description: "Members worked on smart monitoring and automation prototypes, focusing on real-world problem solving and iterative design thinking.",
+    },
+  ],
+  projects: [
+    {
+      name: "Smart Agriculture Monitor",
+      image: "/clubs/smartsense/project-1.svg",
+      description: "A sensor-driven monitoring system designed to track soil moisture, temperature, and ambient conditions for smarter irrigation and farm management.",
+    },
+    {
+      name: "Assistive Sensing Prototype",
+      image: "/clubs/smartsense/project-2.svg",
+      description: "An accessible device concept combining sensor fusion and alerting systems to support safer, more responsive environments.",
+    },
+    {
+      name: "IoT Automation Lab",
+      image: "/clubs/smartsense/project-3.svg",
+      description: "A learning-focused project where students design connected systems for monitoring, automation, and data visualization.",
+    },
+  ],
+  gallery: [
+    { src: "/clubs/smartsense/gallery/1.svg", caption: "" },
+    { src: "/clubs/smartsense/gallery/2.svg", caption: "" },
+    { src: "/clubs/smartsense/gallery/3.svg", caption: "" },
+    { src: "/clubs/smartsense/gallery/4.svg", caption: "" },
+  ],
+  core: [
+    {
+      name: "Smart Sense Core Team",
+      role: "Club Lead",
+      image: "/clubs/smartsense/lead-1.svg",
+      email: "smartsense@iiitdm.ac.in",
+      roll: "TBD",
+    },
+    {
+      name: "Electronics & IoT Team",
+      role: "Technical Lead",
+      image: "/clubs/smartsense/lead-2.svg",
+      email: "smartsense-tech@iiitdm.ac.in",
+      roll: "TBD",
+    },
+  ],
+  links: {
+    instagram: "https://www.instagram.com/",
+    github: "https://github.com/",
+  },
+};
+
+export default data;

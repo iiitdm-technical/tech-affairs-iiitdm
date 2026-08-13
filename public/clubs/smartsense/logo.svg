@@ -1,0 +1,61 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#F1F3F4"/>
+  <g transform="translate(0 10)">
+    <g opacity="0.96">
+      <circle cx="600" cy="250" r="150" fill="none" stroke="#0B3A4A" stroke-width="14"/>
+      <path d="M446 250C483 188 540 158 600 158C660 158 717 188 754 250C717 312 660 342 600 342C540 342 483 312 446 250Z" fill="none" stroke="#0B3A4A" stroke-width="12"/>
+      <circle cx="600" cy="250" r="64" fill="#0D4F66" stroke="#0B3A4A" stroke-width="10"/>
+      <circle cx="600" cy="250" r="28" fill="#E6F7FB"/>
+      <path d="M315 250C350 182 398 138 446 112" stroke="#0B3A4A" stroke-width="8" stroke-linecap="round"/>
+      <path d="M885 250C850 182 802 138 754 112" stroke="#0B3A4A" stroke-width="8" stroke-linecap="round"/>
+      <path d="M315 250C344 300 388 338 446 366" stroke="#0B3A4A" stroke-width="8" stroke-linecap="round"/>
+      <path d="M885 250C856 300 812 338 754 366" stroke="#0B3A4A" stroke-width="8" stroke-linecap="round"/>
+    </g>
+
+    <g stroke="#0B3A4A" stroke-width="8" stroke-linecap="round">
+      <path d="M600 30V82"/>
+      <path d="M600 418V470"/>
+      <path d="M468 54L489 88"/>
+      <path d="M732 54L711 88"/>
+      <path d="M412 104L448 128"/>
+      <path d="M788 104L752 128"/>
+      <path d="M388 178L420 194"/>
+      <path d="M812 178L780 194"/>
+      <path d="M388 322L420 306"/>
+      <path d="M812 322L780 306"/>
+      <path d="M412 396L448 372"/>
+      <path d="M788 396L752 372"/>
+      <path d="M468 446L489 412"/>
+      <path d="M732 446L711 412"/>
+    </g>
+
+    <g fill="#0B3A4A">
+      <circle cx="600" cy="30" r="8"/>
+      <circle cx="600" cy="470" r="8"/>
+      <circle cx="468" cy="54" r="8"/>
+      <circle cx="732" cy="54" r="8"/>
+      <circle cx="412" cy="104" r="8"/>
+      <circle cx="788" cy="104" r="8"/>
+      <circle cx="388" cy="178" r="8"/>
+      <circle cx="812" cy="178" r="8"/>
+      <circle cx="388" cy="322" r="8"/>
+      <circle cx="812" cy="322" r="8"/>
+      <circle cx="412" cy="396" r="8"/>
+      <circle cx="788" cy="396" r="8"/>
+      <circle cx="468" cy="446" r="8"/>
+      <circle cx="732" cy="446" r="8"/>
+    </g>
+
+    <g>
+      <path d="M295 540C381 495 463 472 600 472C737 472 819 495 905 540" stroke="#0BA9D9" stroke-width="10" stroke-linecap="round"/>
+      <path d="M336 580C428 545 505 528 600 528C695 528 772 545 864 580" stroke="#0BA9D9" stroke-width="10" stroke-linecap="round"/>
+      <path d="M382 620C449 595 519 584 600 584C681 584 751 595 818 620" stroke="#0BA9D9" stroke-width="10" stroke-linecap="round"/>
+      <path d="M425 660C479 642 537 635 600 635C663 635 721 642 775 660" stroke="#0BA9D9" stroke-width="10" stroke-linecap="round"/>
+    </g>
+
+    <g>
+      <text x="600" y="760" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="74" font-weight="700" letter-spacing="6" fill="#0B3A4A">SMART SENSE</text>
+      <text x="600" y="812" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="600" letter-spacing="8" fill="#0B3A4A">IIITDM</text>
+    </g>
+  </g>
+</svg>

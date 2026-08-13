@@ -1,0 +1,12 @@
+<svg width="800" height="480" viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="480" fill="#111827"/>
+  <circle cx="260" cy="225" r="120" fill="#22D3EE" opacity="0.25"/>
+  <circle cx="260" cy="225" r="70" fill="#F8FAFC" opacity="0.85"/>
+  <path d="M360 160H590C610 160 626 176 626 196V300C626 320 610 336 590 336H360C340 336 324 320 324 300V196C324 176 340 160 360 160Z" fill="#7DD3FC" opacity="0.9"/>
+  <path d="M430 195L455 248L500 220L540 260" stroke="#0F172A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="430" cy="195" r="10" fill="#0F172A"/>
+  <circle cx="455" cy="248" r="10" fill="#0F172A"/>
+  <circle cx="500" cy="220" r="10" fill="#0F172A"/>
+  <circle cx="540" cy="260" r="10" fill="#0F172A"/>
+  <text x="400" y="410" text-anchor="middle" font-size="34" font-family="Verdana, Arial, sans-serif" fill="#F8FAFC">Assistive Sensing Prototype</text>
+</svg>
