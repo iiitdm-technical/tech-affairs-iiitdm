@@ -45,7 +45,17 @@ npm ci
 
 `./prepare` creates the static site in `out/`, verifies the export, and then deletes the build-only `.next/` and `node_modules/` directories to save space.
 
-Serve `out/` with a system static server such as Nginx or Caddy. Neither `.next/` nor `node_modules/` is used at runtime, and `next start` is intentionally unavailable in export mode.
+Serve `out/` with a static server. Neither `.next/` nor the project `node_modules/` directory is used at runtime, and `next start` is intentionally unavailable in export mode.
+
+Pushes to `main` deploy through `.github/workflows/deploy.yml`. The workflow connects using the `SSH_HOST`, `SSH_USERNAME`, and `SSH_PASSWORD` GitHub Actions secrets, updates `$HOME/tech-affairs-iiitdm`, runs `npm ci` and `./prepare`, then reloads `ecosystem.config.cjs` with PM2.
+
+The deployment installs `serve@14.2.6` globally so it remains available after `./prepare` removes the project dependencies. PM2 runs the resolved global executable as:
+
+```bash
+serve -s . -l 8007 --no-clipboard
+```
+
+Its working directory is `/home/tech_sac_admin/tech-affairs-iiitdm/out`. The production process uses the server's global Node.js, PM2, and `serve` installations, but does not use `.next/` or the project's deleted `node_modules/` directory.
 
 Example Nginx root:
 
