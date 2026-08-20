@@ -6,7 +6,6 @@
     "dev": "next dev",
     "dev:turbo": "next dev --turbopack",
     "build": "npm run validate:data && next build",
-    "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "validate:data": "node scripts/validate-data.mjs"

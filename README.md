@@ -40,8 +40,20 @@ npm run build
 
 ```bash
 npm ci
-npm run build
-npm start
+./prepare
 ```
 
-`npm run build` creates the standard Next.js production build in `.next/`, and `npm start` serves it on port 3000. Set `PORT` to use another port. The site remains database-free and has no API routes, authentication service, or server-side write operations.
+`./prepare` creates the static site in `out/`, verifies the export, and then deletes the build-only `.next/` and `node_modules/` directories to save space.
+
+Serve `out/` with a system static server such as Nginx or Caddy. Neither `.next/` nor `node_modules/` is used at runtime, and `next start` is intentionally unavailable in export mode.
+
+Example Nginx root:
+
+```nginx
+root /path/to/tech-affairs-iiitdm/out;
+index index.html;
+
+location / {
+    try_files $uri $uri/ $uri/index.html =404;
+}
+```

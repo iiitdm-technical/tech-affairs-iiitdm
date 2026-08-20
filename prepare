@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+set -eu
+
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+cd "$SCRIPT_DIR"
+
+npm run build
+
+if [ ! -f "out/index.html" ]; then
+  echo "Static export failed: out/index.html was not generated." >&2
+  exit 1
+fi
+
+rm -rf .next node_modules
+
+echo "Static site prepared in out/."
+echo ".next/ and node_modules/ have been removed."
+echo "Serve out/ with a system static web server such as Nginx or Caddy."
