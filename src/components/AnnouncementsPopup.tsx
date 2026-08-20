@@ -8,42 +8,19 @@ import {
 import { Close, Campaign, OpenInNew, PictureAsPdf } from '@mui/icons-material';
 import Link from 'next/link';
 import { useOrgs, slugToName } from '@/hooks/useOrgs';
+import { announcements } from '@/lib/data/content';
 
 const SESSION_KEY = 'ta_announcements_seen';
-
-interface Announcement {
-  id: number;
-  org_slug: string;
-  title: string;
-  body: string;
-  link: string;
-  media_url: string;
-  created_at: string;
-}
 
 export default function AnnouncementsPopup() {
   const orgs = useOrgs();
   const [open, setOpen] = useState(false);
-  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
 
   useEffect(() => {
     // Only show once per browser session
     if (sessionStorage.getItem(SESSION_KEY)) return;
 
-    fetch('/api/announcements')
-      .then(async (res) => {
-        if (!res.ok) return;
-        const text = await res.text();
-        if (!text) return;
-        try {
-          const data: Announcement[] = JSON.parse(text);
-          if (data.length > 0) {
-            setAnnouncements(data);
-            setOpen(true);
-          }
-        } catch {}
-      })
-      .catch(() => {});
+    if (announcements.length > 0) setOpen(true);
   }, []);
 
   function handleClose() {

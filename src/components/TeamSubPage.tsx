@@ -1,27 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Container, Typography, Box, Modal, Backdrop, Fade, IconButton,
-  Avatar, Grid, Card, Chip, CircularProgress, Skeleton,
+  Avatar, Grid, Card,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Download as DownloadIcon, Close as CloseIcon, LinkedIn, Email } from '@mui/icons-material';
 import Image from 'next/image';
-import { teamMembersData } from '@/data/team-members';
+import { technicalAffairsMembers, type TechnicalAffairsMember } from '@/lib/data/content';
 
-export interface TeamMemberRow {
-  id?: number;
-  team_slug: string;
-  sub_role: string;
-  name: string;
-  roll: string;
-  email: string;
-  linkedin: string;
-  image: string;
-  sort_order: number;
-  active?: string;
-}
+export type TeamMemberRow = TechnicalAffairsMember;
 
 const SUB_ROLE_LABELS: Record<string, string> = {
   core: 'Cores',
@@ -30,16 +19,6 @@ const SUB_ROLE_LABELS: Record<string, string> = {
 };
 
 const SUB_ROLE_ORDER = ['core', 'jt-core', 'coordinator'];
-
-function MemberSkeleton() {
-  return (
-    <Card sx={{ p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Skeleton variant="circular" width={80} height={80} sx={{ mb: 1.5 }} />
-      <Skeleton variant="text" width={100} height={24} />
-      <Skeleton variant="text" width={70} height={18} />
-    </Card>
-  );
-}
 
 function MemberCard({
   member, onImageClick,
@@ -108,16 +87,6 @@ function MemberCard({
   );
 }
 
-function SkeletonCard() {
-  return (
-    <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 2 }}>
-      <Skeleton variant="circular" width={110} height={110} sx={{ mb: 1.5 }} />
-      <Skeleton variant="text" width={120} height={20} />
-      <Skeleton variant="text" width={80} height={16} />
-    </Card>
-  );
-}
-
 interface TeamSubPageProps {
   slug: string;
   title: string;
@@ -127,22 +96,9 @@ interface TeamSubPageProps {
 export default function TeamSubPage({ slug, title, description }: TeamSubPageProps) {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
-  const staticFallback = teamMembersData.filter((m) => m.team_slug === slug);
-  const [members, setMembers] = useState<TeamMemberRow[]>(staticFallback);
-  const [loading, setLoading] = useState(false);
+  const members = technicalAffairsMembers.filter((member) => member.team_slug === slug);
   const [selectedImage, setSelectedImage] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
-
-  useEffect(() => {
-    fetch(`/api/team-members?slug=${slug}`)
-      .then((r) => (r.ok ? r.json() : []))
-      .then((rows) => {
-        if (Array.isArray(rows)) {
-          setMembers(rows);
-        }
-      })
-      .catch(() => {});
-  }, [slug]);
 
   const handleClose = () => { setModalOpen(false); setSelectedImage(''); };
 
@@ -170,55 +126,38 @@ export default function TeamSubPage({ slug, title, description }: TeamSubPagePro
         </Typography>
       </Box>
 
-      {loading ? (
-        <>
-          {SUB_ROLE_ORDER.map((role) => (
-            <Box key={role} mb={6}>
-              <Skeleton variant="text" width={160} height={32} sx={{ mx: 'auto', mb: 3 }} />
-              <Grid container spacing={2} justifyContent="center">
-                {[1,2,3,4].map((i) => (
-                  <Grid size={{ xs: 6, sm: 4, md: 3 }} key={i}><MemberSkeleton /></Grid>
-                ))}
-              </Grid>
-            </Box>
-          ))}
-        </>
-      ) : (
-        <>
-          {SUB_ROLE_ORDER.map((role) => {
-            const group = grouped[role];
-            if (!group || group.length === 0) return null;
-            return (
-              <Box key={role} mb={6}>
-                <Typography variant="h5" align="center" fontWeight={800} letterSpacing="-0.02em"
-                  sx={{
-                    mb: 3, color: theme.palette.primary.main,
-                    fontSize: { xs: '1.3rem', sm: '1.6rem' },
-                    position: 'relative',
-                    '&::after': {
-                      content: '""', display: 'block', width: 48, height: 3,
-                      background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                      borderRadius: 2, mx: 'auto', mt: 1,
-                    }
-                  }}>
-                  {SUB_ROLE_LABELS[role] || role}
-                </Typography>
-                <Grid container spacing={{ xs: 1.5, sm: 2 }} justifyContent="center">
-                  {group.map((m) => (
-                    <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }} key={`${m.team_slug}:${m.roll || m.name}`}>
-                      <MemberCard member={m} onImageClick={(img) => { setSelectedImage(img); setModalOpen(true); }} />
-                    </Grid>
-                  ))}
-                </Grid>
-              </Box>
-            );
-          })}
-          {members.length === 0 && (
-            <Typography color="text.secondary" align="center" py={8}>
-              No members found.
+      {SUB_ROLE_ORDER.map((role) => {
+        const group = grouped[role];
+        if (!group || group.length === 0) return null;
+        return (
+          <Box key={role} mb={6}>
+            <Typography variant="h5" align="center" fontWeight={800} letterSpacing="-0.02em"
+              sx={{
+                mb: 3, color: theme.palette.primary.main,
+                fontSize: { xs: '1.3rem', sm: '1.6rem' },
+                position: 'relative',
+                '&::after': {
+                  content: '""', display: 'block', width: 48, height: 3,
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                  borderRadius: 2, mx: 'auto', mt: 1,
+                }
+              }}>
+              {SUB_ROLE_LABELS[role] || role}
             </Typography>
-          )}
-        </>
+            <Grid container spacing={{ xs: 1.5, sm: 2 }} justifyContent="center">
+              {group.map((m) => (
+                <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }} key={`${m.team_slug}:${m.roll || m.name}`}>
+                  <MemberCard member={m} onImageClick={(img) => { setSelectedImage(img); setModalOpen(true); }} />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        );
+      })}
+      {members.length === 0 && (
+        <Typography color="text.secondary" align="center" py={8}>
+          No members found.
+        </Typography>
       )}
 
       {/* Image modal */}

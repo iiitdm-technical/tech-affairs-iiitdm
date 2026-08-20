@@ -1,9 +1,8 @@
-import React from "react";
 import NewClubPageTemplate from "@/components/NewClubPageTemplate";
-import clubData from "@/data/societies/ieee";
+import { getOrganizationProfile } from "@/lib/data/organizations";
 
-function IEEE() {
-  return <NewClubPageTemplate {...clubData} />;
+const profile = getOrganizationProfile("societies/ieee");
+
+export default function OrganizationPage() {
+  return <NewClubPageTemplate {...profile} />;
 }
-
-export default IEEE;

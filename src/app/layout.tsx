@@ -5,7 +5,6 @@ import { Bricolage_Grotesque, Roboto } from 'next/font/google';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { ReactLenis } from 'lenis/react';
 import ConditionalShell from '@/components/ConditionalShell';
-import { getCurrentSession } from '@/lib/server/session';
 import { GridsBg } from '@/components/GridsBg';
 import ScrollToTop from '@/components/ScrollToTop';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
@@ -24,9 +23,7 @@ const roboto = Roboto({
   variable: '--font-roboto',
 });
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { user } = await getCurrentSession();
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${bricolage.variable} ${roboto.variable}`}>
       <head />
@@ -36,7 +33,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <GridsBg />
           <ScrollToTop />
           <ScrollToTopButton />
-          <ConditionalShell user={user}>
+          <ConditionalShell>
             {children}
           </ConditionalShell>
         </ThemeProvider>

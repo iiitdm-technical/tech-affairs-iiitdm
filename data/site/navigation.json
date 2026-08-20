@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Achievements",
+    "path": "/achievements"
+  },
+  {
+    "name": "Announcements",
+    "path": "/announcements"
+  },
+  {
+    "name": "Our Team",
+    "path": "/team"
+  }
+]

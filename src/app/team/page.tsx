@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Container,
   GridLegacy as Grid,
@@ -14,7 +14,6 @@ import {
   Modal,
   Backdrop,
   Fade,
-  CircularProgress,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
@@ -29,7 +28,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Tabs, Tab, useMediaQuery } from "@mui/material";
 import { useOrgsByCategory } from "@/hooks/useOrgs";
-import { facultyHeads, teamData, socialMediaLinks, coreTeams } from "@/data/team";
+import { council } from "@/lib/data/content";
 
 interface TeamRow {
   id: number;
@@ -155,8 +154,7 @@ function MemberGrid({
 
 export default function Committee() {
   const theme = useTheme();
-  const [teamRows, setTeamRows] = useState<TeamRow[]>([]);
-  const [loadingTeam, setLoadingTeam] = useState(true);
+  const teamRows: TeamRow[] = council;
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [orgTab, setOrgTab] = useState(0);
@@ -172,36 +170,15 @@ export default function Committee() {
     { label: "Communities", data: communities },
   ];
 
-  useEffect(() => {
-    fetch('/api/team')
-      .then((r) => (r.ok ? r.json() : []))
-      .then(setTeamRows)
-      .finally(() => setLoadingTeam(false));
-  }, []);
-
   const dbSac: Member[]          = teamRows.filter((r) => r.type === 'sac').map((r) => ({ name: r.name, position: r.position, image: r.image, email: r.email, linkedin: r.linkedin }));
   const dbFaculty: Member[]      = teamRows.filter((r) => r.type === 'faculty').map((r) => ({ name: r.name, role: r.position, image: r.image }));
   const dbSocial                 = teamRows.filter((r) => r.type === 'social');
   const dbCoreTeams              = teamRows.filter((r) => r.type === 'core_team');
 
-  const defaultSac: Member[] = [
-    { name: teamData.secretary.name, position: teamData.secretary.position, image: teamData.secretary.image, email: teamData.secretary.email, linkedin: teamData.secretary.linkedin },
-    { name: teamData.jointSecretary.name, position: teamData.jointSecretary.position, image: teamData.jointSecretary.image, email: teamData.jointSecretary.email, linkedin: teamData.jointSecretary.linkedin },
-  ];
-  const defaultFaculty: Member[] = facultyHeads.map((f) => ({ name: f.name, role: f.role, image: f.image }));
-  const defaultSocial = [
-    { id: 1, type: 'social', name: 'Instagram', position: '', image: '', email: '', linkedin: '', url: socialMediaLinks.instagram, path: '', sort_order: 1 },
-    { id: 2, type: 'social', name: 'LinkedIn', position: '', image: '', email: '', linkedin: '', url: socialMediaLinks.linkedin, path: '', sort_order: 2 },
-    { id: 3, type: 'social', name: 'YouTube', position: '', image: '', email: '', linkedin: '', url: socialMediaLinks.youtube, path: '', sort_order: 3 },
-  ];
-  const defaultCoreTeams = coreTeams.map((c, i) => ({
-    id: i + 1, type: 'core_team', name: c.label, position: '', image: '', email: '', linkedin: '', url: '', path: c.path, sort_order: i + 1,
-  }));
-
-  const sacMembers: Member[]      = dbSac.length > 0 ? dbSac : defaultSac;
-  const facultyMembers: Member[]  = dbFaculty.length > 0 ? dbFaculty : defaultFaculty;
-  const socialLinks               = dbSocial.length > 0 ? dbSocial : defaultSocial;
-  const coreTeamLinks             = dbCoreTeams.length > 0 ? dbCoreTeams : defaultCoreTeams;
+  const sacMembers: Member[] = dbSac;
+  const facultyMembers: Member[] = dbFaculty;
+  const socialLinks = dbSocial;
+  const coreTeamLinks = dbCoreTeams;
 
   const handleOpen = (image: string) => { setSelectedImage(image); setOpen(true); };
   const handleClose = () => { setOpen(false); setSelectedImage(""); };
@@ -220,14 +197,6 @@ export default function Committee() {
     justifyContent: "flex-start", p: 1.5, boxShadow: 3,
     transition: "transform 0.2s", "&:hover": { transform: "scale(1.05)" },
   };
-
-  if (loadingTeam) {
-    return (
-      <Box sx={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
 
   return (
     <Container maxWidth="lg" sx={{ py: 12 }}>

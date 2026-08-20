@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Box, Typography, Select, MenuItem, FormControl, Button,
-  Grid, Card, CardContent, Divider, CircularProgress,
+  Grid, Card, CardContent, Divider,
   Chip, InputAdornment, OutlinedInput,
 } from '@mui/material';
 import { EmojiEvents, FilterList, RestartAlt } from '@mui/icons-material';
 import { styled } from '@mui/system';
-import { achievements as fallbackRawAchievements } from '@/data/achievements';
+import { achievements as achievementRows, organizations } from '@/lib/data/content';
 
 interface Achievement {
   id: number;
@@ -20,33 +20,14 @@ interface Achievement {
   org_name?: string;
 }
 
-interface OrgRow {
-  id: number;
-  name: string;
-  image: string;
-  link: string;
-  category: string;
-}
-
-const CLUB_TO_ORG_SLUG: Record<string, string> = {
-  'AUV Society': 'teams/nira',
-  'Mars Club': 'teams/shunya',
-  'TAD': 'teams/tad',
-  'SAE Collegiate Club': 'teams/revolt',
-  'IEEE Student Branch': 'societies/ieee',
-  'Team Astra': 'teams/astra',
-  'E-Cell': 'clubs/ecell',
-};
-
-const defaultFallbackAchievements: Achievement[] = fallbackRawAchievements.map((a, index) => ({
-  id: a.id || index + 1,
-  org_slug: CLUB_TO_ORG_SLUG[a.club] ?? a.club.toLowerCase().replace(/\s+/g, '-'),
-  title: a.title,
-  description: a.description,
-  year: a.year,
-  logo: a.logo,
-  org_name: a.club,
-}));
+const achievements: Achievement[] = achievementRows.map((achievement) => {
+  const org = organizations.find((item) => item.link.endsWith(`/${achievement.org_slug.split('/').pop()}`));
+  return {
+    ...achievement,
+    org_name: org?.name || achievement.org_slug,
+    logo: achievement.logo || org?.image || '',
+  };
+});
 
 const YearHeading = styled(Typography)(({ theme }) => ({
   color: theme.palette.primary.main,
@@ -69,38 +50,9 @@ const StyledCard = styled(Card)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: { flexDirection: 'column', alignItems: 'center', textAlign: 'center' },
 }));
 
-function slugToOrg(slug: string, orgs: OrgRow[]): OrgRow | undefined {
-  return orgs.find((o) => o.link.endsWith('/' + slug.split('/').pop()));
-}
-
 export default function AchievementsPage() {
-  const [achievements, setAchievements] = useState<Achievement[]>([]);
-  const [orgs, setOrgs] = useState<OrgRow[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState('all');
   const [selectedYear, setSelectedYear] = useState('all');
-
-  const load = () => {
-    setError(false);
-    setLoading(true);
-    Promise.all([
-      fetch('/api/achievements').then((r) => (r.ok ? r.json() : [])),
-      fetch('/api/orgs').then((r) => (r.ok ? r.json() : [])),
-    ]).then(([achRows, orgRows]) => {
-      const sourceRows = Array.isArray(achRows) ? achRows : defaultFallbackAchievements;
-      const enriched: Achievement[] = sourceRows.map((a: Achievement) => {
-        const org = slugToOrg(a.org_slug, orgRows);
-        return { ...a, org_name: a.org_name || org?.name || a.org_slug, logo: a.logo || org?.image || '' };
-      });
-      setAchievements(enriched);
-      setOrgs(orgRows);
-    }).catch(() => {
-      setAchievements(defaultFallbackAchievements);
-    }).finally(() => setLoading(false));
-  };
-
-  useEffect(() => { load(); }, []);
 
   const filtered = achievements
     .filter((a) => selectedOrg === 'all' || a.org_name === selectedOrg)
@@ -145,14 +97,7 @@ export default function AchievementsPage() {
         </Typography>
       </Box>
 
-      {loading && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
-          <CircularProgress />
-        </Box>
-      )}
-
-      {!loading && (
-        <>
+      <>
           {/* Filter Bar */}
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap', mb: 4 }}>
             <FormControl size="small" sx={{ minWidth: 200 }}>
@@ -259,8 +204,7 @@ export default function AchievementsPage() {
               </Box>
             )}
           </Box>
-        </>
-      )}
+      </>
     </Box>
   );
 }

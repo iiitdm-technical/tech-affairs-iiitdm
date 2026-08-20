@@ -1,9 +1,8 @@
-import React from "react";
 import NewClubPageTemplate from "@/components/NewClubPageTemplate";
-import clubData from "@/data/communities/gamedevelopers";
+import { getOrganizationProfile } from "@/lib/data/organizations";
 
-function GameDevelopers() {
-  return <NewClubPageTemplate {...clubData} />;
+const profile = getOrganizationProfile("communities/gamedevelopers");
+
+export default function OrganizationPage() {
+  return <NewClubPageTemplate {...profile} />;
 }
-
-export default GameDevelopers;

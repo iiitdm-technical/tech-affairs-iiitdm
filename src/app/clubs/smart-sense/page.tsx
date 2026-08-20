@@ -1,9 +1,8 @@
-import React from "react";
 import NewClubPageTemplate from "@/components/NewClubPageTemplate";
-import clubData from "@/data/clubs/smartsense";
+import { getOrganizationProfile } from "@/lib/data/organizations";
 
-function SmartSenseClub() {
-  return <NewClubPageTemplate {...clubData} />;
+const profile = getOrganizationProfile("clubs/smart-sense");
+
+export default function OrganizationPage() {
+  return <NewClubPageTemplate {...profile} />;
 }
-
-export default SmartSenseClub;

@@ -1,12 +1,8 @@
-import React from "react";
 import NewClubPageTemplate from "@/components/NewClubPageTemplate";
-import clubData from "@/data/clubs/robotics";
+import { getOrganizationProfile } from "@/lib/data/organizations";
 
-function RoboticsClub() {
-  return <NewClubPageTemplate {...clubData} />;
+const profile = getOrganizationProfile("clubs/robotics");
+
+export default function OrganizationPage() {
+  return <NewClubPageTemplate {...profile} />;
 }
-
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
-
-export default RoboticsClub;

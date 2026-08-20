@@ -1,9 +1,8 @@
-import React from "react";
 import NewClubPageTemplate from "@/components/NewClubPageTemplate";
-import clubData from "@/data/clubs/dev";
+import { getOrganizationProfile } from "@/lib/data/organizations";
 
-function DevClub() {
-  return <NewClubPageTemplate {...clubData} />;
+const profile = getOrganizationProfile("clubs/dev");
+
+export default function OrganizationPage() {
+  return <NewClubPageTemplate {...profile} />;
 }
-
-export default DevClub;

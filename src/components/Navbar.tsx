@@ -2,7 +2,7 @@
 
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   AppBar,
@@ -18,10 +18,6 @@ import {
   ListItemButton,
   ListItemText,
   Divider,
-  Avatar,
-  Menu,
-  MenuItem,
-  Tooltip,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -30,35 +26,15 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useThemeContext } from "../context/ThemeContext";
 import { usePathname } from "next/navigation";
 
-// Define the User and Session types based on your application's data structure
-export interface User {
-  id: number;
-  email: string;
-  googleId: string;
-  name: string;
-  picture: string;
-  role: string;       // Primary role: A > O > U
-  roles?: string[];   // All roles for multi-role users
-  orgSlugs: string[];
-}
+import navItems from "../../data/site/navigation.json";
 
-// Define the props for the Navbar component
-interface NavbarProps {
-  user: User | null;
-}
-
-import { navItems } from "@/data/navigation";
-
-const Navbar = ({ user }: NavbarProps) => {
+const Navbar = () => {
   const theme = useMuiTheme();
   const { isDarkMode, toggleTheme } = useThemeContext();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const pathname = usePathname();
-  const hasAdminRole = Boolean(user && (user.roles?.includes('A') || user.role === 'A'));
-  const hasOrgAdminRole = Boolean(user && (user.roles?.includes('O') || user.role === 'O'));
 
   useEffect(() => {
     setMounted(true);
@@ -68,8 +44,6 @@ const Navbar = ({ user }: NavbarProps) => {
   }, []);
 
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => setAnchorElUser(event.currentTarget);
-  const handleCloseUserMenu = () => setAnchorElUser(null);
 
   const logo = (
     <Box sx={{ position: "relative", height: 40, width: 40, flexShrink: 0 }}>
@@ -192,7 +166,7 @@ const Navbar = ({ user }: NavbarProps) => {
 
       <Divider />
 
-      {/* Bottom section: theme toggle + auth */}
+      {/* Bottom section: theme toggle */}
       <Box sx={{ px: 1, py: 1.5 }}>
         <ListItemButton
           onClick={toggleTheme}
@@ -220,132 +194,6 @@ const Navbar = ({ user }: NavbarProps) => {
             primaryTypographyProps={{ fontSize: "0.9rem", fontWeight: 500 }}
           />
         </ListItemButton>
-
-        {user ? (
-          <>
-            <ListItemButton
-              component="a"
-              href="/profile"
-              onClick={handleDrawerToggle}
-              sx={{ borderRadius: 2, py: 1.2, px: 2, mb: 0.5, color: 'text.primary',
-                '&:hover': { bgcolor: 'rgba(125,211,252,0.08)' } }}>
-              <ListItemText primary="Profile & Settings"
-                primaryTypographyProps={{ fontSize: '0.9rem', fontWeight: 500 }} />
-            </ListItemButton>
-            <ListItemButton
-              component="a"
-              href="/logout"
-              onClick={handleDrawerToggle}
-              sx={{
-                borderRadius: 2,
-                py: 1.2,
-                px: 2,
-                mb: 0.5,
-                color: "text.primary",
-                "&:hover": {
-                  bgcolor:
-                    theme.palette.mode === "dark"
-                      ? "rgba(255,255,255,0.05)"
-                      : "rgba(0,0,0,0.04)",
-                },
-              }}
-            >
-              <ListItemText
-                primary="Logout"
-                primaryTypographyProps={{ fontSize: "0.9rem", fontWeight: 500 }}
-              />
-            </ListItemButton>
-            {hasAdminRole && (
-              <ListItemButton
-                component="a"
-                href="/admin"
-                onClick={handleDrawerToggle}
-                sx={{
-                  borderRadius: 2,
-                  py: 1.2,
-                  px: 2,
-                  color: "text.primary",
-                  "&:hover": {
-                    bgcolor:
-                      theme.palette.mode === "dark"
-                        ? "rgba(255,255,255,0.05)"
-                        : "rgba(0,0,0,0.04)",
-                  },
-                }}
-              >
-                <ListItemText
-                  primary="Admin"
-                  primaryTypographyProps={{ fontSize: "0.9rem", fontWeight: 500 }}
-                />
-              </ListItemButton>
-            )}
-            {hasOrgAdminRole && (
-              <ListItemButton
-                component="a"
-                href="/org-admin"
-                onClick={handleDrawerToggle}
-                sx={{
-                  borderRadius: 2,
-                  py: 1.2,
-                  px: 2,
-                  color: "text.primary",
-                  "&:hover": {
-                    bgcolor:
-                      theme.palette.mode === "dark"
-                        ? "rgba(255,255,255,0.05)"
-                        : "rgba(0,0,0,0.04)",
-                  },
-                }}
-              >
-                <ListItemText
-                  primary="Org Dashboard"
-                  primaryTypographyProps={{ fontSize: "0.9rem", fontWeight: 500 }}
-                />
-              </ListItemButton>
-            )}
-            {hasAdminRole && hasOrgAdminRole && (
-              <ListItemButton
-                component="a"
-                href="/dashboard"
-                onClick={handleDrawerToggle}
-                sx={{
-                  borderRadius: 2,
-                  py: 1.2,
-                  px: 2,
-                  color: "text.primary",
-                  "&:hover": {
-                    bgcolor:
-                      theme.palette.mode === "dark"
-                        ? "rgba(255,255,255,0.05)"
-                        : "rgba(0,0,0,0.04)",
-                  },
-                }}
-              >
-                <ListItemText
-                  primary="Choose Dashboard"
-                  primaryTypographyProps={{ fontSize: "0.9rem", fontWeight: 500 }}
-                />
-              </ListItemButton>
-            )}
-          </>
-        ) : (
-          <Button
-            component="a"
-            href="/login"
-            onClick={handleDrawerToggle}
-            variant="contained"
-            fullWidth
-            sx={{
-              mt: 0.5,
-              py: 1.2,
-              borderRadius: 2,
-              fontWeight: 650,
-              fontSize: "0.9rem",
-            }}
-          >
-            Sign In
-          </Button>
-        )}
       </Box>
     </Box>
   );
@@ -399,96 +247,15 @@ const Navbar = ({ user }: NavbarProps) => {
                 {item.name}
               </Button>
             ))}
-              {hasAdminRole && (
-                <Button
-                  component="a"
-                  href="/admin"
-                  variant="outlined"
-                  size="small"
-                  sx={{
-                    borderRadius: 2,
-                    fontWeight: 600,
-                    fontSize: '0.8rem',
-                    color: 'primary.main',
-                    borderColor: 'primary.main',
-                    '&:hover': { bgcolor: 'primary.main', color: '#fff' },
-                  }}
-                >
-                  Admin
-                </Button>
-              )}
-
-              <IconButton
-                onClick={toggleTheme}
-                sx={{
-                  color: theme.palette.mode === "dark" ? "white" : "text.primary",
-                  "&:hover": { color: "primary.main" },
-                }}
-              >
-                {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-              </IconButton>
-
-            {/* User authentication section for desktop */}
-            {user ? (
-              <Box sx={{ flexGrow: 0, ml: 1 }}>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt={user.name} src={user.picture} />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                  keepMounted
-                  transformOrigin={{ vertical: "top", horizontal: "right" }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  <MenuItem disabled sx={{ opacity: '1 !important' }}>
-                    <Box>
-                      <Typography fontWeight={700} fontSize="0.9rem">{user.name}</Typography>
-                      <Typography fontSize="0.75rem" color="text.secondary">{user.email}</Typography>
-                    </Box>
-                  </MenuItem>
-                  <Divider />
-                  <MenuItem component="a" href="/profile" onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Profile & Settings</Typography>
-                  </MenuItem>
-                  {hasAdminRole && (
-                    <MenuItem component="a" href="/admin" onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">Admin Dashboard</Typography>
-                    </MenuItem>
-                  )}
-                  {hasOrgAdminRole && (
-                    <MenuItem component="a" href="/org-admin" onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">Org Dashboard</Typography>
-                    </MenuItem>
-                  )}
-                  {hasAdminRole && hasOrgAdminRole && (
-                    <MenuItem component="a" href="/dashboard" onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">Choose Dashboard</Typography>
-                    </MenuItem>
-                  )}
-                  <Divider />
-                  <MenuItem component="a" href="/logout" onClick={handleCloseUserMenu}
-                    sx={{ color: 'error.main' }}>
-                    <Typography textAlign="center">Sign out</Typography>
-                  </MenuItem>
-                </Menu>
-              </Box>
-            ) : (
-              <Button
-                component="a"
-                href="/login"
-                variant="contained"
-                color="primary"
-                sx={{ my: 1, ml: 1.5 }}
-              >
-                Sign In
-              </Button>
-            )}
+            <IconButton
+              onClick={toggleTheme}
+              sx={{
+                color: theme.palette.mode === "dark" ? "white" : "text.primary",
+                "&:hover": { color: "primary.main" },
+              }}
+            >
+              {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
           </Box>
 
           <IconButton

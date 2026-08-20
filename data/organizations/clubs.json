@@ -1,0 +1,92 @@
+[
+  {
+    "club_id": 2,
+    "name": "CS Club",
+    "iconUrl": "/clubs/csclub/logo.webp",
+    "org_slug": "clubs/cs"
+  },
+  {
+    "club_id": 3,
+    "name": "Developers Club",
+    "iconUrl": "/clubs/devclub/logo.png",
+    "org_slug": "clubs/dev"
+  },
+  {
+    "club_id": 4,
+    "name": "Robotics Club",
+    "iconUrl": "/clubs/robotics/logo.webp",
+    "org_slug": "clubs/robotics"
+  },
+  {
+    "club_id": 5,
+    "name": "System Coding Club",
+    "iconUrl": "/clubs/Scc/logo1.webp",
+    "org_slug": "clubs/scc"
+  },
+  {
+    "club_id": 6,
+    "name": "Cybersecurity Club",
+    "iconUrl": "/clubs/cybersecurity/logo.jpg",
+    "org_slug": "clubs/cybersecurity"
+  },
+  {
+    "club_id": 7,
+    "name": "Team Nira (AUV)",
+    "iconUrl": "/teams/nira/logo.webp",
+    "org_slug": "teams/nira"
+  },
+  {
+    "club_id": 8,
+    "name": "Team Astra",
+    "iconUrl": "/teams/astra/logo.webp",
+    "org_slug": "teams/astra"
+  },
+  {
+    "club_id": 9,
+    "name": "Team TAD",
+    "iconUrl": "/teams/tad/logo.webp",
+    "org_slug": "teams/tad"
+  },
+  {
+    "club_id": 10,
+    "name": "Team Shunya (MaRS)",
+    "iconUrl": "/teams/mars/logo.webp",
+    "org_slug": "teams/shunya"
+  },
+  {
+    "club_id": 11,
+    "name": "ASME",
+    "iconUrl": "/societies/ASMEStudentSection/logo.webp",
+    "org_slug": "societies/asme"
+  },
+  {
+    "club_id": 12,
+    "name": "Game Developers",
+    "iconUrl": "/communities/gamedevelopers/logo.png",
+    "org_slug": "communities/gamedevelopers"
+  },
+  {
+    "club_id": 13,
+    "name": "E-Cell",
+    "iconUrl": "/societies/Ecell/logo.webp",
+    "org_slug": "clubs/ecell"
+  },
+  {
+    "club_id": 14,
+    "name": "Revolt Racers",
+    "iconUrl": "/teams/revolt/logo.webp",
+    "org_slug": "teams/revolt"
+  },
+  {
+    "club_id": 15,
+    "name": "Optica",
+    "iconUrl": "/societies/OpticaStudentChapter/logo.webp",
+    "org_slug": "societies/optica"
+  },
+  {
+    "club_id": 16,
+    "name": "IEEE SB",
+    "iconUrl": "/societies/IEEE/logo.webp",
+    "org_slug": "societies/ieee"
+  }
+]

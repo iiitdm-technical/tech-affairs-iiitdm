@@ -1,0 +1,130 @@
+[
+  {
+    "id": 1,
+    "name": "CS Club",
+    "image": "/clubs/csclub/logo.webp",
+    "link": "/clubs/cs",
+    "category": "club",
+    "sort_order": 1
+  },
+  {
+    "id": 2,
+    "name": "Developers Club",
+    "image": "/clubs/devclub/logo.png",
+    "link": "/clubs/dev",
+    "category": "club",
+    "sort_order": 2
+  },
+  {
+    "id": 3,
+    "name": "Robotics Club",
+    "image": "/clubs/robotics/logo.webp",
+    "link": "/clubs/robotics",
+    "category": "club",
+    "sort_order": 3
+  },
+  {
+    "id": 4,
+    "name": "System Coding Club",
+    "image": "/clubs/Scc/logo1.webp",
+    "link": "/clubs/scc",
+    "category": "club",
+    "sort_order": 4
+  },
+  {
+    "id": 5,
+    "name": "Cybersecurity Club",
+    "image": "/clubs/cybersecurity/logo.jpg",
+    "link": "/clubs/cybersecurity",
+    "category": "club",
+    "sort_order": 5
+  },
+  {
+    "id": 20,
+    "name": "E-Cell",
+    "image": "/societies/Ecell/logo.webp",
+    "link": "/clubs/ecell",
+    "category": "club",
+    "sort_order": 5
+  },
+  {
+    "id": 21,
+    "name": "Smart Sense",
+    "image": "/clubs/smartsense/logo.svg",
+    "link": "/clubs/smart-sense",
+    "category": "club",
+    "sort_order": 7
+  },
+  {
+    "id": 15,
+    "name": "Game Developers",
+    "image": "/communities/gamedevelopers/logo.png",
+    "link": "/communities/gamedevelopers",
+    "category": "community",
+    "sort_order": 1
+  },
+  {
+    "id": 12,
+    "name": "IEEE",
+    "image": "/societies/IEEE/logo.png",
+    "link": "/societies/ieee",
+    "category": "society",
+    "sort_order": 2
+  },
+  {
+    "id": 13,
+    "name": "Optica Student Chapter",
+    "image": "/societies/OpticaStudentChapter/logo.webp",
+    "link": "/societies/optica",
+    "category": "society",
+    "sort_order": 3
+  },
+  {
+    "id": 14,
+    "name": "ASME Student Section",
+    "image": "/societies/ASMEStudentSection/logo.webp",
+    "link": "/societies/asme",
+    "category": "society",
+    "sort_order": 4
+  },
+  {
+    "id": 6,
+    "name": "Team Nira (AUV)",
+    "image": "/teams/nira/logo.webp",
+    "link": "/teams/nira",
+    "category": "team",
+    "sort_order": 1
+  },
+  {
+    "id": 7,
+    "name": "Team Astra",
+    "image": "/teams/astra/logo.webp",
+    "link": "/teams/astra",
+    "category": "team",
+    "sort_order": 2
+  },
+  {
+    "id": 8,
+    "name": "Revolt Racers",
+    "image": "/teams/revolt/logo.webp",
+    "link": "/teams/revolt",
+    "category": "team",
+    "sort_order": 3
+  },
+  {
+    "id": 9,
+    "name": "Team TAD",
+    "image": "/teams/tad/logo.webp",
+    "link": "/teams/tad",
+    "category": "team",
+    "sort_order": 4
+  },
+  {
+    "id": 10,
+    "name": "Team Shunya (MaRS)",
+    "image": "/teams/mars/logo.webp",
+    "link": "/teams/shunya",
+    "category": "team",
+    "sort_order": 5
+  }
+]

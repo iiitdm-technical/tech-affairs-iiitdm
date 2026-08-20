@@ -1,26 +1,16 @@
 "use client";
 
-import { useState, useEffect } from 'react';
 import { Box, IconButton, Badge, Tooltip, useTheme } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { usePathname } from 'next/navigation';
+import { announcements } from '@/lib/data/content';
 
 export default function NotificationBell() {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
   const pathname = usePathname();
-  const [count, setCount] = useState(0);
-  const [pulse, setPulse] = useState(false);
-
-  useEffect(() => {
-    fetch('/api/announcements')
-      .then((r) => r.ok ? r.json() : [])
-      .then((rows: unknown[]) => {
-        setCount(rows.length);
-        if (rows.length > 0) setPulse(true);
-      })
-      .catch(() => {});
-  }, []);
+  const count = announcements.length;
+  const pulse = count > 0;
 
   // Hide on announcements page itself
   if (pathname === '/announcements') return null;

@@ -7,109 +7,36 @@ import {
   Typography,
   Button,
   IconButton,
-  Skeleton,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { achievements as fallbackRawAchievements } from '@/data/achievements';
-
-interface AchievementRow {
-  id: number;
-  org_slug: string;
-  title: string;
-  description: string;
-  year: string;
-  logo: string;
-  image?: string;
-  org_name?: string;
-}
-
-interface OrgRow {
-  id: number;
-  name: string;
-  image: string;
-  link: string;
-  category: string;
-}
+import { achievements, organizations } from '@/lib/data/content';
 
 const ACCENT_COLORS = ['#7dd3fc', '#93c5fd', '#f59e0b', '#bfdbfe', '#fcd34d', '#dbeafe'];
 
-const CLUB_TO_ORG_SLUG: Record<string, string> = {
-  'AUV Society': 'teams/nira',
-  'Mars Club': 'teams/shunya',
-  'TAD': 'teams/tad',
-  'SAE Collegiate Club': 'teams/revolt',
-  'IEEE Student Branch': 'societies/ieee',
-  'Team Astra': 'teams/astra',
-  'E-Cell': 'clubs/ecell',
-};
-
-const defaultFallbackAchievements: AchievementRow[] = fallbackRawAchievements.map((a, index) => ({
-  id: a.id || index + 1,
-  org_slug: CLUB_TO_ORG_SLUG[a.club] ?? a.club.toLowerCase().replace(/\s+/g, '-'),
-  title: a.title,
-  description: a.description,
-  year: a.year,
-  logo: a.logo,
-  image: '',
-  org_name: a.club,
-}));
-
-function slugToOrg(slug: string, orgs: OrgRow[]): OrgRow | undefined {
-  return orgs.find((o) => o.link.endsWith('/' + slug.split('/').pop()));
-}
+const items = [...achievements]
+  .sort((a, b) => parseInt(b.year) - parseInt(a.year) || b.id - a.id)
+  .slice(0, 6)
+  .map((achievement, index) => {
+    const org = organizations.find((item) => item.link.endsWith(`/${achievement.org_slug.split('/').pop()}`));
+    return {
+      title: achievement.title,
+      description: achievement.description,
+      image: achievement.image,
+      logo: achievement.logo || org?.image || '',
+      date: achievement.year,
+      category: org?.name || achievement.org_slug,
+      color: ACCENT_COLORS[index % ACCENT_COLORS.length],
+    };
+  });
 
 const Achievements = () => {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [items, setItems] = useState<{ title: string; description: string; image: string; logo: string; date: string; category: string; color: string }[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    Promise.all([
-      fetch('/api/achievements').then((r) => (r.ok ? r.json() : [])),
-      fetch('/api/orgs').then((r) => (r.ok ? r.json() : [])),
-    ]).then(([achRows, orgRows]: [AchievementRow[], OrgRow[]]) => {
-      const sourceRows = Array.isArray(achRows) ? achRows : defaultFallbackAchievements;
-      const enriched = sourceRows
-        .map((a) => {
-          const org = slugToOrg(a.org_slug, orgRows);
-          return { ...a, org_name: a.org_name || org?.name || a.org_slug, logo: a.logo || org?.image || '' };
-        })
-        .sort((a, b) => {
-          if (b.year !== a.year) return parseInt(b.year) - parseInt(a.year);
-          return b.id - a.id;
-        })
-        .slice(0, 6)
-        .map((a, i) => ({
-          title: a.title,
-          description: a.description,
-          image: a.image || '',
-          logo: a.logo,
-          date: a.year,
-          category: a.org_name || a.org_slug,
-          color: ACCENT_COLORS[i % ACCENT_COLORS.length],
-        }));
-      setItems(enriched);
-    }).catch(() => {
-      const fallbackEnriched = defaultFallbackAchievements
-        .slice(0, 6)
-        .map((a, i) => ({
-          title: a.title,
-          description: a.description,
-          image: a.image || '',
-          logo: a.logo,
-          date: a.year,
-          category: a.org_name || a.org_slug,
-          color: ACCENT_COLORS[i % ACCENT_COLORS.length],
-        }));
-      setItems(fallbackEnriched);
-    }).finally(() => setLoading(false));
-  }, []);
 
   const maxIndex = items.length - 1;
 
@@ -119,7 +46,7 @@ const Achievements = () => {
       setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
     }, 5000);
     return () => clearInterval(interval);
-  }, [isAutoPlaying, maxIndex, items.length]);
+  }, [isAutoPlaying, maxIndex]);
 
   const handlePrevious = () => { setIsAutoPlaying(false); setCurrentIndex((prev) => (prev === 0 ? maxIndex : prev - 1)); };
   const handleNext    = () => { setIsAutoPlaying(false); setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1)); };
@@ -144,14 +71,7 @@ const Achievements = () => {
           </Typography>
         </motion.div>
 
-        {loading ? (
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, py: 4 }}>
-            <Skeleton variant="rounded" width={100} height={100} sx={{ borderRadius: 3.5 }} />
-            <Skeleton variant="text" width={200} height={28} />
-            <Skeleton variant="text" width={360} height={20} />
-            <Skeleton variant="text" width={300} height={20} />
-          </Box>
-        ) : items.length === 0 ? null : (
+        {items.length === 0 ? null : (
           <Box sx={{ position: 'relative', width: '100%', overflow: 'hidden' }}>
             <Box sx={{ display: 'flex', transition: 'transform 0.5s ease-in-out', transform: `translateX(-${currentIndex * 100}%)`, pb: 4 }}>
               {items.map((achievement, idx) => (

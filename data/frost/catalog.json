@@ -1,0 +1,58 @@
+{
+  "title": "FROST",
+  "eyebrow": "Software Distribution",
+  "description": "Free and licensed software distributions for the IIITDM community — Linux, Windows, and Scientific tools.",
+  "categories": [
+    {
+      "title": "Linux",
+      "slug": "linux",
+      "icon": "linux",
+      "color": "#7dd3fc",
+      "description": "Ubuntu, Debian, Linux Mint, Gentoo and more open-source distributions.",
+      "summaryItems": ["Ubuntu", "Debian", "Linux Mint", "Gentoo"],
+      "pageTitle": "Linux Distributions",
+      "pageDescription": "Open-source distributions mirrored and supported for the IIITDM community — from beginner-friendly to power-user.",
+      "items": [
+        { "title": "Ubuntu", "slug": "ubuntu", "icon": "ubuntu", "color": "#f97316", "description": "The most popular Linux distro — beginner-friendly with LTS support and a huge community." },
+        { "title": "Debian", "slug": "debian", "icon": "debian", "color": "#7dd3fc", "description": "Rock-solid stability. The base of Ubuntu and many other distributions." },
+        { "title": "Linux Mint", "slug": "linux-mint", "icon": "linux-mint", "color": "#93c5fd", "description": "Elegant and easy to use — great for newcomers switching from Windows." },
+        { "title": "Gentoo", "slug": "gentoo", "icon": "gentoo", "color": "#bfdbfe", "description": "Source-based distro for maximum control and performance tuning." }
+      ]
+    },
+    {
+      "title": "Windows",
+      "slug": "windows",
+      "icon": "windows",
+      "color": "#93c5fd",
+      "description": "Microsoft Office 365, Windows OS, Teams, Adobe and other licensed software.",
+      "summaryItems": ["Office 365", "Windows OS", "MS Teams", "Adobe"],
+      "pageTitle": "Windows Software",
+      "pageDescription": "Licensed Microsoft and Adobe software available free to all IIITDM students and faculty.",
+      "items": [
+        { "title": "Office 365", "slug": "office365", "icon": "apps", "color": "#7dd3fc", "description": "Word, Excel, PowerPoint and more — free with your IIITDM account." },
+        { "title": "Windows OS", "slug": "os", "icon": "windows", "color": "#93c5fd", "description": "Licensed Windows OS available for students and faculty." },
+        { "title": "MS Teams", "slug": "teams", "icon": "teams", "color": "#f59e0b", "description": "Online meetings, classes and collaboration through Teams." },
+        { "title": "Adobe Suite", "slug": "adobe", "icon": "adobe", "color": "#bfdbfe", "description": "Adobe Creative Cloud — Photoshop, Illustrator, Premiere Pro and more." }
+      ]
+    },
+    {
+      "title": "Scientific",
+      "slug": "scientific",
+      "icon": "scientific",
+      "color": "#f59e0b",
+      "description": "ANSYS, MATLAB, COMSOL, Abaqus and other research-grade tools.",
+      "summaryItems": ["ANSYS", "MATLAB", "COMSOL", "Abaqus"],
+      "pageTitle": "Scientific Software",
+      "pageDescription": "Research-grade simulation, numerical computing, and data analysis tools — download guides and usage tips for each.",
+      "items": [
+        { "title": "MATLAB", "slug": "matlab", "icon": "matlab", "color": "#f59e0b", "tag": "Numerical Computing", "description": "Matrix-based language for numerical computation, data analysis, and algorithm development." },
+        { "title": "ANSYS", "slug": "ansys", "icon": "ansys", "color": "#7dd3fc", "tag": "Simulation", "description": "Industry-leading FEA, CFD, and multiphysics simulation suite for engineering analysis." },
+        { "title": "COMSOL", "slug": "comsol", "icon": "comsol", "color": "#93c5fd", "tag": "Multiphysics", "description": "Coupled physics simulation — thermal, structural, electrical, fluid in one model." },
+        { "title": "Abaqus", "slug": "abaqus", "icon": "abaqus", "color": "#bfdbfe", "tag": "FEA", "description": "Advanced nonlinear finite element analysis for materials, structures, and crash simulations." },
+        { "title": "Python", "slug": "python", "icon": "python", "color": "#60a5fa", "tag": "Scientific Computing", "description": "NumPy, SciPy, pandas, matplotlib — the complete open-source scientific computing stack." },
+        { "title": "R", "slug": "r", "icon": "r", "color": "#818cf8", "tag": "Statistics", "description": "Statistical computing and publication-quality graphics for data analysis and research." },
+        { "title": "Materials Studio", "slug": "materials-studio", "icon": "materials", "color": "#f472b6", "tag": "Materials Science", "description": "Molecular modeling, crystal structure prediction, and quantum chemistry simulations." }
+      ]
+    }
+  ]
+}

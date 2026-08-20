@@ -1,0 +1,108 @@
+{
+  "name": "Team TAD",
+  "logo": "/teams/tad/logo.webp",
+  "introduction": "The Talpade Aero Design Club at IIITDM Kancheepuram is a student-driven initiative dedicated to exploration, design, and innovation in the field of aviation and aerospace systems. Established in 2023, Inspired by Shivkar Bapuji Talpade, we aim to push aerodynamic boundaries and foster technical excellence. TAD provides a dynamic platform for students to engage in real-world aeronautical challenges, encouraging them to apply theoretical knowledge through hands-on projects.",
+  "timeline": [
+    {
+      "year": 2025,
+      "event": "IIT Bombay – Techfest Aeromodelling Competition",
+      "description": "Finished top 50's at Techfest Aeromodelling Competition 2025 by flying payload-carrying RC planes."
+    },
+    {
+      "year": 2025,
+      "event": "IIT Madras – Boeing National Aeromodelling Competition",
+      "description": "Finished top 30's at South Zone of National Aeromodelling Competition 2025."
+    },
+    {
+      "year": 2024,
+      "event": "Industrial Academia Conclave (IAC) - ASoI",
+      "description": "Won 1st Runner-Up at the Industrial Academia Conclave 2024."
+    }
+  ],
+  "projects": [
+    {
+      "name": "RC Planes with Structural Variants (2025 – Ongoing)",
+      "description": "Designed fixed-wing aircraft with varied fuselage shapes and internal structures to analyse aerodynamic and structural performance.",
+      "image": "/teams/tad/logo.webp",
+      "technologies": [
+        "Aerodynamics",
+        "Aircraft Design",
+        "Structural Analysis"
+      ],
+      "themeColor": "#1E88E5"
+    },
+    {
+      "name": "Small Payload-Capable RC Aircraft (2025)",
+      "description": "Designing a modular VTOL UAV with hybrid thrust configuration, validated through MATLAB/Simulink-based control simulations.",
+      "image": "/teams/tad/logo.webp",
+      "technologies": [
+        "UAV Systems",
+        "Mechanical Design",
+        "Energy Systems"
+      ],
+      "themeColor": "#43A047"
+    },
+    {
+      "name": "VTOL UAV Development (2025 – Ongoing)",
+      "description": "Designing a modular VTOL UAV with hybrid thrust configuration, validated through MATLAB/Simulink-based control simulations.",
+      "technologies": [
+        "Control Systems",
+        "Embedded Systems",
+        "Flight Dynamics"
+      ],
+      "themeColor": "#FB8C00"
+    },
+    {
+      "name": "High-Lift RC Payload Plane (2025)",
+      "description": "Engineered a high-lift wing aircraft with flap mechanisms for enhanced payload capacity.",
+      "technologies": [
+        "Control Systems",
+        "Embedded Systems",
+        "Flight Dynamics"
+      ],
+      "themeColor": "#FB8C00"
+    },
+    {
+      "name": "Modular-Wing Glider (2025)",
+      "description": "Built a glider with interchangeable wings and tail modules for aerodynamic experimentation.",
+      "technologies": [
+        "Control Systems",
+        "Embedded Systems",
+        "Flight Dynamics"
+      ],
+      "themeColor": "#FB8C00"
+    }
+  ],
+  "gallery": [
+    {
+      "src": "/teams/tad/gallery/plane1.jpeg",
+      "caption": ""
+    },
+    {
+      "src": "/teams/tad/gallery/plane2.jpeg",
+      "caption": ""
+    },
+    {
+      "src": "/teams/tad/gallery/team.jpeg",
+      "caption": ""
+    },
+    {
+      "src": "/teams/tad/gallery/team2.jpeg",
+      "caption": ""
+    }
+  ],
+  "core": [
+    {
+      "name": "Hanush P V",
+      "role": "Club Lead",
+      "image": "/teams/tad/hanush.webp",
+      "email": "ME23B1017@iiitdm.ac.in",
+      "linkedin": "https://www.linkedin.com/in/hanush-p-v/",
+      "roll": "ME23B1017"
+    }
+  ],
+  "links": {
+    "website": "https://tad.iiitdm.ac.in",
+    "instagram": "#"
+  }
+}

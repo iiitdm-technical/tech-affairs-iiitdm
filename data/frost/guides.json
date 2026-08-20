@@ -1,0 +1,285 @@
+{
+  "linux/ubuntu": {
+    "title": "Ubuntu",
+    "subtitle": "The most widely used Linux distribution on campus — beginner-friendly with long-term support releases and a massive community.",
+    "backHref": "/frost/linux",
+    "backLabel": "Back to Linux",
+    "breadcrumbs": [{ "label": "FROST", "href": "/frost" }, { "label": "Linux", "href": "/frost/linux" }],
+    "accentColor": "#f97316",
+    "blocks": [
+      { "type": "heading", "text": "Campus Mirror" },
+      { "type": "paragraph", "content": [{ "text": "IIITDM maintains a full Ubuntu mirror in compliance with official guidelines. Updates reach the campus server with a maximum delay of " }, { "text": "6 hours", "bold": true }, { "text": ". This means you get fast, on-campus download speeds while still receiving timely security patches." }] },
+      { "type": "paragraph", "content": [{ "text": "Check the " }, { "text": "Ubuntu release cycle", "href": "https://ubuntu.com/about/release-cycle" }, { "text": " to see which versions are currently supported." }] },
+      { "type": "heading", "text": "APT Repository Configuration" },
+      { "type": "paragraph", "content": [{ "text": "Replace " }, { "text": "<release>", "code": true }, { "text": " with your Ubuntu codename (e.g. " }, { "text": "noble", "code": true }, { "text": ", " }, { "text": "jammy", "code": true }, { "text": ", " }, { "text": "focal", "code": true }, { "text": ") in " }, { "text": "/etc/apt/sources.list", "code": true }, { "text": ":" }] },
+      { "type": "code", "text": "deb http://repo.iiitdm.ac.in/ubuntu <release> main restricted universe multiverse\ndeb http://repo.iiitdm.ac.in/ubuntu <release>-updates main restricted universe multiverse\ndeb http://repo.iiitdm.ac.in/ubuntu <release>-security main restricted universe multiverse\n# deb http://repo.iiitdm.ac.in/ubuntu <release>-backports main restricted universe multiverse\n# deb http://repo.iiitdm.ac.in/ubuntu <release>-proposed main restricted universe multiverse" },
+      { "type": "paragraph", "content": [{ "text": "After editing, run " }, { "text": "sudo apt update", "code": true }, { "text": " to refresh the package lists." }] },
+      { "type": "heading", "text": "Supported Release ISOs" },
+      { "type": "paragraph", "content": [{ "text": "CD/DVD images for all currently supported releases are available from the official Ubuntu image server: " }, { "text": "cdimage.ubuntu.com", "href": "http://cdimage.ubuntu.com" }] },
+      { "type": "heading", "text": "End-of-Life (EOL) Releases" },
+      { "type": "paragraph", "content": [{ "text": "Legacy software sometimes requires an EOL Ubuntu release. CD images for EOL versions: " }, { "text": "old-releases.ubuntu.com/releases", "href": "http://old-releases.ubuntu.com/releases/" }] },
+      { "type": "paragraph", "content": [{ "text": "Package repositories for all EOL releases are available at " }, { "text": "old-releases.ubuntu.com/ubuntu", "href": "http://old-releases.ubuntu.com/ubuntu/" }, { "text": ". Requests to EOL repos are transparently proxied — intermediate directories are not browsable." }] },
+      { "type": "warning", "content": [{ "text": "EOL releases no longer receive security updates. Understand the security implications before running EOL software in any production or network-connected environment." }] }
+    ]
+  },
+  "linux/debian": {
+    "title": "Debian", "subtitle": "Rock-solid stability — the universal operating system and base of Ubuntu, Linux Mint, and hundreds of others.", "backHref": "/frost/linux", "backLabel": "Back to Linux", "breadcrumbs": [{ "label": "FROST", "href": "/frost" }, { "label": "Linux", "href": "/frost/linux" }], "accentColor": "#7dd3fc",
+    "blocks": [
+      { "type": "paragraph", "content": [{ "text": "For Debian users, IIITDM runs an " }, { "text": "apt-cacher-ng", "code": true }, { "text": " proxy at port " }, { "text": ":9999", "code": true }, { "text": ". The paths " }, { "text": "/debian", "code": true }, { "text": " and " }, { "text": "/debian-backports", "code": true }, { "text": " are transparently proxied to the official Debian archives — giving you fast, on-campus download speeds." }] },
+      { "type": "paragraph", "content": [{ "text": "Note: Debian discontinued " }, { "text": "debian-volatile", "code": true }, { "text": ", but an archived copy is available at " }, { "text": "archive.debian.org", "href": "http://archive.debian.org" }, { "text": "." }] },
+      { "type": "heading", "text": "Repository Setup" },
+      { "type": "paragraph", "content": [{ "text": "Add the IIITDM mirror to your " }, { "text": "/etc/apt/sources.list", "code": true }, { "text": ":" }] },
+      { "type": "code", "text": "deb http://repo.iiitdm.ac.in/debian <release> main contrib non-free" },
+      { "type": "paragraph", "content": [{ "text": "Replace " }, { "text": "<release>", "code": true }, { "text": " with your Debian version codename, e.g. " }, { "text": "bookworm", "code": true }, { "text": ", " }, { "text": "bullseye", "code": true }, { "text": ", or " }, { "text": "buster", "code": true }, { "text": "." }] },
+      { "type": "heading", "text": "APT Proxy Configuration" },
+      { "type": "paragraph", "content": [{ "text": "To route all APT downloads through the campus proxy, create " }, { "text": "/etc/apt/apt.conf.d/01proxy", "code": true }, { "text": ":" }] },
+      { "type": "code", "text": "Acquire::http { Proxy \"http://repo.iiitdm.ac.in:9999\"; };" },
+      { "type": "heading", "text": "Per-Command Proxy" },
+      { "type": "paragraph", "content": [{ "text": "Use the proxy for a single " }, { "text": "apt-get", "code": true }, { "text": " command without permanently configuring it:" }] },
+      { "type": "code", "text": "apt-get -o 'Acquire::http::Proxy=\"http://repo.iiitdm.ac.in:9999\"' install <package>" },
+      { "type": "paragraph", "content": [{ "text": "Or point directly at the proxied Debian archive:" }] },
+      { "type": "code", "text": "deb http://repo.iiitdm.ac.in:9999/ftp.debian.org/debian <release> main" }
+    ]
+  },
+  "linux/linux-mint": {
+    "title": "Linux Mint", "subtitle": "Elegant, familiar, and easy — the ideal Linux distribution for users switching from Windows.", "backHref": "/frost/linux", "backLabel": "Back to Linux", "breadcrumbs": [{ "label": "FROST", "href": "/frost" }, { "label": "Linux", "href": "/frost/linux" }], "accentColor": "#93c5fd",
+    "blocks": [
+      { "type": "heading", "text": "Overview" },
+      { "type": "paragraph", "content": [{ "text": "Linux Mint Debian Edition (LMDE) is a semi-rolling release distribution based directly on Debian — not Ubuntu. LMDE provides the same polished Mint experience (Cinnamon desktop, software center, familiar layout) while building on Debian's rock-solid foundation." }] },
+      { "type": "paragraph", "content": [{ "text": "Since LMDE uses the Debian package format and APT, " }, { "text": "apt-cacher-ng", "code": true }, { "text": " works out of the box. Refer to the " }, { "text": "Debian section", "href": "/frost/linux/debian" }, { "text": " for proxy and repository configuration." }] },
+      { "type": "heading", "text": "Key Features" },
+      { "type": "list", "items": [[{ "text": "Based on Debian — not Ubuntu — for a cleaner, leaner base" }], [{ "text": "Semi-rolling release: Debian testing packages with periodic stable snapshots" }], [{ "text": "Cinnamon desktop — Windows-like taskbar layout, easy to navigate" }], [{ "text": "Nemo file manager — polished, feature-rich file browser" }], [{ "text": "APT package management — same tooling as Debian and Ubuntu" }], [{ "text": "Timeshift snapshots — built-in system restore points" }]] },
+      { "type": "heading", "text": "Download" },
+      { "type": "paragraph", "content": [{ "text": "Official LMDE ISO images and torrents are available from the Linux Mint website: " }, { "text": "linuxmint.com/download_lmde.php", "href": "https://www.linuxmint.com/download_lmde.php" }] },
+      { "type": "note", "content": [{ "text": "After installation, configure the APT proxy (see the Debian page) to route package downloads through the IIITDM campus mirror for faster speeds." }] }
+    ]
+  },
+  "linux/gentoo": {
+    "title": "Gentoo", "subtitle": "Source-based Linux — compile everything from scratch for maximum control, optimization, and performance.", "backHref": "/frost/linux", "backLabel": "Back to Linux", "breadcrumbs": [{ "label": "FROST", "href": "/frost" }, { "label": "Linux", "href": "/frost/linux" }], "accentColor": "#bfdbfe",
+    "blocks": [
+      { "type": "paragraph", "content": [{ "text": "IIITDM mirrors the Gentoo portage tree and distfiles via rsync and HTTP. Using the campus mirror dramatically speeds up " }, { "text": "emerge sync", "code": true }, { "text": " and package downloads compared to pulling from external servers." }] },
+      { "type": "heading", "text": "Configure the Mirror" },
+      { "type": "paragraph", "content": [{ "text": "Add the following to " }, { "text": "/etc/make.conf", "code": true }, { "text": " (or " }, { "text": "/etc/portage/make.conf", "code": true }, { "text": " on modern Gentoo):" }] },
+      { "type": "code", "text": "SYNC=\"rsync://repo.iiitdm.ac.in/gentoo-portage\"\nGENTOO_MIRRORS=\"http://repo.iiitdm.ac.in/gentoo\"" },
+      { "type": "paragraph", "content": [{ "text": "Then run " }, { "text": "emerge --sync", "code": true }, { "text": " to pull the latest portage tree from the campus mirror." }] },
+      { "type": "heading", "text": "About Gentoo" },
+      { "type": "list", "items": [[{ "text": "Every package is compiled from source — optimized for your exact hardware" }], [{ "text": "USE flags give fine-grained control over features included in each package" }], [{ "text": "Rolling release — always have the latest software without reinstalling" }], [{ "text": "Excellent for learning how Linux systems work from the ground up" }]] },
+      { "type": "note", "content": [{ "text": "Gentoo is not recommended for first-time Linux users. It requires comfort with compiling software, editing config files, and troubleshooting build failures. Start with Debian or Ubuntu if you're new to Linux." }] }
+    ]
+  },
+  "windows/office365": {
+    "title": "Microsoft Office 365", "subtitle": "Free for all IIITDM students, staff, and faculty with your institutional account.", "backHref": "/frost/windows", "backLabel": "Back to Windows Software", "breadcrumbs": [{ "label": "FROST", "href": "/frost" }, { "label": "Windows", "href": "/frost/windows" }], "accentColor": "#7dd3fc",
+    "blocks": [
+      { "type": "paragraph", "content": [{ "text": "IIITDMK has subscribed to " }, { "text": "Microsoft 365", "bold": true }, { "text": " along with the Microsoft Campus Agreement for all faculty, staff and students. Office 365 includes access to Office applications plus cloud services (OneDrive storage) as well as the full desktop versions of Word, Excel, PowerPoint, OneNote, Outlook, Publisher, and Access — installable across multiple devices including PCs, Macs, Android, and iOS." }] },
+      { "type": "paragraph", "content": [{ "text": "With an active subscription you always have the most up-to-date version of all applications." }] },
+      { "type": "heading", "text": "How to Sign In" },
+      { "type": "paragraph", "content": [{ "text": "Visit " }, { "text": "office.com", "href": "https://office.com" }, { "text": " and sign in using your IIITDM credentials. Your username format is:" }] },
+      { "type": "code", "text": "<userid>@iiitdm.ac.in" },
+      { "type": "paragraph", "content": [{ "text": "For example, if your User ID is " }, { "text": "xyz", "code": true }, { "text": ", sign in as " }, { "text": "xyz@iiitdm.ac.in", "code": true }, { "text": " with your IIITDM Kerberos password." }] },
+      { "type": "heading", "text": "Important Notes" },
+      { "type": "note", "content": [{ "text": "Password sync: ", "bold": true }, { "text": "The user database is synced with IIITDM's main directory. If you recently changed your IIITDM password, use the updated password here as well. Allow up to a few hours for the sync to propagate." }] },
+      { "type": "paragraph", "content": [{ "text": "Office 365 applications can be installed on up to 5 PCs or Macs, 5 tablets, and 5 smartphones simultaneously under a single account." }] }
+    ]
+  },
+  "windows/teams": {
+    "title": "Microsoft Teams", "subtitle": "Online teaching, meetings, and collaboration — powered by your IIITDM account.", "backHref": "/frost/windows", "backLabel": "Back to Windows Software", "breadcrumbs": [{ "label": "FROST", "href": "/frost" }, { "label": "Windows", "href": "/frost/windows" }], "accentColor": "#f59e0b",
+    "blocks": [
+      { "type": "paragraph", "content": [{ "text": "Microsoft Teams is the primary platform for online teaching, meetings, and collaboration at IIITDM. Teams is included with the Microsoft Office subscription. Sign in using your IIITDM Kerberos credentials:" }] },
+      { "type": "code", "text": "<userid>@iiitdm.ac.in" },
+      { "type": "heading", "text": "Download Teams" },
+      { "type": "paragraph", "content": [{ "text": "Teams is available on all platforms. Download the desktop and mobile apps from Microsoft: " }, { "text": "microsoft.com/teams/download-app", "href": "https://www.microsoft.com/en-in/microsoft-365/microsoft-teams/download-app" }] },
+      { "type": "paragraph", "content": [{ "text": "Alternatively, Teams is accessible directly in your browser at " }, { "text": "teams.microsoft.com", "href": "https://teams.microsoft.com" }, { "text": " without any installation." }] },
+      { "type": "heading", "text": "Full Software Catalog" },
+      { "type": "paragraph", "content": [{ "text": "IIITDM's CSC page has detailed instructions for all Microsoft software available under the campus agreement: " }, { "text": "csc.iiitdm.ac.in/services-software-windows-os", "href": "https://csc.iiitdm.ac.in/services-software-windows-os" }] },
+      { "type": "heading", "text": "Learning Resources" },
+      { "type": "paragraph", "content": [{ "text": "Official Microsoft video training for Teams: " }, { "text": "Microsoft Teams Video Training", "href": "https://support.office.com/en-us/article/microsoft-teams-video-training-4f108e54-240b-4351-8084-b1089f0d21d7" }] },
+      { "type": "heading", "text": "OneNote Integration" },
+      { "type": "paragraph", "content": [{ "text": "OneNote is bundled with Teams and Office 365. You can dictate notes, write equations, sketch ideas, and sync across all your devices. " }, { "text": "Learn more about OneNote", "href": "https://www.microsoft.com/en-in/microsoft-365/onenote/digital-note-taking-app" }] }
+    ]
+  },
+  "windows/adobe": {
+    "title": "Adobe Creative Cloud", "subtitle": "Full Creative Cloud suite — free for all active IIITDM faculty, staff and students.", "backHref": "/frost/windows", "backLabel": "Back to Windows Software", "breadcrumbs": [{ "label": "FROST", "href": "/frost" }, { "label": "Windows", "href": "/frost/windows" }], "accentColor": "#bfdbfe",
+    "blocks": [
+      { "type": "paragraph", "content": [{ "text": "IIITDM has subscribed to " }, { "text": "Adobe Creative Cloud", "bold": true }, { "text": " for all active faculty, staff and students. The subscription includes access to all major Adobe products — Acrobat Reader, Photoshop, Illustrator, Premiere Pro, Lightroom, and more — with 100 GB of cloud storage per user." }] },
+      { "type": "paragraph", "content": [{ "text": "Applications can be installed on multiple devices: PCs, Macs, Android, and iOS. You always get the latest version automatically." }] },
+      { "type": "heading", "text": "Included Apps" },
+      { "type": "list", "items": [[{ "text": "Acrobat Pro DC", "bold": true }, { "text": " — PDF creation, editing, and signing" }], [{ "text": "Photoshop", "bold": true }, { "text": " — professional photo and image editing" }], [{ "text": "Illustrator", "bold": true }, { "text": " — vector graphics and illustration" }], [{ "text": "Premiere Pro", "bold": true }, { "text": " — video editing and production" }], [{ "text": "Lightroom", "bold": true }, { "text": " — photo management and editing" }], [{ "text": "InDesign", "bold": true }, { "text": " — print and digital layout design" }], [{ "text": "After Effects", "bold": true }, { "text": " — motion graphics and visual effects" }], [{ "text": "100 GB Creative Cloud storage per user" }]] },
+      { "type": "heading", "text": "How to Access" },
+      { "type": "paragraph", "content": [{ "text": "Sign in at " }, { "text": "account.adobe.com", "href": "https://account.adobe.com/" }, { "text": " using your institutional email address in the format:" }] },
+      { "type": "code", "text": "<userid>@<department>.iiitdm.ac.in" },
+      { "type": "paragraph", "content": [{ "text": "Adobe will send an OTP to your email. Enter the OTP, set a password, and you're ready. It's recommended to then download the " }, { "text": "Creative Cloud desktop app", "bold": true }, { "text": " to manage and install individual Adobe products." }] }
+    ]
+  },
+  "windows/os": {
+    "title": "Windows OS — Install & Activate", "subtitle": "Step-by-step guide to obtaining, installing, and activating a licensed Windows OS via IIITDM's volume agreement.", "backHref": "/frost/windows", "backLabel": "Back to Windows Software", "breadcrumbs": [{ "label": "FROST", "href": "/frost" }, { "label": "Windows", "href": "/frost/windows" }], "accentColor": "#93c5fd",
+    "blocks": [
+      { "type": "heading", "text": "Prerequisites" },
+      { "type": "paragraph", "content": [{ "text": "Windows Volume License covers " }, { "text": "upgrades only", "bold": true }, { "text": ". You must first have a qualifying, genuine Windows license (typically purchased with your hardware from an OEM). When procuring hardware, ensure the OEM provides an underlying Windows starter license that can be upgraded under IIITDM's volume agreement." }] },
+      { "type": "warning", "content": [{ "text": "Important: ", "bold": true }, { "text": "Without a qualifying base license from your OEM, the volume license upgrade cannot be applied. Contact your hardware OEM if unsure." }] },
+      { "type": "heading", "text": "1 — Obtain the ISO Image" },
+      { "type": "paragraph", "content": [{ "text": "Map the network folder as a drive in Windows (My Computer → Tools → Map Network Drive, without \"reconnect at login\", using different credentials):" }] },
+      { "type": "code", "text": "\\\\filer02.iiitdm.ac.in\\winisos" },
+      { "type": "paragraph", "content": [{ "text": "On Mac or Linux, mount the CIFS share:" }] },
+      { "type": "code", "text": "cifs://filer02.iiitdm.ac.in/winisos" },
+      { "type": "paragraph", "content": [{ "text": "Sign in using your IIITDM Kerberos credentials. Copy the required ISO image, burn it to a USB or DVD, then disconnect the network drive." }] },
+      { "type": "heading", "text": "2 — Install Windows" },
+      { "type": "paragraph", "content": [{ "text": "Boot from the USB/DVD and follow the on-screen installer. After installation:" }] },
+      { "type": "list", "items": [[{ "text": "Configure networking with DHCP (or contact your department sysadmin for static IP parameters)" }], [{ "text": "Set DNS search suffix to " }, { "text": "ACAD.WINDOWS.IIITDM.AC.IN", "code": true }], [{ "text": "Set internet time server to " }, { "text": "ntp.iiitdm.ac.in", "code": true }]] },
+      { "type": "heading", "text": "3 — Activate Windows" },
+      { "type": "paragraph", "content": [{ "text": "Windows must be activated within the 30-day grace period. Your machine must be on the IIITDM LAN (or connected via VPN for off-campus staff)." }] },
+      { "type": "paragraph", "content": [{ "text": "Run as " }, { "text": "Administrator", "bold": true }, { "text": " in Command Prompt:" }] },
+      { "type": "code", "text": "slmgr /skms ccwds.acad.windows.iiitdm.ac.in" },
+      { "type": "paragraph", "content": [{ "text": "Then open " }, { "text": "kmsproxy.iiitdm.ac.in/kms.html", "href": "https://kmsproxy.iiitdm.ac.in/kms.html" }, { "text": " and log in with your IIITDM credentials. Within the next 30 minutes, run:" }] },
+      { "type": "code", "text": "slmgr /ato" },
+      { "type": "paragraph", "content": [{ "text": "Useful diagnostic commands:" }] },
+      { "type": "code", "text": "slmgr /xpr    # check activation expiry date\nslmgr /dli    # license details (summary)\nslmgr /dlv    # license details (verbose)" },
+      { "type": "heading", "text": "Grace Period Extension" },
+      { "type": "paragraph", "content": [{ "text": "The grace period can be extended for an additional 30 days (up to 3 times total) without a LAN connection:" }] },
+      { "type": "code", "text": "slmgr /rearm" },
+      { "type": "warning", "content": [{ "text": "On expiry of the grace or activation period, Windows enters " }, { "text": "Reduced Functionality Mode (RFM)", "bold": true }, { "text": ". Re-activate before this happens. A fresh installation may be required if the OS becomes unusable." }] },
+      { "type": "heading", "text": "Activate Office" },
+      { "type": "paragraph", "content": [{ "text": "Navigate to your Office installation directory (replace " }, { "text": "1X", "code": true }, { "text": " with your Office version number, e.g. " }, { "text": "16", "code": true }, { "text": "):" }] },
+      { "type": "code", "text": "# Office 32-bit on Windows 32-bit:\ncd \"C:\\Program Files\\Microsoft Office\\Office1X\"\n\n# Office 32-bit on Windows 64-bit:\ncd \"C:\\Program Files (x86)\\Microsoft Office\\Office1X\"\n\n# Office 64-bit on Windows 64-bit:\ncd \"C:\\Program Files\\Microsoft Office\\Office1X\"" },
+      { "type": "paragraph", "content": [{ "text": "Set the KMS host then activate:" }] },
+      { "type": "code", "text": "cscript ospp.vbs /sethst:ccwds.acad.windows.iiitdm.ac.in\ncscript ospp.vbs /act" },
+      { "type": "paragraph", "content": [{ "text": "Log in to " }, { "text": "kmsproxy.iiitdm.ac.in/kms.html", "href": "https://kmsproxy.iiitdm.ac.in/kms.html" }, { "text": " before running " }, { "text": "/act", "code": true }, { "text": ". Check activation status:" }] },
+      { "type": "code", "text": "cscript ospp.vbs /dstatus" }
+    ]
+  },
+  "scientific/matlab": {
+    "title": "MATLAB", "subtitle": "Matrix laboratory — the go-to environment for numerical computation, signal processing, control systems, and algorithm development.", "backHref": "/frost/scientific", "backLabel": "Back to Scientific Software", "breadcrumbs": [{ "label": "FROST", "href": "/frost" }, { "label": "Scientific", "href": "/frost/scientific" }], "accentColor": "#f59e0b",
+    "blocks": [
+      { "type": "heading", "text": "What is MATLAB?" },
+      { "type": "paragraph", "content": [{ "text": "MATLAB (Matrix Laboratory) is a proprietary programming language and numeric computing environment by MathWorks. It is widely used in engineering, physics, economics, and applied mathematics for data analysis, algorithm prototyping, simulation, and visualization. MATLAB code is interpreted and matrix-native — no boilerplate needed for array operations." }] },
+      { "type": "heading", "text": "Download & Install" },
+      { "type": "paragraph", "content": [{ "text": "IIITDM has a campus license. The general process for institutional access:" }] },
+      { "type": "list", "ordered": true, "items": [[{ "text": "Contact CSC or your department to get a MathWorks license activation key linked to your institutional email" }], [{ "text": "Create a MathWorks account at " }, { "text": "mathworks.com", "code": true }, { "text": " using your " }, { "text": "@iiitdm.ac.in", "code": true }, { "text": " email" }], [{ "text": "Associate the license key with your account under My Account → License Center" }], [{ "text": "Download the installer for your OS (Windows / macOS / Linux) from the MathWorks portal" }], [{ "text": "Run the installer — sign in to your MathWorks account — select the toolboxes you need" }]] },
+      { "type": "note", "content": [{ "text": "Minimum requirements: 4 GB RAM (8 GB recommended), 3–4 GB disk space per toolbox. A 64-bit OS is required for MATLAB R2020a and later." }] },
+      { "type": "heading", "text": "Essential Toolboxes" },
+      { "type": "list", "items": [[{ "text": "Signal Processing Toolbox", "bold": true }, { "text": " — FFT, filter design, spectral analysis" }], [{ "text": "Control System Toolbox", "bold": true }, { "text": " — PID design, Bode/Nyquist plots, state-space" }], [{ "text": "Image Processing Toolbox", "bold": true }, { "text": " — filtering, morphology, feature detection" }], [{ "text": "Statistics and Machine Learning Toolbox", "bold": true }, { "text": " — regression, classification, clustering" }], [{ "text": "Symbolic Math Toolbox", "bold": true }, { "text": " — symbolic differentiation, integration, equation solving" }], [{ "text": "Optimization Toolbox", "bold": true }, { "text": " — linear/nonlinear programming, genetic algorithms" }], [{ "text": "Deep Learning Toolbox", "bold": true }, { "text": " — CNNs, RNNs, transfer learning" }], [{ "text": "Simulink", "bold": true }, { "text": " — block-diagram simulation for dynamic systems" }]] },
+      { "type": "heading", "text": "Quick Start" },
+      { "type": "paragraph", "content": [{ "text": "Basic MATLAB workflow:" }] },
+      { "type": "code", "text": "% Define a matrix\nA = [1 2 3; 4 5 6; 7 8 9];\n\n% Element-wise operations\nB = A .^ 2;\n\n% Plot\nx = 0:0.01:2*pi;\nplot(x, sin(x));\ntitle('Sine Wave'); xlabel('x'); ylabel('sin(x)');\n\n% Solve linear system Ax = b\nb = [1; 2; 3];\nx = A \\ b;" },
+      { "type": "heading", "text": "Free Alternative — GNU Octave" },
+      { "type": "paragraph", "content": [{ "text": "GNU Octave is mostly syntax-compatible with MATLAB and is completely free. Good for learning and running basic MATLAB scripts without a license. Download from " }, { "text": "octave.org", "code": true }, { "text": ". Most core MATLAB scripts run unchanged; toolbox-specific functions differ." }] },
+      { "type": "heading", "text": "Learning Resources" },
+      { "type": "list", "items": [[{ "text": "MathWorks MATLAB Onramp — free interactive course at " }, { "text": "matlabacademy.mathworks.com", "code": true }], [{ "text": "Official documentation: " }, { "text": "mathworks.com/help/matlab", "code": true }], [{ "text": "MATLAB Central File Exchange — thousands of community-contributed functions and examples" }]] }
+    ]
+  },
+  "scientific/ansys": {
+    "title": "ANSYS", "subtitle": "Industry-leading simulation suite for structural, thermal, fluid, and electromagnetic analysis used by engineers worldwide.", "backHref": "/frost/scientific", "backLabel": "Back to Scientific Software", "breadcrumbs": [{ "label": "FROST", "href": "/frost" }, { "label": "Scientific", "href": "/frost/scientific" }], "accentColor": "#7dd3fc",
+    "blocks": [
+      { "type": "heading", "text": "What is ANSYS?" },
+      { "type": "paragraph", "content": [{ "text": "ANSYS is a suite of engineering simulation software covering finite element analysis (FEA), computational fluid dynamics (CFD), electromagnetics, and systems simulation. It is used across aerospace, automotive, civil, mechanical, and electronics industries to validate designs before physical prototyping — saving cost and time." }] },
+      { "type": "paragraph", "content": [{ "text": "Key products in the suite: " }, { "text": "ANSYS Mechanical", "bold": true }, { "text": " (structural/thermal FEA), " }, { "text": "ANSYS Fluent", "bold": true }, { "text": " (CFD), " }, { "text": "ANSYS HFSS", "bold": true }, { "text": " (electromagnetics), " }, { "text": "ANSYS Workbench", "bold": true }, { "text": " (unified simulation environment)." }] },
+      { "type": "heading", "text": "Download & Install" },
+      { "type": "list", "ordered": true, "items": [[{ "text": "Obtain the license server address and port from CSC (format: " }, { "text": "1055@licserver.iiitdm.ac.in", "code": true }, { "text": ")" }], [{ "text": "Download the ANSYS installer ISO from the ANSYS Customer Portal or the CSC file server" }], [{ "text": "Mount the ISO and run " }, { "text": "setup.exe", "code": true }, { "text": " (Windows) or the Linux installer script" }], [{ "text": "During installation, select Configure license server and enter the campus license server address" }], [{ "text": "Select only the products you need — full install can exceed 50 GB" }]] },
+      { "type": "warning", "content": [{ "text": "ANSYS requires a network connection to the IIITDM LAN (or VPN) to check out a license at launch. It will not run offline without a standalone license file." }] },
+      { "type": "heading", "text": "System Requirements" },
+      { "type": "list", "items": [[{ "text": "OS: ", "bold": true }, { "text": "Windows 10/11 64-bit or RHEL/CentOS/Ubuntu Linux" }], [{ "text": "RAM: ", "bold": true }, { "text": "8 GB minimum — 32 GB+ strongly recommended for large models" }], [{ "text": "Disk: ", "bold": true }, { "text": "30–60 GB for a typical install (varies by products selected)" }], [{ "text": "GPU: ", "bold": true }, { "text": "NVIDIA GPU with CUDA support improves solver performance significantly" }], [{ "text": "CPU: ", "bold": true }, { "text": "Multi-core processor; ANSYS scales well with core count" }]] },
+      { "type": "heading", "text": "ANSYS Workbench Workflow" },
+      { "type": "paragraph", "content": [{ "text": "The standard simulation workflow in Workbench:" }] },
+      { "type": "list", "items": [[{ "text": "Geometry", "bold": true }, { "text": " — create or import CAD geometry (STEP, IGES, Parasolid, SpaceClaim)" }], [{ "text": "Mesh", "bold": true }, { "text": " — discretize the geometry; control element size, inflation layers for CFD" }], [{ "text": "Setup", "bold": true }, { "text": " — apply boundary conditions, material properties, loads" }], [{ "text": "Solution", "bold": true }, { "text": " — run the solver (CPU/GPU parallel); monitor convergence" }], [{ "text": "Results", "bold": true }, { "text": " — post-process: stress contours, velocity fields, temperature maps, animations" }]] },
+      { "type": "heading", "text": "ANSYS Student Edition (Free)" },
+      { "type": "paragraph", "content": [{ "text": "ANSYS offers a free Student Edition with size-limited models (128k nodes for structural, 512k cells for Fluent). Sufficient for coursework and learning. Download from " }, { "text": "ansys.com/academic/students", "code": true }, { "text": " — no license server needed." }] },
+      { "type": "heading", "text": "Learning Resources" },
+      { "type": "list", "items": [[{ "text": "ANSYS Innovation Courses — free video courses at " }, { "text": "courses.ansys.com", "code": true }], [{ "text": "ANSYS How-To videos on YouTube (official channel)" }], [{ "text": "ANSYS Learning Hub — structured learning paths for each product" }], [{ "text": "SimCafe (Cornell) — tutorial repository for ANSYS Fluent and Mechanical" }]] }
+    ]
+  },
+  "scientific/comsol": {
+    "title": "COMSOL Multiphysics", "subtitle": "Coupled physics simulation — model heat transfer, fluid flow, structural mechanics, and electromagnetics all in one unified environment.", "backHref": "/frost/scientific", "backLabel": "Back to Scientific Software", "breadcrumbs": [{ "label": "FROST", "href": "/frost" }, { "label": "Scientific", "href": "/frost/scientific" }], "accentColor": "#93c5fd",
+    "blocks": [
+      { "type": "heading", "text": "What is COMSOL?" },
+      { "type": "paragraph", "content": [{ "text": "COMSOL Multiphysics is a finite element analysis software platform specializing in " }, { "text": "multiphysics coupling", "bold": true }, { "text": " — simulating systems where multiple physical phenomena interact simultaneously (e.g., Joule heating causes thermal expansion which changes electrical resistance). This makes it uniquely suited for MEMS, microfluidics, electrochemistry, and RF devices." }] },
+      { "type": "paragraph", "content": [{ "text": "COMSOL is built around a unified model tree — geometry, materials, physics, mesh, and study all in one interface. Results can be exported to MATLAB via LiveLink for further processing." }] },
+      { "type": "heading", "text": "Download & Install" },
+      { "type": "list", "ordered": true, "items": [[{ "text": "Get the campus license server details from CSC (FlexLM format: " }, { "text": "1718@licserver.iiitdm.ac.in", "code": true }, { "text": ")" }], [{ "text": "Download the installer from " }, { "text": "comsol.com/product-download", "code": true }, { "text": " using your institutional account, or from the CSC file server" }], [{ "text": "Run the installer — choose Custom installation to select only needed modules" }], [{ "text": "On the license page, select COMSOL License Manager and enter the server address" }], [{ "text": "Install MATLAB (optional but recommended) before COMSOL if you want LiveLink integration" }]] },
+      { "type": "note", "content": [{ "text": "Only install modules you need — a full install with all add-on modules can exceed 25 GB." }] },
+      { "type": "heading", "text": "Key Add-on Modules" },
+      { "type": "list", "items": [[{ "text": "Heat Transfer Module", "bold": true }, { "text": " — conduction, convection, radiation, phase change" }], [{ "text": "CFD Module", "bold": true }, { "text": " — laminar and turbulent flow, non-Newtonian fluids" }], [{ "text": "Structural Mechanics Module", "bold": true }, { "text": " — static, dynamic, fatigue, contact mechanics" }], [{ "text": "AC/DC Module", "bold": true }, { "text": " — electrostatics, magnetostatics, circuit simulation" }], [{ "text": "RF Module", "bold": true }, { "text": " — microwave, antenna design, S-parameters" }], [{ "text": "MEMS Module", "bold": true }, { "text": " — microelectromechanical systems, piezoelectrics" }], [{ "text": "Chemical Reaction Engineering Module", "bold": true }, { "text": " — reactor design, mass transport" }], [{ "text": "LiveLink for MATLAB", "bold": true }, { "text": " — run COMSOL models from MATLAB scripts" }]] },
+      { "type": "heading", "text": "Basic Workflow" },
+      { "type": "list", "items": [[{ "text": "Model Wizard", "bold": true }, { "text": " — select space dimension (1D/2D/3D/axisymmetric) and add physics interfaces" }], [{ "text": "Geometry", "bold": true }, { "text": " — build with primitives or import CAD (STEP, DXF, STL)" }], [{ "text": "Materials", "bold": true }, { "text": " — assign from built-in library or define custom material properties" }], [{ "text": "Physics", "bold": true }, { "text": " — set governing equations, boundary conditions, initial values" }], [{ "text": "Mesh", "bold": true }, { "text": " — auto mesh or manually control element size per domain/boundary" }], [{ "text": "Study", "bold": true }, { "text": " — choose solver type: Stationary, Time Dependent, Eigenfrequency, Parametric Sweep" }], [{ "text": "Results", "bold": true }, { "text": " — surface/volume plots, streamlines, animations, derived quantities" }]] },
+      { "type": "heading", "text": "System Requirements" },
+      { "type": "list", "items": [[{ "text": "OS: ", "bold": true }, { "text": "Windows 10/11, macOS 12+, or Linux (RHEL/Ubuntu)" }], [{ "text": "RAM: ", "bold": true }, { "text": "4 GB minimum — 16 GB+ for 3D models" }], [{ "text": "Disk: ", "bold": true }, { "text": "8–25 GB depending on modules installed" }], [{ "text": "Display: ", "bold": true }, { "text": "OpenGL 3.2 capable GPU required for 3D visualization" }]] },
+      { "type": "heading", "text": "Learning Resources" },
+      { "type": "list", "items": [[{ "text": "COMSOL Learning Center — free tutorials and videos at " }, { "text": "comsol.com/learning-center", "code": true }], [{ "text": "Application Gallery — 2000+ ready-to-run models at " }, { "text": "comsol.com/models", "code": true }], [{ "text": "COMSOL Blog — in-depth articles on simulation techniques and physics" }], [{ "text": "Built-in documentation: Help → Documentation inside COMSOL Desktop" }]] }
+    ]
+  },
+  "scientific/abaqus": {
+    "title": "Abaqus", "subtitle": "Advanced nonlinear finite element analysis for materials, structures, crash simulations, and manufacturing processes.", "backHref": "/frost/scientific", "backLabel": "Back to Scientific Software", "breadcrumbs": [{ "label": "FROST", "href": "/frost" }, { "label": "Scientific", "href": "/frost/scientific" }], "accentColor": "#bfdbfe",
+    "blocks": [
+      { "type": "heading", "text": "What is Abaqus?" },
+      { "type": "paragraph", "content": [{ "text": "Abaqus (part of the Dassault Systèmes SIMULIA suite) is a powerful FEA solver focused on " }, { "text": "nonlinear structural mechanics", "bold": true }, { "text": " — large deformations, contact, material plasticity, damage, and fracture. It handles problems that linear solvers cannot: metal forming, crash impact, rubber sealing, and composite failure." }] },
+      { "type": "paragraph", "content": [{ "text": "Two main solvers: " }, { "text": "Abaqus/Standard", "bold": true }, { "text": " (implicit, for static and low-speed dynamic problems) and " }, { "text": "Abaqus/Explicit", "bold": true }, { "text": " (for high-speed impact, crash, and forming processes). " }, { "text": "Abaqus/CAE", "bold": true }, { "text": " is the graphical pre/post-processor." }] },
+      { "type": "heading", "text": "Download & Install" },
+      { "type": "list", "ordered": true, "items": [[{ "text": "Obtain the SIMULIA license server details from CSC or your department" }], [{ "text": "Download the installer from the 3DS (Dassault) customer portal or the campus file server" }], [{ "text": "Run " }, { "text": "setup.exe", "code": true }, { "text": " — install Abaqus/CAE, Standard, and Explicit solvers" }], [{ "text": "During setup, configure the FLEXnet license server with the campus address and port" }], [{ "text": "Optionally install fe-safe (fatigue) and Isight (optimization) if licensed" }]] },
+      { "type": "warning", "content": [{ "text": "Abaqus requires a LAN or VPN connection to the campus license server at runtime. Floating licenses are checked out per solver token." }] },
+      { "type": "heading", "text": "System Requirements" },
+      { "type": "list", "items": [[{ "text": "OS: ", "bold": true }, { "text": "Windows 10/11 64-bit or Linux (RHEL 7/8, CentOS)" }], [{ "text": "RAM: ", "bold": true }, { "text": "8 GB minimum — 32 GB+ for large nonlinear models" }], [{ "text": "Disk: ", "bold": true }, { "text": "~15 GB for base install; large models generate multi-GB result files" }], [{ "text": "CPU: ", "bold": true }, { "text": "Multi-core recommended; Abaqus parallelizes using MPI or shared memory" }]] },
+      { "type": "heading", "text": "Abaqus/CAE Workflow" },
+      { "type": "list", "items": [[{ "text": "Part", "bold": true }, { "text": " — create geometry (sketch-based) or import CAD" }], [{ "text": "Property", "bold": true }, { "text": " — define material (elastic, plastic, hyperelastic, composite layup)" }], [{ "text": "Assembly", "bold": true }, { "text": " — instance and position parts" }], [{ "text": "Step", "bold": true }, { "text": " — define analysis steps (Static General, Dynamic Explicit, Heat Transfer, etc.)" }], [{ "text": "Interaction", "bold": true }, { "text": " — contact pairs, constraints, connectors, ties" }], [{ "text": "Load", "bold": true }, { "text": " — forces, pressures, displacement BCs, temperature fields" }], [{ "text": "Mesh", "bold": true }, { "text": " — element type (C3D8R, S4R, etc.), seed density, sweep/structured meshing" }], [{ "text": "Job", "bold": true }, { "text": " — submit, monitor convergence, check warnings in " }, { "text": ".msg", "code": true }, { "text": " file" }], [{ "text": "Visualization", "bold": true }, { "text": " — deformed shape, stress/strain contours, animations via ODB file" }]] },
+      { "type": "heading", "text": "Running via Command Line" },
+      { "type": "paragraph", "content": [{ "text": "Abaqus jobs can be submitted without the GUI — useful for batch runs on servers:" }] },
+      { "type": "code", "text": "# Run a job (model.inp → model.odb results)\nabaqus job=model cpus=4 interactive\n\n# Check job status\nabaqus job=model status\n\n# Open results in Viewer\nabaqus viewer odb=model.odb" },
+      { "type": "heading", "text": "Learning Resources" },
+      { "type": "list", "items": [[{ "text": "3DS Learning (SIMULIA) — official courses at " }, { "text": "3ds.com/support/learning", "code": true }], [{ "text": "Abaqus documentation — Getting Started with Abaqus: Interactive Edition (PDF bundled with install)" }], [{ "text": "iMechanica forum — active FEA community with Abaqus-specific threads" }], [{ "text": "YouTube: \"Abaqus Tutorial\" — many university-published step-by-step guides" }]] }
+    ]
+  },
+  "scientific/python": {
+    "title": "Python (Scientific)", "subtitle": "Free, open-source, and the most widely used language in scientific computing — from data analysis to machine learning.", "backHref": "/frost/scientific", "backLabel": "Back to Scientific Software", "breadcrumbs": [{ "label": "FROST", "href": "/frost" }, { "label": "Scientific", "href": "/frost/scientific" }], "accentColor": "#60a5fa",
+    "blocks": [
+      { "type": "heading", "text": "Why Python for Science?" },
+      { "type": "paragraph", "content": [{ "text": "Python has become the dominant language for scientific computing, data science, and machine learning due to its readable syntax, massive ecosystem of libraries, and seamless integration with C/Fortran performance code. It is completely free and runs on all platforms." }] },
+      { "type": "heading", "text": "Install Python" },
+      { "type": "paragraph", "content": [{ "text": "The recommended way for scientific work is " }, { "text": "Anaconda", "bold": true }, { "text": " or " }, { "text": "Miniconda", "bold": true }, { "text": " — they bundle Python with conda package manager and most scientific libraries pre-installed." }] },
+      { "type": "list", "ordered": true, "items": [[{ "text": "Download Anaconda from " }, { "text": "anaconda.com/download", "code": true }, { "text": " (includes everything) or Miniconda from " }, { "text": "docs.conda.io", "code": true }, { "text": " (minimal, install only what you need)" }], [{ "text": "Run the installer — on Linux: " }, { "text": "bash Anaconda3-*.sh", "code": true }], [{ "text": "Restart terminal. Verify: " }, { "text": "python --version", "code": true }], [{ "text": "Create isolated environments per project to avoid dependency conflicts" }]] },
+      { "type": "code", "text": "# Create a new environment\nconda create -n research python=3.11\n\n# Activate it\nconda activate research\n\n# Install scientific stack\nconda install numpy scipy matplotlib pandas jupyter scikit-learn" },
+      { "type": "heading", "text": "Core Scientific Libraries" },
+      { "type": "list", "items": [[{ "text": "NumPy", "bold": true }, { "text": " — N-dimensional arrays, linear algebra, FFT, random number generation" }], [{ "text": "SciPy", "bold": true }, { "text": " — integration, optimization, interpolation, signal processing, statistics" }], [{ "text": "pandas", "bold": true }, { "text": " — DataFrame-based data manipulation, CSV/Excel I/O, time series" }], [{ "text": "matplotlib", "bold": true }, { "text": " — 2D/3D plotting, publication-quality figures" }], [{ "text": "Seaborn", "bold": true }, { "text": " — statistical visualization built on matplotlib" }], [{ "text": "SymPy", "bold": true }, { "text": " — symbolic mathematics (differentiation, integration, equation solving)" }], [{ "text": "scikit-learn", "bold": true }, { "text": " — machine learning: classification, regression, clustering, preprocessing" }], [{ "text": "TensorFlow / PyTorch", "bold": true }, { "text": " — deep learning frameworks" }], [{ "text": "OpenCV", "bold": true }, { "text": " — computer vision and image processing" }]] },
+      { "type": "heading", "text": "Jupyter Notebooks" },
+      { "type": "paragraph", "content": [{ "text": "Jupyter Notebook / JupyterLab is the standard interactive environment for scientific Python — mix code, equations (LaTeX), plots, and markdown in one document." }] },
+      { "type": "code", "text": "# Install and launch JupyterLab\npip install jupyterlab\njupyter lab\n\n# Or classic notebook\njupyter notebook" },
+      { "type": "paragraph", "content": [{ "text": "VS Code also has excellent Jupyter support via the Python extension — recommended for larger projects." }] },
+      { "type": "heading", "text": "Quick Example" },
+      { "type": "code", "text": "import numpy as np\nimport matplotlib.pyplot as plt\nfrom scipy.integrate import odeint\n\n# Solve ODE: dy/dt = -2y\ndef model(y, t):\n    return -2 * y\n\nt = np.linspace(0, 5, 100)\ny = odeint(model, y0=5, t=t)\n\nplt.plot(t, y)\nplt.xlabel('Time'); plt.ylabel('y(t)')\nplt.title('Exponential Decay'); plt.show()" },
+      { "type": "heading", "text": "Learning Resources" },
+      { "type": "list", "items": [[{ "text": "NumPy quickstart: " }, { "text": "numpy.org/doc/stable/user/quickstart", "code": true }], [{ "text": "SciPy lectures: " }, { "text": "scipy-lectures.org", "code": true }, { "text": " — comprehensive free textbook" }], [{ "text": "Kaggle Learn — free micro-courses on pandas, ML, deep learning" }], [{ "text": "Python for Data Analysis (book by Wes McKinney, pandas author)" }], [{ "text": "Real Python — " }, { "text": "realpython.com", "code": true }, { "text": " — practical tutorials" }]] }
+    ]
+  },
+  "scientific/r": {
+    "title": "R", "subtitle": "The language of statisticians — built for data analysis, statistical modeling, and publication-quality graphics.", "backHref": "/frost/scientific", "backLabel": "Back to Scientific Software", "breadcrumbs": [{ "label": "FROST", "href": "/frost" }, { "label": "Scientific", "href": "/frost/scientific" }], "accentColor": "#818cf8",
+    "blocks": [
+      { "type": "heading", "text": "What is R?" },
+      { "type": "paragraph", "content": [{ "text": "R is a free, open-source language and environment designed specifically for statistical computing and data visualization. It has become the standard tool in statistics, bioinformatics, social sciences, and quantitative research. R's package ecosystem (CRAN — over 20,000 packages) covers virtually every statistical method ever published." }] },
+      { "type": "heading", "text": "Download & Install" },
+      { "type": "list", "ordered": true, "items": [[{ "text": "Download R from " }, { "text": "cran.r-project.org", "code": true }, { "text": " — choose your OS (Windows/macOS/Linux)" }], [{ "text": "Install " }, { "text": "RStudio Desktop", "bold": true }, { "text": " from " }, { "text": "posit.co/download/rstudio-desktop", "code": true }, { "text": " — the standard IDE for R (free)" }], [{ "text": "Launch RStudio — R is automatically detected" }]] },
+      { "type": "code", "text": "# On Ubuntu/Debian Linux\nsudo apt install r-base r-base-dev\n\n# Install RStudio separately from posit.co" },
+      { "type": "note", "content": [{ "text": "R and RStudio are completely free. No license server or institutional account required." }] },
+      { "type": "heading", "text": "Essential Packages" },
+      { "type": "list", "items": [[{ "text": "tidyverse", "bold": true }, { "text": " — ggplot2, dplyr, tidyr, readr, purrr — the core data science toolkit" }], [{ "text": "ggplot2", "bold": true }, { "text": " — grammar-of-graphics based plotting, publication-ready figures" }], [{ "text": "dplyr", "bold": true }, { "text": " — data manipulation: filter, select, mutate, group_by, summarise" }], [{ "text": "caret / tidymodels", "bold": true }, { "text": " — machine learning model training and evaluation" }], [{ "text": "lme4", "bold": true }, { "text": " — linear and mixed effects models" }], [{ "text": "survival", "bold": true }, { "text": " — survival analysis, Kaplan-Meier curves" }], [{ "text": "Rmarkdown / Quarto", "bold": true }, { "text": " — reproducible research documents combining code and text" }], [{ "text": "Shiny", "bold": true }, { "text": " — interactive web apps directly from R code" }]] },
+      { "type": "code", "text": "# Install packages from CRAN\ninstall.packages(\"tidyverse\")\ninstall.packages(c(\"caret\", \"lme4\", \"survival\"))\n\n# Load a package\nlibrary(tidyverse)" },
+      { "type": "heading", "text": "Quick Example" },
+      { "type": "code", "text": "library(tidyverse)\n\n# Built-in dataset\ndata(mtcars)\n\n# Summary statistics\nsummary(mtcars$mpg)\n\n# Linear regression\nmodel <- lm(mpg ~ wt + hp, data = mtcars)\nsummary(model)\n\n# Plot\nggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +\n  geom_point(size = 3) +\n  geom_smooth(method = \"lm\") +\n  labs(title = \"MPG vs Weight\", x = \"Weight\", y = \"Miles per Gallon\")" },
+      { "type": "heading", "text": "Learning Resources" },
+      { "type": "list", "items": [[{ "text": "R for Data Science", "bold": true }, { "text": " (Hadley Wickham) — free online at " }, { "text": "r4ds.had.co.nz", "code": true }], [{ "text": "Swirl", "bold": true }, { "text": " — learn R interactively inside R itself: " }, { "text": "install.packages(\"swirl\")", "code": true }], [{ "text": "RStudio Cheatsheets — " }, { "text": "posit.co/resources/cheatsheets", "code": true }, { "text": " — one-page references for ggplot2, dplyr, etc." }], [{ "text": "CRAN Task Views — curated package lists by domain (e.g., Econometrics, Survival, MachineLearning)" }]] }
+    ]
+  },
+  "scientific/materials-studio": {
+    "title": "Materials Studio", "subtitle": "Molecular modeling and simulation platform for chemistry, materials science, and drug discovery research.", "backHref": "/frost/scientific", "backLabel": "Back to Scientific Software", "breadcrumbs": [{ "label": "FROST", "href": "/frost" }, { "label": "Scientific", "href": "/frost/scientific" }], "accentColor": "#f472b6",
+    "blocks": [
+      { "type": "heading", "text": "What is Materials Studio?" },
+      { "type": "paragraph", "content": [{ "text": "Materials Studio (by Dassault Systèmes BIOVIA) is a simulation environment for materials modeling at the atomic and molecular scale. It combines quantum mechanics (DFT), molecular dynamics, Monte Carlo, and mesoscale methods in one platform — used in polymer research, catalysis, crystal engineering, battery materials, and pharmaceutical development." }] },
+      { "type": "heading", "text": "Download & Install" },
+      { "type": "list", "ordered": true, "items": [[{ "text": "Obtain the BIOVIA license server details from CSC (FLEXlm format)" }], [{ "text": "Download the installer from the BIOVIA customer portal or campus file server" }], [{ "text": "Run the Windows installer (Materials Studio is Windows-only for the GUI; servers can run Linux)" }], [{ "text": "During install, point to the campus license server" }], [{ "text": "Install only the modules licensed — each module (CASTEP, Forcite, etc.) uses separate license tokens" }]] },
+      { "type": "warning", "content": [{ "text": "Materials Studio GUI runs only on Windows. Computational jobs can be offloaded to a Linux server via the built-in job gateway." }] },
+      { "type": "heading", "text": "Key Simulation Modules" },
+      { "type": "list", "items": [[{ "text": "CASTEP", "bold": true }, { "text": " — plane-wave DFT for electronic structure, phonons, band gaps, optical properties" }], [{ "text": "DMol³", "bold": true }, { "text": " — DFT with localized basis sets; molecular and periodic systems" }], [{ "text": "Forcite", "bold": true }, { "text": " — classical molecular dynamics and energy minimization with force fields" }], [{ "text": "GULP", "bold": true }, { "text": " — lattice dynamics and energy minimization for ionic/covalent materials" }], [{ "text": "Amorphous Cell", "bold": true }, { "text": " — build and analyze amorphous polymer/glass structures" }], [{ "text": "Polymorph", "bold": true }, { "text": " — crystal structure prediction from molecular structure" }], [{ "text": "VAMP", "bold": true }, { "text": " — semi-empirical quantum mechanics (AM1, PM3, MNDO)" }], [{ "text": "Adsorption Locator", "bold": true }, { "text": " — surface adsorption sites via Monte Carlo" }]] },
+      { "type": "heading", "text": "Typical Workflow" },
+      { "type": "list", "items": [[{ "text": "Build", "bold": true }, { "text": " — construct molecule, crystal, surface slab, or polymer chain using the 3D Sketcher" }], [{ "text": "Clean", "bold": true }, { "text": " — geometry optimize with a quick force field to remove bad contacts" }], [{ "text": "Calculate", "bold": true }, { "text": " — choose a module and set up calculation parameters (functional, k-points, cutoff energy for DFT)" }], [{ "text": "Run", "bold": true }, { "text": " — submit locally or to a remote server via Job Gateway" }], [{ "text": "Analyze", "bold": true }, { "text": " — view results: band structure, DOS, RDF, MSD, energy convergence" }]] },
+      { "type": "heading", "text": "Free Open-Source Alternatives" },
+      { "type": "list", "items": [[{ "text": "VESTA", "bold": true }, { "text": " — crystal structure visualization and analysis (free, widely used)" }], [{ "text": "Quantum ESPRESSO", "bold": true }, { "text": " — plane-wave DFT, equivalent to CASTEP (free, Linux)" }], [{ "text": "LAMMPS", "bold": true }, { "text": " — classical molecular dynamics (free, highly scalable)" }], [{ "text": "GROMACS / NAMD", "bold": true }, { "text": " — biomolecular MD simulations (free)" }], [{ "text": "ASE", "bold": true }, { "text": " (Atomic Simulation Environment) — Python library interfacing many DFT codes" }]] },
+      { "type": "heading", "text": "Learning Resources" },
+      { "type": "list", "items": [[{ "text": "BIOVIA Materials Studio Tutorials — bundled with installation under Help → Tutorials" }], [{ "text": "CASTEP Workshop materials — free lecture notes and exercises at " }, { "text": "castep.org", "code": true }], [{ "text": "ResearchGate / forums — active community for specific module questions" }], [{ "text": "YouTube: search \"Materials Studio tutorial CASTEP\" for step-by-step DFT walkthroughs" }]] }
+    ]
+  }
+}

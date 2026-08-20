@@ -1,0 +1,24 @@
+{
+  "contact": {
+    "email": "technical.affairs@iiitdm.ac.in",
+    "phone": "+91 44 2747 6335",
+    "address": [
+      "IIITDM Kancheepuram,",
+      "Vandalur-Kelambakkam Road,",
+      "Chennai - 600 127,",
+      "Tamil Nadu, India"
+    ]
+  },
+  "socialLinks": [
+    { "name": "LinkedIn", "href": "https://www.linkedin.com/company/technical-affairs-iiitdm/", "color": "#38bdf8" },
+    { "name": "Instagram", "href": "https://www.instagram.com/iiitdm.technical/", "color": "#f472b6" },
+    { "name": "YouTube", "href": "https://www.youtube.com/@iiitdm.technical", "color": "#fb7185" }
+  ],
+  "downloads": [
+    { "name": "Tech Event Advance/Reimbursement", "href": "/downloads/Tech_Event_Advance_Reimbursement_Form.pdf" },
+    { "name": "Tech Event Approval Form", "href": "/downloads/Tech_Event_Approval_Form.pdf" },
+    { "name": "Club On-Campus Event Approval", "href": "/downloads/Technical_Club–On_Campus_Event_Approval.pdf" }
+  ],
+  "socialDescription": "Follow us on social media to stay updated with our latest events, achievements, and opportunities.",
+  "copyright": "© 2025 Technical Affairs, IIITDM Kancheepuram. All rights reserved."
+}

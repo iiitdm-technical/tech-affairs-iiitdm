@@ -1,21 +1,13 @@
 "use client";
 
-import { useState, useEffect } from 'react';
 import {
-  Box, Container, Typography, Button, Skeleton,
+  Box, Container, Typography, Button,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import HandshakeIcon from '@mui/icons-material/Handshake';
 
-interface Sponsor {
-  id: number;
-  name: string;
-  logo: string;
-  website: string;
-  tier: string;
-  year: string;
-}
+import { sponsors, type Sponsor } from '@/lib/data/content';
 
 const TIER_ORDER = ['title', 'gold', 'silver', 'general'];
 const TIER_LABELS: Record<string, string> = {
@@ -34,18 +26,7 @@ const TIER_LOGO_SIZE: Record<string, number> = {
 export default function SponsorsSection() {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
-  const [sponsors, setSponsors] = useState<Sponsor[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('/api/sponsors')
-      .then((r) => r.ok ? r.json() : [])
-      .then(setSponsors)
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (!loading && sponsors.length === 0) {
+  if (sponsors.length === 0) {
     // Show "Become a Sponsor" CTA even with no sponsors
     return <BecomeSponsorCTA isDark={isDark} />;
   }
@@ -85,14 +66,7 @@ export default function SponsorsSection() {
           </Typography>
         </motion.div>
 
-        {loading ? (
-          <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap', justifyContent: 'center' }}>
-            {[1, 2, 3, 4, 5].map((i) => (
-              <Skeleton key={i} variant="rounded" width={120} height={60} sx={{ borderRadius: 2 }} />
-            ))}
-          </Box>
-        ) : (
-          <>
+        <>
             {TIER_ORDER.map((tier) => {
               const group = grouped[tier];
               if (!group || group.length === 0) return null;
@@ -160,8 +134,7 @@ export default function SponsorsSection() {
                 </motion.div>
               );
             })}
-          </>
-        )}
+        </>
 
         <BecomeSponsorCTA isDark={isDark} />
       </Container>

@@ -1,5 +1,8 @@
-import { redirect } from "next/navigation";
+import NewClubPageTemplate from "@/components/NewClubPageTemplate";
+import { getOrganizationProfile } from "@/lib/data/organizations";
 
-export default function ECellSocietyRedirect() {
-  redirect("/clubs/ecell");
+const profile = getOrganizationProfile("societies/ecell");
+
+export default function OrganizationPage() {
+  return <NewClubPageTemplate {...profile} />;
 }

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import {
-  Box, Container, Typography, Chip, IconButton, Button, Skeleton,
+  Box, Container, Typography, Chip, IconButton, Button,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
@@ -10,32 +10,14 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
-interface Highlight {
-  id: number;
-  title: string;
-  subtitle: string;
-  image: string;
-  link: string;
-  tag: string;
-  sort_order: number;
-}
+import { highlights as items } from '@/lib/data/content';
 
 export default function Highlights() {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
-  const [items, setItems] = useState<Highlight[]>([]);
-  const [loading, setLoading] = useState(true);
   const [current, setCurrent] = useState(0);
   const [isAuto, setIsAuto] = useState(true);
   const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  useEffect(() => {
-    fetch('/api/highlights')
-      .then((r) => r.ok ? r.json() : [])
-      .then(setItems)
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, []);
 
   useEffect(() => {
     if (!isAuto || items.length <= 1) return;
@@ -43,12 +25,12 @@ export default function Highlights() {
       setCurrent((p) => (p + 1) % items.length);
     }, 5000);
     return () => { if (autoRef.current) clearInterval(autoRef.current); };
-  }, [isAuto, items.length]);
+  }, [isAuto]);
 
   const prev = () => { setIsAuto(false); setCurrent((p) => (p === 0 ? items.length - 1 : p - 1)); };
   const next = () => { setIsAuto(false); setCurrent((p) => (p + 1) % items.length); };
 
-  if (!loading && items.length === 0) return null;
+  if (items.length === 0) return null;
 
   return (
     <Box id="highlights" sx={{ py: { xs: 8, md: 12 }, overflow: 'hidden' }}>
@@ -74,12 +56,7 @@ export default function Highlights() {
           </Typography>
         </motion.div>
 
-        {loading ? (
-          <Box sx={{ borderRadius: 4, overflow: 'hidden' }}>
-            <Skeleton variant="rounded" width="100%" height={420} />
-          </Box>
-        ) : (
-          <Box sx={{ position: 'relative' }}>
+        <Box sx={{ position: 'relative' }}>
             {/* Slides */}
             <Box sx={{ position: 'relative', borderRadius: 4, overflow: 'hidden', height: { xs: 340, sm: 420, md: 500 } }}>
               {items.map((item, idx) => (
@@ -204,8 +181,7 @@ export default function Highlights() {
                 ))}
               </Box>
             )}
-          </Box>
-        )}
+        </Box>
       </Container>
     </Box>
   );

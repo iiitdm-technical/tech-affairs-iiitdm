@@ -1,0 +1,18 @@
+{
+  "name": "I²R Makerspace",
+  "mark": "I²R",
+  "description": "Innovative Idea to Reality (I²R) Makerspace is a collaborative hub where creativity meets technology, from electronics and fabrication to design and prototyping.",
+  "summary": "Bring your ideas to life and be part of IIITDM's maker community.",
+  "facilities": [
+    { "title": "Fabrication", "description": "Build and iterate on physical prototypes using the makerspace's fabrication facilities." },
+    { "title": "Electronics", "description": "Develop, test, and integrate electronics for student projects and prototypes." },
+    { "title": "Design & Prototyping", "description": "Turn early concepts into testable designs in a collaborative project environment." }
+  ],
+  "process": [
+    "Define your project and equipment requirements.",
+    "Contact the I²R team for availability and access guidance.",
+    "Complete the required orientation before using equipment.",
+    "Use the space responsibly during your allotted slot."
+  ],
+  "contactEmail": "technical.affairs@iiitdm.ac.in"
+}

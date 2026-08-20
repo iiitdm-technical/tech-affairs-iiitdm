@@ -1,0 +1,27 @@
+[
+  {
+    "slug": "management",
+    "title": "Management",
+    "description": "The Management team is responsible for planning, organizing, and overseeing events and activities. We ensure smooth execution and effective coordination among all stakeholders."
+  },
+  {
+    "slug": "innovation",
+    "title": "Innovation",
+    "description": "The Innovation team drives creative thinking and cutting-edge projects. We explore new ideas, foster entrepreneurship, and push the boundaries of what's possible."
+  },
+  {
+    "slug": "media-and-marketing",
+    "title": "Media and Marketing",
+    "description": "The Media and Marketing team is the voice of the technical council. We manage our online presence, create engaging content, and promote our events and achievements to the world."
+  },
+  {
+    "slug": "social-outreach",
+    "title": "Media and Outreach Team",
+    "description": "The Media and Outreach team is the voice of the technical council and connects our technical community with society. We manage our online presence, create engaging content, promote events, organize workshops, and make a positive impact."
+  },
+  {
+    "slug": "tech-development",
+    "title": "Tech Development",
+    "description": "The Tech Development team builds and maintains the digital infrastructure of Technical Affairs. We create web applications, tools, and platforms that power the council's operations."
+  }
+]

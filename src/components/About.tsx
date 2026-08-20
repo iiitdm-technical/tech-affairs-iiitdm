@@ -3,14 +3,7 @@ import { Box, Container, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-
-const stats = [
-  { number: '13', label: 'Technical Clubs',  color: '#7dd3fc' },
-  { number: '6',  label: 'Competitive Teams', color: '#93c5fd' },
-  { number: '10+',label: 'Esteemed Awards',   color: '#f59e0b' },
-  { number: '50+',label: 'Events Annually',   color: '#bfdbfe' },
-  { number: '20+',label: 'Sponsors',           color: '#fcd34d' },
-];
+import { homeContent } from '@/lib/data/content';
 
 const About = () => {
   const theme = useTheme();
@@ -90,10 +83,7 @@ const About = () => {
               lineHeight: 1.8,
             }}
           >
-            Technical Affairs at IIITDM Kancheepuram is the driving force behind technical innovation and excellence.
-            We foster a culture of learning, innovation, and collaboration through our diverse range of technical clubs
-            and competitive teams. Our mission is to empower students with practical skills, industry exposure, and
-            opportunities to showcase their talents on national and international platforms.
+            {homeContent.about.description}
           </Typography>
         </motion.div>
 
@@ -111,7 +101,7 @@ const About = () => {
             borderBottom: `1px solid ${isDark ? 'rgba(125,211,252,0.12)' : 'rgba(51,73,132,0.15)'}`,
           }}
         >
-          {stats.map((stat, index) => (
+          {homeContent.about.stats.map((stat, index) => (
             <Box
               key={stat.label}
               sx={{

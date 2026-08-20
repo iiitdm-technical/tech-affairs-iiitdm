@@ -1,11 +1,12 @@
 import TeamSubPage from '@/components/TeamSubPage';
+import { getTechnicalAffairsTeam } from '@/lib/data/content';
+
+const team = getTechnicalAffairsTeam('management');
 
 export default function ManagementPage() {
   return (
     <TeamSubPage
-      slug="management"
-      title="Management"
-      description="The Management team is responsible for planning, organizing, and overseeing events and activities. We ensure smooth execution and effective coordination among all stakeholders."
+      {...team}
     />
   );
 }

@@ -1,5 +1,5 @@
 // Minimal service worker - enables PWA installability with network-first fresh content
-const CACHE = 'ta-v2';
+const CACHE = 'ta-v3';
 const STATIC = ['/'];
 
 self.addEventListener('install', (e) => {
@@ -17,10 +17,8 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  const url = new URL(e.request.url);
-  // Skip non-GET and API routes
+  // Only cache safe, idempotent requests.
   if (e.request.method !== 'GET') return;
-  if (url.pathname.startsWith('/api/')) return;
 
   // Network-first for all requests to guarantee latest data, fallback to cache when offline
   e.respondWith(

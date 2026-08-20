@@ -1,12 +1,8 @@
-import React from "react";
 import NewClubPageTemplate from "@/components/NewClubPageTemplate";
-import clubData from "@/data/teams/tad";
+import { getOrganizationProfile } from "@/lib/data/organizations";
 
-function TalpadeAeroDesign() {
-  return <NewClubPageTemplate {...clubData} />;
+const profile = getOrganizationProfile("teams/tad");
+
+export default function OrganizationPage() {
+  return <NewClubPageTemplate {...profile} />;
 }
-
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
-
-export default TalpadeAeroDesign;

@@ -1,12 +1,8 @@
-import React from "react";
 import NewClubPageTemplate from "@/components/NewClubPageTemplate";
-import clubData from "@/data/societies/optica";
+import { getOrganizationProfile } from "@/lib/data/organizations";
 
-function OpticaStudentChapter() {
-  return <NewClubPageTemplate {...clubData} />;
+const profile = getOrganizationProfile("societies/optica");
+
+export default function OrganizationPage() {
+  return <NewClubPageTemplate {...profile} />;
 }
-
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
-
-export default OpticaStudentChapter;

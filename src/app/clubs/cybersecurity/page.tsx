@@ -1,9 +1,8 @@
-import React from "react";
 import NewClubPageTemplate from "@/components/NewClubPageTemplate";
-import clubData from "@/data/clubs/cybersecurity";
+import { getOrganizationProfile } from "@/lib/data/organizations";
 
-function CybersecurityClub() {
-  return <NewClubPageTemplate {...clubData} />;
+const profile = getOrganizationProfile("clubs/cybersecurity");
+
+export default function OrganizationPage() {
+  return <NewClubPageTemplate {...profile} />;
 }
-
-export default CybersecurityClub;

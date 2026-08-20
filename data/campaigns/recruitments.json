@@ -1,0 +1,16 @@
+{
+  "year": "2026",
+  "intro": "Explore opportunities to contribute, innovate, and lead. Find your place in our technical ecosystem.",
+  "sections": [
+    { "slug": "clubs", "title": "Clubs", "description": "Join our vibrant technical clubs and work on exciting projects, participate in competitions, and build a strong technical community.", "link": "/recruitments/clubs", "color": "#f472b6" },
+    { "slug": "teams", "title": "Teams", "description": "Be part of specialized technical teams focusing on robotics, automotive, coding, and more.", "link": "/recruitments/teams", "color": "#34d399" },
+    { "slug": "communities", "title": "Communities", "description": "Join interest-based communities to share knowledge and collaborate on niche technologies.", "link": "/recruitments/communities", "color": "#38bdf8" },
+    { "slug": "societies", "title": "Societies", "description": "Engage with professional societies that connect you with industry standards and networking opportunities.", "link": "/recruitments/societies", "color": "#a78bfa" }
+  ],
+  "categories": {
+    "clubs": { "title": "Clubs Recruitment", "status": "Open", "symbol": "✓", "heading": "Recruitment is Open!", "description": "The technical clubs recruitment drive is currently active. Click the button below to fill out the application form.", "actionLabel": "Apply Now", "actionUrl": "https://forms.gle/3Er3vuUr4nBkkQvr8", "color": "#f472b6" },
+    "teams": { "title": "Teams Recruitment", "status": "Open", "symbol": "✓", "heading": "Recruitment is Open!", "description": "The specialized technical teams recruitment drive is currently active. Click the button below to fill out the application form.", "actionLabel": "Apply Now", "actionUrl": "https://forms.gle/uEVo1vPcW6cfdMuXA", "color": "#34d399" },
+    "communities": { "title": "Communities Recruitment", "status": "Coming Soon", "symbol": "!", "heading": "Coming Soon", "description": "Recruitments for technical communities will be announced soon. Keep an eye on this page for updates.", "actionLabel": "Stay Tuned", "actionUrl": "", "color": "#38bdf8" },
+    "societies": { "title": "Societies Recruitment", "status": "Coming Soon", "symbol": "!", "heading": "Coming Soon", "description": "Recruitments for professional societies like IEEE, ASME, and Optica will be announced soon. Keep an eye on this page for updates.", "actionLabel": "Stay Tuned", "actionUrl": "", "color": "#a78bfa" }
+  }
+}

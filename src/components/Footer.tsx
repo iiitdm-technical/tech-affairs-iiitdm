@@ -19,44 +19,17 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import DownloadIcon from "@mui/icons-material/Download";
+import { footerContent } from "@/lib/data/content";
 
 const Footer = () => {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
 
-  const downloads = [
-    {
-      name: "Tech Event Advance/Reimbursement",
-      href: "/downloads/Tech_Event_Advance_Reimbursement_Form.pdf",
-    },
-    {
-      name: "Tech Event Approval Form",
-      href: "/downloads/Tech_Event_Approval_Form.pdf",
-    },
-    {
-      name: "Club On-Campus Event Approval",
-      href: "/downloads/Technical_Club–On_Campus_Event_Approval.pdf",
-    },
-   
-  ];
-
-  const socialLinks = [
-    {
-      icon: <LinkedInIcon />,
-      href: "https://www.linkedin.com/company/technical-affairs-iiitdm/",
-      color: '#38bdf8',
-    },
-    {
-      icon: <InstagramIcon />,
-      href: "https://www.instagram.com/iiitdm.technical/",
-      color: '#f472b6',
-    },
-    {
-      icon: <YouTubeIcon />,
-      href: "https://www.youtube.com/@iiitdm.technical",
-      color: '#fb7185',
-    },
-  ];
+  const socialIcons = {
+    LinkedIn: <LinkedInIcon />,
+    Instagram: <InstagramIcon />,
+    YouTube: <YouTubeIcon />,
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -129,7 +102,7 @@ const Footer = () => {
                   >
                     <EmailIcon sx={{ color: '#fb923c', fontSize: '1.2rem', mt: 0.3 }} />
                     <Typography variant="body2" color="text.secondary">
-                      technical.affairs@iiitdm.ac.in
+                      {footerContent.contact.email}
                     </Typography>
                   </Box>
                   <Box
@@ -143,7 +116,7 @@ const Footer = () => {
                   >
                     <PhoneIcon sx={{ color: '#34d399', fontSize: '1.2rem', mt: 0.3 }} />
                     <Typography variant="body2" color="text.secondary">
-                      +91 44 2747 6335
+                      {footerContent.contact.phone}
                     </Typography>
                   </Box>
                   <Box
@@ -157,13 +130,7 @@ const Footer = () => {
                   >
                     <LocationOnIcon sx={{ color: '#f472b6', fontSize: '1.2rem', mt: 0.3 }} />
                     <Typography variant="body2" color="text.secondary">
-                      IIITDM Kancheepuram,
-                      <br />
-                      Vandalur-Kelambakkam Road,
-                      <br />
-                      Chennai - 600 127,
-                      <br />
-                      Tamil Nadu, India
+                      {footerContent.contact.address.map((line) => <React.Fragment key={line}>{line}<br /></React.Fragment>)}
                     </Typography>
                   </Box>
                 </Box>
@@ -185,9 +152,9 @@ const Footer = () => {
                   Connect With Us
                 </Typography>
                 <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
-                  {socialLinks.map((social, index) => (
+                  {footerContent.socialLinks.map((social) => (
                     <IconButton
-                      key={index}
+                      key={social.name}
                       component="a"
                       href={social.href}
                       target="_blank"
@@ -205,7 +172,7 @@ const Footer = () => {
                         },
                       }}
                     >
-                      {social.icon}
+                      {socialIcons[social.name as keyof typeof socialIcons]}
                     </IconButton>
                   ))}
                 </Box>
@@ -214,8 +181,7 @@ const Footer = () => {
                   color="text.secondary"
                   sx={{ lineHeight: 1.65 }}
                 >
-                  Follow us on social media to stay updated with our latest
-                  events, achievements, and opportunities.
+                  {footerContent.socialDescription}
                 </Typography>
               </motion.div>
             </Grid>
@@ -242,7 +208,7 @@ const Footer = () => {
                     m: 0,
                   }}
                 >
-                  {downloads.map((download) => (
+                  {footerContent.downloads.map((download) => (
                     <Box
                       component="li"
                       key={download.name}
@@ -296,8 +262,7 @@ const Footer = () => {
                 color: isDark ? 'rgba(241,240,245,0.28)' : 'rgba(15,23,42,0.46)',
               }}
             >
-              &copy; 2025 Technical Affairs, IIITDM Kancheepuram. All rights
-              reserved.
+              {footerContent.copyright}
             </Typography>
             <Box>
               <Link

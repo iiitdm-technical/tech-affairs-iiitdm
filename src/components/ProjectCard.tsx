@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import Tilt from 'react-parallax-tilt';
 import { motion } from 'framer-motion';
 
@@ -45,7 +46,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           whileHover="hover"
         >
           {image ? (
-            <img src={image} alt={displayTitle} className="w-full h-full object-cover rounded-xl" />
+            <Image src={image} alt={displayTitle} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover rounded-xl" />
           ) : (
             <div
               className="w-full h-full rounded-xl"

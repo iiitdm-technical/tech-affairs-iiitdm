@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Button, Container } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
+import { homeContent } from '@/lib/data/content';
 
 const Hero = () => {
   const theme = useTheme();
@@ -75,7 +76,7 @@ const Hero = () => {
               color: isDark ? '#7dd3fc' : '#334984',
               letterSpacing: '0.03em',
             }}>
-              IIITDM Kancheepuram
+              {homeContent.hero.badge}
             </Typography>
           </Box>
 
@@ -100,7 +101,7 @@ const Hero = () => {
             fontWeight: 800, letterSpacing: '-0.045em', lineHeight: 1.0,
             color: 'text.primary', mb: 0.5,
           }}>
-            Technical Affairs
+            {homeContent.hero.title}
           </Typography>
           <Typography component="h1" sx={{
             fontSize: { xs: 'clamp(2.4rem, 9vw, 3.5rem)', md: 'clamp(3rem, 6vw, 5rem)' },
@@ -112,7 +113,7 @@ const Hero = () => {
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
           }}>
-            Student Council
+            {homeContent.hero.titleAccent}
           </Typography>
 
           {/* Subtitle */}
@@ -121,8 +122,7 @@ const Hero = () => {
             lineHeight: 1.75, color: 'text.secondary',
             maxWidth: 560, mx: 'auto', mb: 5,
           }}>
-            Driving technical innovation and excellence. Explore our clubs, teams,
-            societies, and communities shaping the future of technology.
+            {homeContent.hero.description}
           </Typography>
 
           {/* CTAs */}

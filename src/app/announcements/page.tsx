@@ -1,37 +1,15 @@
 "use client";
 
-import { useState, useEffect } from 'react';
 import {
   Box, Typography, Container, Card, CardContent, Chip, Divider,
-  Button, CircularProgress,
+  Button,
 } from '@mui/material';
 import { Campaign, OpenInNew } from '@mui/icons-material';
 import { useOrgs, slugToName, slugToLogo } from '@/hooks/useOrgs';
-
-interface Announcement {
-  id: number;
-  org_slug: string;
-  title: string;
-  body: string;
-  link: string;
-  created_at: string;
-}
+import { announcements as items } from '@/lib/data/content';
 
 export default function AnnouncementsPage() {
   const orgs = useOrgs();
-  const [items, setItems] = useState<Announcement[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('/api/announcements')
-      .then(async (res) => {
-        if (!res.ok) return;
-        const text = await res.text();
-        if (text) try { setItems(JSON.parse(text)); } catch {}
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
   return (
     <Box sx={{ pt: { xs: 12, md: 14 }, pb: 8, minHeight: '100vh' }}>
       <Container maxWidth="md">
@@ -50,11 +28,7 @@ export default function AnnouncementsPage() {
           </Box>
         </Box>
 
-        {loading && (
-          <Box display="flex" justifyContent="center" py={8}><CircularProgress /></Box>
-        )}
-
-        {!loading && items.length === 0 && (
+        {items.length === 0 && (
           <Typography color="text.secondary" textAlign="center" py={8}>
             No announcements at the moment. Check back soon!
           </Typography>

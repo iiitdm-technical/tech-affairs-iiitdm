@@ -10,41 +10,14 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import PublicIcon from "@mui/icons-material/Public";
+import { recruitments } from "@/lib/data/content";
 
-const recruitmentSections = [
-  {
-    title: "Clubs",
-    description:
-      "Join our vibrant technical clubs and work on exciting projects, participate in competitions, and build a strong technical community.",
-    icon: <GroupsIcon sx={{ fontSize: 36 }} />,
-    link: "/recruitments/clubs",
-    color: "#f472b6",
-  },
-  {
-    title: "Teams",
-    description:
-      "Be part of specialized technical teams focusing on robotics, automotive, coding, and more.",
-    icon: <PrecisionManufacturingIcon sx={{ fontSize: 36 }} />,
-    link: "/recruitments/teams",
-    color: "#34d399",
-  },
-  {
-    title: "Communities",
-    description:
-      "Join interest-based communities to share knowledge and collaborate on niche technologies.",
-    icon: <PublicIcon sx={{ fontSize: 36 }} />,
-    link: "/recruitments/communities",
-    color: "#38bdf8",
-  },
-  {
-    title: "Societies",
-    description:
-      "Engage with professional societies that connect you with industry standards and networking opportunities.",
-    icon: <AccountBalanceIcon sx={{ fontSize: 36 }} />,
-    link: "/recruitments/societies",
-    color: "#a78bfa",
-  },
-];
+const sectionIcons = {
+  clubs: <GroupsIcon sx={{ fontSize: 36 }} />,
+  teams: <PrecisionManufacturingIcon sx={{ fontSize: 36 }} />,
+  communities: <PublicIcon sx={{ fontSize: 36 }} />,
+  societies: <AccountBalanceIcon sx={{ fontSize: 36 }} />,
+};
 
 export default function RecruitmentsPage() {
   const { isDarkMode } = useThemeContext();
@@ -88,7 +61,7 @@ export default function RecruitmentsPage() {
                   WebkitTextFillColor: "transparent",
                 }}
               >
-                2026
+                {recruitments.year}
               </Box>
             </Typography>
 
@@ -100,8 +73,7 @@ export default function RecruitmentsPage() {
                 color: "text.secondary",
               }}
             >
-              Explore opportunities to contribute, innovate, and lead.
-              Find your place in our technical ecosystem.
+              {recruitments.intro}
             </Typography>
           </motion.div>
         </Box>
@@ -118,7 +90,7 @@ export default function RecruitmentsPage() {
             gap: 4,
           }}
         >
-          {recruitmentSections.map((section) => (
+          {recruitments.sections.map((section) => (
             <motion.div key={section.title} whileHover={{ y: -6 }}>
               <Link href={section.link} style={{ textDecoration: "none" }}>
                 <Box
@@ -171,7 +143,7 @@ export default function RecruitmentsPage() {
                       color: section.color,
                     }}
                   >
-                    {section.icon}
+                    {sectionIcons[section.slug as keyof typeof sectionIcons]}
                   </Box>
 
                   {/* TITLE */}
