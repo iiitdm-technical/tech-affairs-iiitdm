@@ -12,6 +12,7 @@ import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import Link from 'next/link';
 import { achievements, organizations } from '@/lib/data/content';
 
 const ACCENT_COLORS = ['#7dd3fc', '#93c5fd', '#f59e0b', '#bfdbfe', '#fcd34d', '#dbeafe'];
@@ -127,7 +128,7 @@ const Achievements = () => {
             )}
 
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
-              <Button variant="contained" size="large" href="/achievements" sx={{ px: 4, py: 1.5, fontSize: '0.95rem', borderRadius: 3.5 }}>
+              <Button component={Link} variant="contained" size="large" href="/achievements" sx={{ px: 4, py: 1.5, fontSize: '0.95rem', borderRadius: 3.5 }}>
                 View All Achievements
               </Button>
             </Box>

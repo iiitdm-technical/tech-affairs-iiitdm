@@ -9,7 +9,7 @@ module.exports = {
     {
       name: 'tech-affairs-static',
       script: serveBin,
-      args: '-s . -l 8007 --no-clipboard',
+      args: '. -l 8007 --no-clipboard',
       cwd: '/home/tech_sac_admin/tech-affairs-iiitdm/out',
       interpreter: 'none',
       exec_mode: 'fork',

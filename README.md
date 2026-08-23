@@ -52,7 +52,7 @@ Pushes to `main` deploy through `.github/workflows/deploy.yml`. The workflow con
 The deployment installs `serve@14.2.6` globally so it remains available after `./prepare` removes the project dependencies. PM2 runs the resolved global executable as:
 
 ```bash
-serve -s . -l 8007 --no-clipboard
+serve . -l 8007 --no-clipboard
 ```
 
 Its working directory is `/home/tech_sac_admin/tech-affairs-iiitdm/out`. The production process uses the server's global Node.js, PM2, and `serve` installations, but does not use `.next/` or the project's deleted `node_modules/` directory.

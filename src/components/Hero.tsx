@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Button, Container } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { homeContent } from '@/lib/data/content';
 
 const Hero = () => {
@@ -130,7 +131,7 @@ const Hero = () => {
             display: 'flex', flexDirection: { xs: 'column', sm: 'row' },
             gap: 1.5, justifyContent: 'center', alignItems: 'center',
           }}>
-            <Button variant="contained" size="large" href="/announcements" sx={{
+            <Button component={Link} variant="contained" size="large" href="/announcements" sx={{
               px: { xs: 3, sm: 4 }, py: { xs: 1.2, sm: 1.5 },
               fontSize: { xs: '0.95rem', sm: '1rem' },
               borderRadius: 3, minWidth: { xs: 220, sm: 'auto' },
@@ -153,7 +154,7 @@ const Hero = () => {
             }}>
               Latest Announcements
             </Button>
-            <Button variant="outlined" size="large" href="/council" sx={{
+            <Button component={Link} variant="outlined" size="large" href="/council" sx={{
               px: { xs: 3, sm: 4 }, py: { xs: 1.2, sm: 1.5 },
               fontSize: { xs: '0.95rem', sm: '1rem' },
               borderRadius: 3, minWidth: { xs: 220, sm: 'auto' },

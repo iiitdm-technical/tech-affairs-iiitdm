@@ -2,6 +2,7 @@
 
 import { Box, IconButton, Badge, Tooltip, useTheme } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { announcements } from '@/lib/data/content';
 
@@ -26,7 +27,7 @@ export default function NotificationBell() {
     >
       <Tooltip title="Announcements" placement="left">
         <IconButton
-          component="a"
+          component={Link}
           href="/announcements"
           aria-label="View announcements"
           sx={{
