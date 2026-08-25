@@ -94,21 +94,15 @@
   ],
   "core": [
     {
-      "name": "Sai Pranav",
-      "role": "Head Core",
-      "image": "/clubs/devclub/headcores/Sai Pranav.webp",
-      "email": "cs22b1027@iiitdm.ac.in"
-    },
-    {
       "name": "Sainath Reddy",
-      "role": "Vice Head Core",
-      "image": "/clubs/devclub/headcores/sainath.webp",
-      "email": "cs23i1010@iiitdm.ac.in"
+      "role": "Head Core",
+      "image": "/technical-affairs-team/management/cores/CS23I1010.webp",
+      "email": "devclub@iiitdm.ac.in"
     }
   ],
   "links": {
     "website": "https://devclub.iiitdm.ac.in/",
     "instagram": "https://www.instagram.com/dev.club.iiitdm/",
-    "github": "https://github.com/dev-iiitdm"
+    "github": "https://github.com/DevClubIIITDM"
   }
 }
