@@ -55,6 +55,14 @@ export default function AnnouncementsPage() {
                       </Box>
                       <Typography fontWeight={700} fontSize="1rem" gutterBottom>{item.title}</Typography>
                       <Typography variant="body2" color="text.secondary">{item.body}</Typography>
+                      {item.media_url && !item.media_url.startsWith('pending:') && (
+                        <Box
+                          component="img"
+                          src={item.media_url}
+                          alt={`${item.title} poster`}
+                          sx={{ mt: 2, width: '100%', maxHeight: 520, objectFit: 'contain', borderRadius: 2, display: 'block' }}
+                        />
+                      )}
                       {item.link && (
                         <Button
                           component="a" href={item.link.startsWith('http') ? item.link : `https://${item.link}`} target="_blank" rel="noopener noreferrer"
