@@ -62,6 +62,8 @@ export type Announcement = {
   link: string;
   media_url: string;
   created_at: string;
+  event_start?: string;
+  event_end?: string;
 };
 
 export type Highlight = {
@@ -132,6 +134,26 @@ export const recruitments = recruitmentsJson;
 export const sponsors = sponsorsJson as Sponsor[];
 export const technicalAffairsMembers = membersJson as TechnicalAffairsMember[];
 export const technicalAffairsTeams = teamsJson as TechnicalAffairsTeam[];
+
+export function isUpcomingAnnouncement(announcement: Announcement, now = new Date()): boolean {
+  if (!announcement.event_start) return false;
+
+  const eventEnd = announcement.event_end ?? announcement.event_start;
+  const endTime = new Date(eventEnd).getTime();
+  return Number.isFinite(endTime) && endTime > now.getTime();
+}
+
+export function isUpcomingEvent(event: Event, now = new Date()): boolean {
+  const eventEnd = new Date(event.end_time || event.start_time).getTime();
+  return Number.isFinite(eventEnd) && eventEnd > now.getTime();
+}
+
+export const upcomingAnnouncements = announcements
+  .filter((announcement) => isUpcomingAnnouncement(announcement))
+  .sort((first, second) => (
+    new Date(first.event_start ?? first.created_at).getTime()
+    - new Date(second.event_start ?? second.created_at).getTime()
+  ));
 
 export function getTechnicalAffairsTeam(slug: string): TechnicalAffairsTeam {
   const team = technicalAffairsTeams.find((entry) => entry.slug === slug);

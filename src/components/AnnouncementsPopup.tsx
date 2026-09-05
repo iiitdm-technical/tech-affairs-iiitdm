@@ -2,26 +2,43 @@
 
 import { useState, useEffect } from 'react';
 import {
-  Dialog, DialogTitle, DialogContent, DialogActions,
-  Button, Typography, Box, Chip, Divider, IconButton,
+  Dialog, DialogContent, DialogActions,
+  Button, Typography, Box, Chip, IconButton,
 } from '@mui/material';
-import { Close, Campaign, OpenInNew, PictureAsPdf } from '@mui/icons-material';
+import {
+  ArrowBackIosNew, ArrowForwardIos, Close, Campaign, OpenInNew, PictureAsPdf,
+} from '@mui/icons-material';
 import Link from 'next/link';
 import { useOrgs, slugToName } from '@/hooks/useOrgs';
-import { announcements } from '@/lib/data/content';
+import { upcomingAnnouncements } from '@/lib/data/content';
 
 const SESSION_KEY = 'ta_announcements_seen';
 
 export default function AnnouncementsPopup() {
   const orgs = useOrgs();
   const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     // Only show once per browser session
     if (sessionStorage.getItem(SESSION_KEY)) return;
 
-    if (announcements.length > 0) setOpen(true);
+    if (upcomingAnnouncements.length > 0) setOpen(true);
   }, []);
+
+  useEffect(() => {
+    if (!open || upcomingAnnouncements.length < 2) return undefined;
+
+    const timer = window.setInterval(() => {
+      setActiveIndex((index) => (index + 1) % upcomingAnnouncements.length);
+    }, 2000);
+
+    return () => window.clearInterval(timer);
+  }, [open]);
+
+  function moveTo(index: number) {
+    setActiveIndex((index + upcomingAnnouncements.length) % upcomingAnnouncements.length);
+  }
 
   function handleClose() {
     sessionStorage.setItem(SESSION_KEY, '1');
@@ -56,24 +73,34 @@ export default function AnnouncementsPopup() {
         </IconButton>
       </Box>
 
-      <DialogContent sx={{ p: 0, overflowY: 'auto' }}>
-        {announcements.map((a, i) => (
-          <Box key={a.id}>
-            {i > 0 && <Divider />}
-            <Box sx={{ px: 3, py: 2.5 }}>
+      <DialogContent sx={{ p: 0, overflow: 'hidden' }}>
+        {upcomingAnnouncements.length > 0 && (() => {
+          const announcement = upcomingAnnouncements[activeIndex];
+          return (
+            <Box sx={{ display: 'flex', alignItems: 'stretch', minHeight: 280 }}>
+              {upcomingAnnouncements.length > 1 && (
+                <IconButton
+                  aria-label="Previous announcement"
+                  onClick={() => moveTo(activeIndex - 1)}
+                  sx={{ alignSelf: 'center', flexShrink: 0 }}
+                >
+                  <ArrowBackIosNew fontSize="small" />
+                </IconButton>
+              )}
+              <Box sx={{ flex: 1, minWidth: 0, px: 2, py: 2.5 }}>
               <Box display="flex" alignItems="center" gap={1} mb={1} flexWrap="wrap">
-                <Chip label={slugToName(a.org_slug, orgs)} size="small" color="primary" variant="outlined" />
+                <Chip label={slugToName(announcement.org_slug, orgs)} size="small" color="primary" variant="outlined" />
                 <Typography variant="caption" color="text.secondary" sx={{ ml: 'auto' }}>
-                  {new Date(a.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  {new Date(announcement.event_start ?? announcement.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                 </Typography>
               </Box>
-              <Typography fontWeight={700} fontSize="1rem" mb={0.75}>{a.title}</Typography>
-              <Typography variant="body2" color="text.secondary" lineHeight={1.6}>{a.body}</Typography>
-              {a.media_url && !a.media_url.startsWith('pending:') && (
-                a.media_url.endsWith('.pdf') ? (
+              <Typography fontWeight={700} fontSize="1rem" mb={0.75}>{announcement.title}</Typography>
+              <Typography variant="body2" color="text.secondary" lineHeight={1.6}>{announcement.body}</Typography>
+              {announcement.media_url && !announcement.media_url.startsWith('pending:') && (
+                announcement.media_url.endsWith('.pdf') ? (
                   <Button
                     component="a"
-                    href={a.media_url}
+                    href={announcement.media_url}
                     target="_blank"
                     rel="noopener noreferrer"
                     size="small"
@@ -87,16 +114,16 @@ export default function AnnouncementsPopup() {
                 ) : (
                   <Box
                     component="img"
-                    src={a.media_url}
+                    src={announcement.media_url}
                     alt="attachment"
                     sx={{ mt: 1.5, width: '100%', maxHeight: 200, objectFit: 'cover', borderRadius: 2 }}
                   />
                 )
               )}
-              {a.link && (
+              {announcement.link && (
                 <Button
                   component="a"
-                  href={a.link.startsWith('http') ? a.link : `https://${a.link}`}
+                  href={announcement.link.startsWith('http') ? announcement.link : `https://${announcement.link}`}
                   target="_blank" rel="noopener noreferrer"
                   size="small" endIcon={<OpenInNew fontSize="small" />}
                   sx={{ mt: 1.5, px: 0, textTransform: 'none', fontWeight: 600 }}
@@ -104,9 +131,34 @@ export default function AnnouncementsPopup() {
                   Learn more
                 </Button>
               )}
+              </Box>
+              {upcomingAnnouncements.length > 1 && (
+                <IconButton
+                  aria-label="Next announcement"
+                  onClick={() => moveTo(activeIndex + 1)}
+                  sx={{ alignSelf: 'center', flexShrink: 0 }}
+                >
+                  <ArrowForwardIos fontSize="small" />
+                </IconButton>
+              )}
             </Box>
+          );
+        })()}
+        {upcomingAnnouncements.length > 1 && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 0.5, pb: 1 }}>
+            {upcomingAnnouncements.map((announcement, index) => (
+              <IconButton
+                key={announcement.id}
+                aria-label={`Show announcement ${index + 1}`}
+                onClick={() => moveTo(index)}
+                size="small"
+                sx={{ p: 0.75 }}
+              >
+                <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: index === activeIndex ? 'primary.main' : 'action.disabled' }} />
+              </IconButton>
+            ))}
           </Box>
-        ))}
+        )}
       </DialogContent>
 
       <DialogActions sx={{ px: 3, py: 2, gap: 1 }}>

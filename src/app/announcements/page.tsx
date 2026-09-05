@@ -6,10 +6,66 @@ import {
 } from '@mui/material';
 import { Campaign, OpenInNew } from '@mui/icons-material';
 import { useOrgs, slugToName, slugToLogo } from '@/hooks/useOrgs';
-import { announcements as items } from '@/lib/data/content';
+import {
+  announcements,
+  isUpcomingAnnouncement,
+  upcomingAnnouncements,
+} from '@/lib/data/content';
 
 export default function AnnouncementsPage() {
   const orgs = useOrgs();
+  const pastAnnouncements = announcements
+    .filter((item) => !isUpcomingAnnouncement(item))
+    .sort((first, second) => (
+      new Date(second.event_start ?? second.created_at).getTime()
+      - new Date(first.event_start ?? first.created_at).getTime()
+    ));
+
+  function renderAnnouncement(item: typeof announcements[number]) {
+    const logo = slugToLogo(item.org_slug, orgs);
+    const name = slugToName(item.org_slug, orgs);
+
+    return (
+      <Card key={item.id} variant="outlined" sx={{ borderRadius: 3, transition: 'box-shadow 0.15s', '&:hover': { boxShadow: 4 } }}>
+        <CardContent>
+          <Box display="flex" alignItems="flex-start" gap={2}>
+            {logo && (
+              <Box component="img" src={logo} alt={name}
+                sx={{ width: 40, height: 40, objectFit: 'contain', borderRadius: 1, flexShrink: 0, mt: 0.25 }} />
+            )}
+            <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+              <Box display="flex" alignItems="center" gap={1} mb={0.75} flexWrap="wrap">
+                <Chip label={name} size="small" color="primary" variant="outlined" />
+                <Typography variant="caption" color="text.secondary" sx={{ ml: 'auto' }}>
+                  {new Date(item.event_start ?? item.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+                </Typography>
+              </Box>
+              <Typography fontWeight={700} fontSize="1rem" gutterBottom>{item.title}</Typography>
+              <Typography variant="body2" color="text.secondary">{item.body}</Typography>
+              {item.media_url && !item.media_url.startsWith('pending:') && (
+                <Box
+                  component="img"
+                  src={item.media_url}
+                  alt={`${item.title} poster`}
+                  sx={{ mt: 2, width: '100%', maxHeight: 520, objectFit: 'contain', borderRadius: 2, display: 'block' }}
+                />
+              )}
+              {item.link && (
+                <Button
+                  component="a" href={item.link.startsWith('http') ? item.link : `https://${item.link}`} target="_blank" rel="noopener noreferrer"
+                  size="small" endIcon={<OpenInNew fontSize="small" />}
+                  sx={{ mt: 1, px: 0, textTransform: 'none', fontWeight: 600 }}
+                >
+                  Learn more
+                </Button>
+              )}
+            </Box>
+          </Box>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Box sx={{ pt: { xs: 12, md: 14 }, pb: 8, minHeight: '100vh' }}>
       <Container maxWidth="md">
@@ -28,57 +84,39 @@ export default function AnnouncementsPage() {
           </Box>
         </Box>
 
-        {items.length === 0 && (
+        {announcements.length === 0 && (
           <Typography color="text.secondary" textAlign="center" py={8}>
             No announcements at the moment. Check back soon!
           </Typography>
         )}
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          {items.map((item, i) => {
-            const logo = slugToLogo(item.org_slug, orgs);
-            const name = slugToName(item.org_slug, orgs);
-            return (
-              <Card key={item.id} variant="outlined" sx={{ borderRadius: 3, transition: 'box-shadow 0.15s', '&:hover': { boxShadow: 4 } }}>
-                <CardContent>
-                  <Box display="flex" alignItems="flex-start" gap={2}>
-                    {logo && (
-                      <Box component="img" src={logo} alt={name}
-                        sx={{ width: 40, height: 40, objectFit: 'contain', borderRadius: 1, flexShrink: 0, mt: 0.25 }} />
-                    )}
-                    <Box sx={{ flexGrow: 1, minWidth: 0 }}>
-                      <Box display="flex" alignItems="center" gap={1} mb={0.75} flexWrap="wrap">
-                        <Chip label={name} size="small" color="primary" variant="outlined" />
-                        <Typography variant="caption" color="text.secondary" sx={{ ml: 'auto' }}>
-                          {new Date(item.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
-                        </Typography>
-                      </Box>
-                      <Typography fontWeight={700} fontSize="1rem" gutterBottom>{item.title}</Typography>
-                      <Typography variant="body2" color="text.secondary">{item.body}</Typography>
-                      {item.media_url && !item.media_url.startsWith('pending:') && (
-                        <Box
-                          component="img"
-                          src={item.media_url}
-                          alt={`${item.title} poster`}
-                          sx={{ mt: 2, width: '100%', maxHeight: 520, objectFit: 'contain', borderRadius: 2, display: 'block' }}
-                        />
-                      )}
-                      {item.link && (
-                        <Button
-                          component="a" href={item.link.startsWith('http') ? item.link : `https://${item.link}`} target="_blank" rel="noopener noreferrer"
-                          size="small" endIcon={<OpenInNew fontSize="small" />}
-                          sx={{ mt: 1, px: 0, textTransform: 'none', fontWeight: 600 }}
-                        >
-                          Learn more
-                        </Button>
-                      )}
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </Box>
+        {upcomingAnnouncements.length > 0 && (
+          <Box sx={{ mb: 6 }}>
+            <Typography variant="h5" fontWeight={800} gutterBottom>
+              Upcoming Announcements
+            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {upcomingAnnouncements.map(renderAnnouncement)}
+            </Box>
+          </Box>
+        )}
+
+        {pastAnnouncements.length > 0 && (
+          <Box>
+            <Typography variant="h5" fontWeight={800} gutterBottom>
+              Past Announcements
+            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {pastAnnouncements.map(renderAnnouncement)}
+            </Box>
+          </Box>
+        )}
+
+        {announcements.length > 0 && upcomingAnnouncements.length === 0 && pastAnnouncements.length === 0 && (
+          <Typography color="text.secondary" textAlign="center" py={8}>
+            No announcements at the moment. Check back soon!
+          </Typography>
+        )}
       </Container>
     </Box>
   );

@@ -1,4 +1,4 @@
-import { clubs, events as eventRows } from '@/lib/data/content';
+import { clubs, events as eventRows, isUpcomingEvent } from '@/lib/data/content';
 import EventsClient from './EventsClient';
 import { Box, Typography } from '@mui/material';
 
@@ -19,7 +19,7 @@ export type EventWithClub = {
 
 function getEventsData(): EventWithClub[] {
     // Format the data to match the structure needed by the client component
-    return eventRows.map(item => {
+    return eventRows.filter((item) => isUpcomingEvent(item)).map(item => {
         const eventDate = new Date(item.start_time);
         const club = clubs.find((entry) => entry.club_id === item.club_id);
         return {
